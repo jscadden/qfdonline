@@ -1,0 +1,19 @@
+!!! XML utf-8
+!!! Strict
+%html(xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en")
+  %head
+    %meta(http-equiv="Content-Type" content="text/html; charset=utf-8")/
+    %title= @title ? @title + " : QFD Online" : "QFD Online"
+    = stylesheet_link_tag("qfdonline.css")
+    = javascript_include_tag(:defaults)
+    = yield(:head)
+  %body(class=page_class)
+    #flash_wrapper
+      = show_flash
+    #content
+      = yield
+    #footer
+      %div
+        Copyright 2010 QFDOnline.com
+      %div
+        #{h(`git show --pretty=oneline --abbrev-commit | head -1`)}

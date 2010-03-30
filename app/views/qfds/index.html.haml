@@ -1,0 +1,5 @@
+%h1 QFDs
+
+%ul
+  = list_of(@qfds) do |qfd|
+    = link_to(h(qfd.name), qfd_path(qfd))

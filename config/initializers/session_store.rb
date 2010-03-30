@@ -5,8 +5,8 @@
 # Make sure the secret is at least 30 characters and all random, 
 # no regular words or you'll be exposed to dictionary attacks.
 ActionController::Base.session = {
-  :key         => '_qfdonline_new_session',
-  :secret      => 'f506bbc75dd1eaebc30fb05324e532eb1480619442dae9c81f94055a2d69f634c5407176a559ea06ed661954893dcb34d7326b78330dbcfe5c1aa7015a4ec912'
+  :key         => '_qfd2_session',
+  :secret      => 'ea1f26fe61d768db8db08145ebcd3c665f95001fa558d6a190632acc945d8daf2de1dc89b2d658810500b8919493bd07bf4b3c77b1530de980624869aa96471c'
 }
 
 # Use the database for sessions instead of the cookie-based default,
