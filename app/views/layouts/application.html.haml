@@ -3,7 +3,10 @@
 %html(xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en")
   %head
     %meta(http-equiv="Content-Type" content="text/html; charset=utf-8")/
-    %title= @title ? @title + " : QFD Online" : "QFD Online"
+    %title= @title ? @title + " : QFD Online Builder" : "QFD Online Builder"
+    = stylesheet_link_tag("reset.css")
+    /[if lt IE 8]
+      = stylesheet_link_tag("http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE8.js")
     = stylesheet_link_tag("qfdonline.css")
     = javascript_include_tag(:defaults)
     = yield(:head)
@@ -14,6 +17,14 @@
       = yield
     #footer
       %div
-        Copyright 2010 QFDOnline.com
+        Copyright &copy;2008&ndash;#{Time.now.year} QFD Online
+        %span(style="padding-right: 2em")
+        = link_to("Blog")
+        |
+        = link_to("Forum")
+        |
+        = link_to("About QFD Online")
+        |
+        = link_to("Terms of Use")
       %div
         #{h(`git show --pretty=oneline --abbrev-commit | head -1`)}
