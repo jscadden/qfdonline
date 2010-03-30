@@ -20,6 +20,9 @@ module NavigationHelpers
     when /^the HOQ\'s QFD$/i
       qfd_path(@hoq.qfd)
 
+    when /^the requirement\'s HOQ$/i
+      qfd_hoq_path(@requirement.hoq.qfd, @requirement.hoq) # FIXME: demeter?
+
     when /^new HOQ form$/i
       new_qfd_hoq_path(assigns["qfd"])
 

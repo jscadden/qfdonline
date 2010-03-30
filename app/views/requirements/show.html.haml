@@ -1,0 +1,15 @@
+%h1 Requirement: #{h(@requirement.name)}
+
+.breadcrumbs
+  = link_to("My QFDs", qfds_path)
+  &larr;
+  = link_to(h(@qfd.name), qfd_path(@qfd))
+  &larr;
+  = link_to(h(@hoq.name), qfd_hoq_path(@qfd, @hoq))
+  &larr;
+  =h @requirement.name
+
+
+Updated: #{@requirement.updated_at}
+%br
+Created: #{@requirement.created_at}

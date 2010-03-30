@@ -6,6 +6,16 @@
   = link_to(h(@qfd.name), qfd_path(@qfd))
   &larr;
   =h @hoq.name
+  &larr;
+  = link_to("Add new Requirement", new_qfd_hoq_requirement_path(@qfd, @hoq))
+
+%h2 Requirements:
+%ul
+  = list_of(@hoq.requirements) do |requirement|
+    = link_to(h(requirement.name), qfd_hoq_requirement_path(@qfd, @hoq, requirement))
+  - if @hoq.requirements.empty?
+    %li
+      %em No Requirements found
 
 Updated: #{@hoq.updated_at}
 %br

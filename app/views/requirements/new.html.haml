@@ -1,0 +1,10 @@
+%h1 New Requirement
+
+- form_for([@qfd, @hoq, @requirement]) do |f|
+  = f.error_messages
+  .field
+    = f.label(:name)
+    %br
+    = f.text_field(:name)
+  .actions
+    = f.submit("Create Requirement")
