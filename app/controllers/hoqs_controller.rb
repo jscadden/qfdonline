@@ -1,12 +1,13 @@
 class HoqsController < ApplicationController
-  before_filter :find_qfd
+  before_filter :find_qfd, :only => ["new",]
 
   def create
-    @hoq = @qfd.hoqs.build(params[:hoq])
+    @hoq = Hoq.new(params[:hoq])
+    @qfd = @hoq.qfd
 
     if @hoq.save
       flash[:notice] = "HOQ created successfully"
-      redirect_to [@qfd, @hoq]
+      redirect_to hoq_path(@hoq)
     else
       render :action => "new"
     end
@@ -17,14 +18,15 @@ class HoqsController < ApplicationController
   end
 
   def show
-    @hoq = @qfd.hoqs.find(params[:id])
+    @hoq = Hoq.find(params[:id])
+    @qfd = @hoq.qfd
   end
 
-
+  
   private
 
   def find_qfd
-    # TODO: restrict to user
     @qfd = Qfd.find(params[:qfd_id])
   end
+
 end

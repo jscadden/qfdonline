@@ -43,11 +43,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.root :controller => "qfds"
 
-  map.resources :qfds do |qfds|
-    qfds.resources :hoqs do |hoqs|
-      hoqs.resources :requirements
-    end
-  end
-
+  map.resources :qfds
+  map.resources :hoqs
+  map.resources :requirements
   
 end

@@ -21,16 +21,16 @@ module NavigationHelpers
       qfd_path(@hoq.qfd)
 
     when /^the requirement\'s HOQ$/i
-      qfd_hoq_path(@requirement.hoq.qfd, @requirement.hoq) # FIXME: demeter?
+      hoq_path(@requirement.hoq)
 
     when /^new HOQ form$/i
-      new_qfd_hoq_path(assigns["qfd"])
+      new_hoq_path(:qfd_id => assigns["qfd"])
 
     when /^new (.*) form$/i
       send("new_#{$1.camelize.downcase}_path")
 
     when /^the new HOQ\'s page$/i
-      qfd_hoq_path(assigns["qfd"], assigns["hoq"])
+      hoq_path(assigns["hoq"])
 
     when /^the new (.*)\'s page$/i
       model_name = $1.camelize.downcase

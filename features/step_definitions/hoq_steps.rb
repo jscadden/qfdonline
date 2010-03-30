@@ -7,5 +7,5 @@ Then /^I should see the HOQ\'s name$/ do
 end
 
 Then /^a link to the HOQ$/ do
-  response.should have_tag("a[href=\"#{qfd_hoq_path(@qfd, @hoq)}\"]")
+  response.should have_tag("a[href=\"#{hoq_path(@hoq)}\"]")
 end

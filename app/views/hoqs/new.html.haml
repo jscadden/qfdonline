@@ -1,7 +1,8 @@
 %h1 New HOQ
 
-- form_for([@qfd, @hoq]) do |f|
+- form_for(@hoq) do |f|
   = f.error_messages
+  = f.hidden_field(:qfd_id)
   .field
     = f.label(:name)
     %br
