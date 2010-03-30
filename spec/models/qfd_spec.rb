@@ -2,13 +2,21 @@ require 'spec_helper'
 
 describe Qfd do
   before(:each) do
-    @valid_attributes = {
-      :name => "value for name",
-      :user_id => 1
-    }
+    @qfd = Factory.build("qfd")
   end
 
-  it "should create a new instance given valid attributes" do
-    Qfd.create!(@valid_attributes)
+  describe "Factory" do
+    it "should create a new instance" do
+      @qfd.save!
+    end
+  end
+
+  describe "#name" do
+    it "should be required" do
+      @qfd.name = nil
+
+      @qfd.save.should be_false
+      @qfd.errors.on("name").should_not be_empty
+    end
   end
 end

@@ -2,13 +2,21 @@ require 'spec_helper'
 
 describe Hoq do
   before(:each) do
-    @valid_attributes = {
-      :name => "value for name",
-      :qfd_id => 1
-    }
+    @hoq = Factory.build("hoq")
   end
 
-  it "should create a new instance given valid attributes" do
-    Hoq.create!(@valid_attributes)
+  describe "Factory" do
+    it "should create a new instance" do
+      @hoq.save!
+    end
+  end
+
+  describe "#name" do
+    it "should be required" do
+      @hoq.name = nil
+
+      @hoq.save.should be_false
+      @hoq.errors.on("name").should_not be_empty
+    end
   end
 end
