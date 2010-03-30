@@ -1,0 +1,12 @@
+%h1 HOQ: #{h(@hoq.name)}
+
+.breadcrumbs
+  = link_to("My QFDs", qfds_path)
+  &larr;
+  = link_to(h(@qfd.name), qfd_path(@qfd))
+  &larr;
+  =h @hoq.name
+
+Updated: #{@hoq.updated_at}
+%br
+Created: #{@hoq.created_at}

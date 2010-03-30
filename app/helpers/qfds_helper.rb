@@ -1,0 +1,2 @@
+module QfdsHelper
+end

@@ -17,8 +17,17 @@ module NavigationHelpers
     #   when /^(.*)'s profile page$/i
     #     user_profile_path(User.find_by_login($1))
 
+    when /^the HOQ\'s QFD$/i
+      qfd_path(@hoq.qfd)
+
+    when /^new HOQ form$/i
+      new_qfd_hoq_path(assigns["qfd"])
+
     when /^new (.*) form$/i
       send("new_#{$1.camelize.downcase}_path")
+
+    when /^the new HOQ\'s page$/i
+      qfd_hoq_path(assigns["qfd"], assigns["hoq"])
 
     when /^the new (.*)\'s page$/i
       model_name = $1.camelize.downcase

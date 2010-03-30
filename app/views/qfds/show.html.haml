@@ -1,5 +1,20 @@
 %h1 QFD: #{h(@qfd.name)}
 
+.breadcrumbs
+  = link_to("My QFDs", qfds_path)
+  &larr;
+  =h @qfd.name
+  &larr;
+  = link_to("Add new HOQ", new_qfd_hoq_path(@qfd))
+
+%h2 HOQs:
+%ul
+  = list_of(@qfd.hoqs) do |hoq|
+    = link_to(h(hoq.name), qfd_hoq_path(@qfd, hoq))
+  - if @qfd.hoqs.empty?
+    %li
+      %em No HOQs found
+
 Updated: #{@qfd.updated_at}
 %br
 Created: #{@qfd.created_at}
