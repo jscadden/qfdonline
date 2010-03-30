@@ -1,0 +1,12 @@
+%div
+  Copyright &copy;2008&ndash;#{Time.now.year} QFD Online
+  %span(style="padding-right: 2em")
+  = link_to("Blog", "http://qfdonline.com")
+  |
+  = link_to("Forum", "http://qfdonline.com/forum/index.php#7")
+  |
+  = link_to("About QFD Online", "http://www.qfdonline.com/about")
+  |
+  = link_to("Terms of Use", "http://www.qfdonline.com/about/terms-of-use")
+%div
+  #{h(`git show --pretty=oneline --abbrev-commit | head -1`)}

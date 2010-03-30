@@ -1,4 +1,10 @@
 // variables
+!dk_grey = #404040
+!med_grey = #808080
+!lt_grey = #999999
+!text_white = #f0f0f0
+!orange = #ffa500
+!header_pad = 8px
 
 // mix-ins
 
@@ -11,6 +17,8 @@ body
   font:
     family: Arial, Verdana, sans-serif, Helvetica
     size: 12pt
+
+  line-height: 1.5
 
 h1, h2, h3, h4, h5, h6
   margin:
@@ -40,12 +48,16 @@ h5
 // classes
 
 // ids
+#content
+  padding: 25px 100px
 
 #footer
-  color: gray
+  color = !lt_grey
   font:
     family: Arial
     size: 9pt
+  margin:
+    top: 5em
   padding:
     bottom: 4px
   text:
@@ -54,3 +66,33 @@ h5
 
 #footer a
   color: blue
+
+#header
+  background:
+    color = !dk_grey
+  border:
+    bottom = 5px solid !orange
+  color = !text_white
+  display: table
+  font:
+    size: 14px
+  width: 100%
+
+  .left
+    padding:
+      bottom = !header_pad
+      left = !header_pad
+      top = !header_pad
+
+  .right
+    display: table-cell
+    padding:
+      bottom = !header_pad
+      right = !header_pad
+      top = !header_pad
+    text-align: right
+    vertical-align: middle    
+
+  a
+    text-decoration: none
+      
