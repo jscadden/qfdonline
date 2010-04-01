@@ -2,8 +2,11 @@
   = link_to(image_tag("qfdonline_logo.jpg"), root_path)
 
 .right
-  Welcome
-  %br
-  Account
-  |
-  Sign Out
+  - if logged_in?
+    Welcome #{h(current_user.login)}
+    %br
+    = link_to("Log out", logout_path)
+  - else
+    = link_to("Register", register_path)
+    |
+    = link_to("Log in", login_path)
