@@ -1,7 +1,13 @@
-Then /^I should see the QFD\'s name$/ do
-  response.should contain(@qfd.name)
+Given /^I\'m on the new QFD form$/ do
+  visit(new_qfd_path)
 end
 
-Then /^a link to the QFD$/ do
-  response.should have_tag("a[href=\"#{qfd_path(@qfd)}\"]")
+Given /^I\'ve created a QFD$/ do
+  @qfd = Factory.create("qfd")
+  assigns["current_user"].qfds << @qfd
 end
+
+Given /^I\'m viewing the QFD$/ do
+  visit(qfd_path(@qfd))
+end
+

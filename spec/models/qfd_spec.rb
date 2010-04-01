@@ -5,18 +5,14 @@ describe Qfd do
     @qfd = Factory.build("qfd")
   end
 
-  describe "Factory" do
-    it "should create a new instance" do
-      @qfd.save!
-    end
+  it "should create a new instance given valid attributes" do
+    @qfd.save!
   end
 
-  describe "#name" do
-    it "should be required" do
-      @qfd.name = nil
-
-      @qfd.save.should be_false
-      @qfd.errors.on("name").should_not be_empty
+  describe "after creation" do
+    it "should create a HoqList" do
+      @qfd.save!
+      @qfd.hoq_list.should_not be_nil
     end
   end
 end

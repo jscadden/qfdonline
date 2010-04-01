@@ -1,24 +1,26 @@
 Feature: Requirements
 
-  As a user
-  I want to create and manage requirements
-  So that I can create great products
-
   Background:
-    Given a QFD exists
-    And the QFD has a HOQ
-    
-  @wip    	    
-  Scenario: User creates a new requirement
-    Given that I'm on the new requirement form
+    Given that I'm logged in
+    And I've created a QFD
+    And I've created a HOQ
+
+  Scenario: User can add a primary requirement
+    Given I'm on the new primary requirement form
     When I fill in the following:
-      | Name     | Test Requirement |
-    And I press "Create Requirement"
-    Then I should be on the new requirements's page
+      | Name   | Test Pri Req |
+      | Weight | 1.0          |
+    And I press "Create Primary Requirement"
+    Then I should be on the HOQ's page
+    And I should see a primary requirement "Test Pri Req"
     And I should see a flash notice indicating success
 
-  Scenario: User views a list of requirements
-    Given the HOQ has a requirement
-    When I visit the requirement's HOQ
-    Then I should see the requirement's name
-    And a link to the requirement
+  Scenario: User can add a secondary requirement
+    Given I'm on the new secondary requirement form
+    When I fill in the following:
+      | Name   | Test Sec Req |
+      | Weight | 2.0          |
+    And I press "Create Secondary Requirement"
+    Then I should be on the HOQ's page
+    And I should see a secondary requirement "Test Sec Req"
+    And I should see a flash notice indicating success

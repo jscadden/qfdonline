@@ -1,9 +1,12 @@
 *~
+.autotest
 config/database.yml
+config/session_secret.yml
 db/schema.rb
 db/*.sqlite3
 log/*
 public/stylesheets/qfdonline.css
 rerun.txt
+TAGS
 test
 tmp/*

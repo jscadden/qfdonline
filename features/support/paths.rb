@@ -8,36 +8,35 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
     
-    when /the home\s?page/
-      '/'
-    
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
     #   when /^(.*)'s profile page$/i
     #     user_profile_path(User.find_by_login($1))
 
-    when /^the HOQ\'s QFD$/i
-      qfd_path(@hoq.qfd)
+    when /the login(?: page)?/
+      login_path
 
-    when /^the requirement\'s HOQ$/i
-      hoq_path(@requirement.hoq)
+    when /the logout(?: page)?/
+      logout_path
 
-    when /^new HOQ form$/i
-      new_hoq_path(:qfd_id => assigns["qfd"])
+    when /the root page/
+      root_path
 
-    when /^new (.*) form$/i
-      send("new_#{$1.camelize.downcase}_path")
+    when /the QFDs index/
+      qfds_path
 
-    when /^the new HOQ\'s page$/i
-      hoq_path(assigns["hoq"])
+    when /the new QFD\'s page/
+      qfd_path(assigns["qfd"])
 
-    when /^the new (.*)\'s page$/i
-      model_name = $1.camelize.downcase
-      send("#{model_name}_path", assigns[model_name])
+    when /the new HOQ form/
+      new_qfd_hoq_path(@qfd)
 
-    when /^the (.*) index$/i
-      send("#{$1.camelize.downcase.pluralize}_path")
+    when /the new HOQ\'s page/
+      qfd_hoq_path(assigns["qfd"], assigns["hoq"])
+
+    when /the HOQ\'s page/
+      qfd_hoq_path(@qfd, @hoq)
 
     else
       raise "Can't find mapping from \"#{page_name}\" to a path.\n" +

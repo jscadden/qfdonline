@@ -1,13 +1,8 @@
-%h1 QFDs
-
-.breadcrumbs
-  My QFDs
-  &larr;
-  = link_to("Add new QFD", new_qfd_path)
+%h1 My QFDs
+= link_to("Create new QFD", new_qfd_path)
 
 %ul
   = list_of(@qfds) do |qfd|
-    = link_to(h(qfd.name), qfd_path(qfd))
-  - if @qfds.empty?
-    %li
-      %em No QFDs found
+    = link_to(h(qfd.name), qfd)
+
+

@@ -1,22 +1,15 @@
 %h1 HOQ: #{h(@hoq.name)}
 
-.breadcrumbs
-  = link_to("My QFDs", qfds_path)
-  &larr;
-  = link_to(h(@qfd.name), qfd_path(@qfd))
-  &larr;
-  =h @hoq.name
-  &larr;
-  = link_to("Add new Requirement", new_requirement_path(:hoq_id =>@hoq))
+= link_to("Back to #{h(@qfd.name)}", @qfd)
 
-%h2 Requirements:
-%ul
-  = list_of(@hoq.requirements) do |requirement|
-    = link_to(h(requirement.name), requirement_path(requirement))
-  - if @hoq.requirements.empty?
-    %li
-      %em No Requirements found
+%h2 Primary Requirements
+= link_to("Add new primary requirement", new_hoq_primary_requirement_path(@hoq))
+%ul.requirements.primary
+  = list_of(@hoq.primary_requirements) do |req|
+    =h req.name
 
-Updated: #{@hoq.updated_at}
-%br
-Created: #{@hoq.created_at}
+%h2 Secondary Requirements
+= link_to("Add new secondary requirement", new_hoq_secondary_requirement_path(@hoq))
+%ul.requirements.secondary
+  = list_of(@hoq.secondary_requirements) do |req|
+    =h req.name

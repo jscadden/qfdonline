@@ -1,0 +1,6 @@
+%h1 New Primary Requirement
+
+- form_for([@hoq, @req], :url => hoq_primary_requirements_path(@hoq)) do |f|
+  = render :partial => f
+  .actions
+    = f.submit("Create Primary Requirement")

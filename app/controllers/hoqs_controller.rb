@@ -1,16 +1,20 @@
 class HoqsController < ApplicationController
-  before_filter :find_qfd, :only => ["new",]
+  before_filter :require_user
+  before_filter :find_qfd
 
   def create
     @hoq = Hoq.new(params[:hoq])
-    @qfd = @hoq.qfd
 
-    if @hoq.save
+    if @qfd.hoq_list.insert_back(@hoq)
       flash[:notice] = "HOQ created successfully"
-      redirect_to hoq_path(@hoq)
+      redirect_to [@qfd, @hoq]
     else
       render :action => "new"
     end
+  end
+
+  def index
+    @hoqs = @qfd.hoqs.all
   end
 
   def new
@@ -18,15 +22,14 @@ class HoqsController < ApplicationController
   end
 
   def show
-    @hoq = Hoq.find(params[:id])
-    @qfd = @hoq.qfd
+    @hoq = @qfd.hoqs.find(params[:id], :include => [:primary_requirements, :secondary_requirements,])
   end
 
-  
+
   private
 
   def find_qfd
-    @qfd = Qfd.find(params[:qfd_id])
+    @qfd = current_user.qfds.find(params[:qfd_id])
   end
 
 end
