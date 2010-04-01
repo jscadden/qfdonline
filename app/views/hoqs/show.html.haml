@@ -4,12 +4,12 @@
 
 %h2 Primary Requirements
 = link_to("Add new primary requirement", new_hoq_primary_requirement_path(@hoq))
-%ul.requirements.primary
+%ol.requirements.primary
   = list_of(@hoq.primary_requirements) do |req|
     =h req.name
 
 %h2 Secondary Requirements
 = link_to("Add new secondary requirement", new_hoq_secondary_requirement_path(@hoq))
-%ul.requirements.secondary
+%ol.requirements.secondary
   = list_of(@hoq.secondary_requirements) do |req|
     =h req.name

@@ -1,6 +1,7 @@
 %h1 New HOQ
 
 - form_for([@qfd, @hoq]) do |f|
+  = f.error_messages
   = render :partial => f
   .actions
     = f.submit("Create HOQ")

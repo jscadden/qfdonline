@@ -4,7 +4,7 @@
 %h2 Houses of Quality
 = link_to("Create new HOQ", new_qfd_hoq_path(@qfd))
 
-%ul
+%ol
   = list_of(@qfd.hoqs) do |hoq|
     = link_to(h(hoq.name), [@qfd, hoq])
 
