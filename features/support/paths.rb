@@ -26,6 +26,9 @@ module NavigationHelpers
     when /the QFDs index/
       qfds_path
 
+    when /the QFD\'s page/
+      qfd_path(@qfd)
+
     when /the new QFD\'s page/
       qfd_path(assigns["qfd"])
 

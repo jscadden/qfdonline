@@ -11,3 +11,7 @@ Given /^I\'m viewing the QFD$/ do
   visit(qfd_path(@qfd))
 end
 
+# Then /^I should be redirected to the page of the QFD\'s first HOQ$/ do
+#   current_path = URI.parse(current_url).select(:path, :query).compact.join('?')
+#   current_path.should == qfd_hoq_path(assigns["qfd"], assigns["hoq"])
+# end

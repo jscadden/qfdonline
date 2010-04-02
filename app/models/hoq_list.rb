@@ -1,4 +1,5 @@
 class HoqList < ActiveRecord::Base
+  include Enumerable
 
   belongs_to :qfd
   has_many :hoqs, :order => "position", :extend => HoqListExtensions
@@ -14,6 +15,8 @@ class HoqList < ActiveRecord::Base
   def insert_back(hoq)
     insert_at(hoq, hoqs.size+1)
   end
+
+  delegate :each, :to => :hoqs
 
 
   private
