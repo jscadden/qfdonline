@@ -85,7 +85,12 @@ module MatrixHelper
   end
 
   def rating_for(pri_req, sec_req)
-    Rating.lookup(pri_req, sec_req).value || "&nbsp;"
+    rating = Rating.lookup(pri_req, sec_req)
+    if rating
+      rating.value
+    else
+      "&nbsp;"
+    end
   end
 end
 
