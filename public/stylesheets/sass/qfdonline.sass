@@ -1,5 +1,6 @@
 // variables
 !dk_grey = #404040
+!heading_grey = #dcdcdc
 !med_grey = #808080
 !lt_grey = #999999
 !text_white = #f0f0f0
@@ -56,7 +57,61 @@ ul
   padding:
     left: 2em
 
+
 // classes
+.highlight
+  background:
+    color = !orange
+
+.matrix
+  border:
+    collapse: collapse
+  display: table
+  font:
+    size: medium
+
+  .cell
+    display: table-cell
+    padding: 3px
+
+  .cell.num, .cell.weight
+    text-align: center
+
+  .cell.rating
+    padding: 0
+
+  .cell.rating > div
+    padding: 3px
+
+  .cell.rating.highlight_border > div
+    border:
+      color = !orange
+      style: solid
+      width: 1px
+    padding: 2px
+
+  .cell
+    border:
+      color = !med_grey
+      width: 1px
+      style: solid
+
+  .cell.rating
+    text-align: center
+
+  .header
+    display: table-header-group
+    background:
+      color = !heading_grey
+
+  .row
+    display: table-row
+
+  .sider
+    background:
+      color = !heading_grey
+    display: table-column-group
+    
 
 // ids
 #content
