@@ -4,4 +4,6 @@ class Requirement < ActiveRecord::Base
 
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :requirements_list_id
+  validates_numericality_of :weight, :relative_weight, :allow_nil => true
+
 end

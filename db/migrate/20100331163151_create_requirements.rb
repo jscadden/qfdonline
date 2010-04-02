@@ -3,7 +3,8 @@ class CreateRequirements < ActiveRecord::Migration
     create_table :requirements do |t|
       t.string :name
       t.integer :position
-      t.integer :weight
+      t.float :weight
+      t.float :relative_weight
       t.references :requirements_list
 
       t.timestamps

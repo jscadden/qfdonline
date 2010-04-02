@@ -4,12 +4,30 @@
 
 %h2 Primary Requirements
 = link_to("Add new primary requirement", new_hoq_primary_requirement_path(@hoq))
-%ol.requirements.primary
-  = list_of(@hoq.primary_requirements) do |req|
-    =h req.name
+%table.requirements.primary(cellpadding="0" cellspacing="0")
+  %thead
+    %tr
+      %th Name
+      %th Weight
+      %th Relative Weight
+  %tbody
+    - @hoq.primary_requirements.each do |req|
+      %tr
+        %td=h req.name
+        %td=h req.weight
+        %td=h req.relative_weight
 
 %h2 Secondary Requirements
 = link_to("Add new secondary requirement", new_hoq_secondary_requirement_path(@hoq))
-%ol.requirements.secondary
-  = list_of(@hoq.secondary_requirements) do |req|
-    =h req.name
+%table.requirements.secondary(cellpadding="0" cellspacing="0")
+  %thead
+    %tr
+      %th Name
+      %th Weight
+      %th Relative Weight
+  %tbody
+    - @hoq.secondary_requirements.each do |req|
+      %tr
+        %td=h req.name
+        %td=h req.weight
+        %td=h req.relative_weight

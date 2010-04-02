@@ -3,7 +3,7 @@ Given /^I\'m on the new primary requirement form$/ do
 end
 
 Then /^I should see a primary requirement "([^\"]*)"$/ do |name|
-  response.should have_tag(".requirements.primary li", /#{name}/)
+  response.should have_tag(".requirements.primary td", /#{name}/)
 end
 
 Given /^I\'m on the new secondary requirement form$/ do
@@ -11,5 +11,5 @@ Given /^I\'m on the new secondary requirement form$/ do
 end
 
 Then /^I should see a secondary requirement "([^\"]*)"$/ do |name|
-  response.should have_tag(".requirements.secondary li", /#{name}/)
+  response.should have_tag(".requirements.secondary td", /#{name}/)
 end
