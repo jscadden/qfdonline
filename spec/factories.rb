@@ -23,3 +23,7 @@ end
 Factory.define "requirement" do |r|
   r.name Factory.next("requirement_name")
 end
+
+Factory.define "rating" do |r|
+  r.value 3
+end

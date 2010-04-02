@@ -31,4 +31,15 @@ qfd = user.qfds.create!(:name => "Test QFD")
                             :weight => rand(100))
       hoq.secondary_requirements_list.requirements << req
   end
+
+  hoq.primary_requirements.each do |pri_req|
+    hoq.secondary_requirements.each do |sec_req|
+      rating = Rating.lookup(pri_req, sec_req)
+      if rating.nil?
+        Rating.create!(:primary_requirement => pri_req,
+                       :secondary_requirement => sec_req,
+                       :value => [1, 3, 9, nil].rand)
+      end
+    end
+  end
 end

@@ -85,7 +85,7 @@ module MatrixHelper
   end
 
   def rating_for(pri_req, sec_req)
-    [1, 3, 9, "&nbsp;"].rand
+    Rating.lookup(pri_req, sec_req).value || "&nbsp;"
   end
 end
 

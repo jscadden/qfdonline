@@ -6,4 +6,8 @@ class Requirement < ActiveRecord::Base
   validates_uniqueness_of :name, :scope => :requirements_list_id
   validates_numericality_of :weight, :relative_weight, :allow_nil => true
 
+  with_options(:class_name => "Rating") do |r|
+    r.has_one :primary_rating, :foreign_key => "primary_requirement_id"
+    r.has_one :secondary_rating, :foreign_key => "secondary_requirement_id"
+  end
 end
