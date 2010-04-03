@@ -37,7 +37,6 @@ module MatrixHelper
     haml_tag("div", :class => "matrix") do
       haml_tag("div", :class => "sider")
       haml_tag("div", :class => "sider")
-      haml_tag("div", :class => "sider")
       haml_tag("div", :class => "header") do
         row do
           cell("")
@@ -51,22 +50,20 @@ module MatrixHelper
           cell("Weight")
           cols.each {|sec_req| cell(sec_req.weight || "0", :class => "weight")}
         end
-        row do
-          cell("Row #")
-          cell("Weight")
-          cell("Primary / Secondary")
-          cols.each {|x| cell(h(x.name))}
-        end
+      end
+      row do
+        cell("Row #")
+        cell("Weight")
+        cell("Primary / Secondary", :class => "header")
+        cols.each {|sec_req| name_for(sec_req)}
       end
       rows.each_with_index do |pri_req, idx|    
         row do
           cell(idx + 1, :class => "num")
           cell(pri_req.weight || "0", :class => "weight")
-          cell(h(pri_req.name))
+          name_for(pri_req)
           cols.each do |sec_req|
-            cell(:class => "rating") do
-              haml_tag("div", rating_for(pri_req, sec_req))
-            end
+            rating_for(pri_req, sec_req)
           end
         end
       end
@@ -86,12 +83,24 @@ module MatrixHelper
 
   def rating_for(pri_req, sec_req)
     rating = Rating.lookup(pri_req, sec_req)
-    if rating
-      rating.value
+    
+    if rating && rating.value
+      value = rating.value
     else
-      "&nbsp;"
+      value = "&nbsp;"
+    end
+
+    cell(:class => "rating", :id => rating ? "#{rating.id}" : "") do
+      concat(inner_rating_for(pri_req, sec_req, value))
     end
   end
+
+  def name_for(req)
+    cell(:class => "name") do
+      concat(inner_name_for(req))
+    end
+  end
+
 end
 
 

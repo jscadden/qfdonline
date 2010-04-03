@@ -1,37 +1,10 @@
 %h1 HOQ: #{h(@hoq.name)}
 
 = link_to("Back to #{h(@qfd.name)}", @qfd)
-
-%h2 Primary Requirements
+%br
 = link_to("Add new primary requirement", new_hoq_primary_requirement_path(@hoq))
-%table.requirements.primary(cellpadding="0" cellspacing="0")
-  %thead
-    %tr
-      %th Name
-      %th Weight
-      %th Relative Weight
-  %tbody
-    - @hoq.primary_requirements.each do |req|
-      %tr
-        %td=h req.name
-        %td=h req.weight
-        %td=h req.relative_weight
-
-%h2 Secondary Requirements
+%br
 = link_to("Add new secondary requirement", new_hoq_secondary_requirement_path(@hoq))
-%table.requirements.secondary(cellpadding="0" cellspacing="0")
-  %thead
-    %tr
-      %th Name
-      %th Weight
-      %th Relative Weight
-  %tbody
-    - @hoq.secondary_requirements.each do |req|
-      %tr
-        %td=h req.name
-        %td=h req.weight
-        %td=h req.relative_weight
-
 
 %h1 Matrix
 - matrix(@hoq.secondary_requirements, @hoq.primary_requirements)

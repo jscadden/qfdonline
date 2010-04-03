@@ -7,6 +7,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :qfds, :has_many => :hoqs
   map.resources :hoqs, :has_many => [:primary_requirements, :secondary_requirements,]
+  map.resources :ratings
+  map.resources :requirements
 
   map.resource :user_sessions
   map.resource :account, :controller => "users"

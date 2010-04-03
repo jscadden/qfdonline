@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
 
   filter_parameter_logging :password, :password_confirmation
   helper_method :current_user_session, :current_user, :logged_in?
+  helper_method :inner_rating_for, :inner_name_for
 
   private
 
@@ -50,5 +51,23 @@ class ApplicationController < ActionController::Base
   def logged_in?
     !current_user.nil?
   end
+
+  def inner_rating_for(pri_req, sec_req, value)
+    render_to_string(:partial => "/common/inner_rating_for", 
+                     :locals => {
+                       :pri_req => pri_req, 
+                       :sec_req => sec_req, 
+                       :value => value,
+                     })
+  end
+
+  def inner_name_for(req)
+    render_to_string(:partial => "/common/inner_name_for", 
+                     :locals => {
+                       :id => req.id, 
+                       :name => req.name,
+                     })
+  end
+
 end
 

@@ -1,7 +1,7 @@
 class CreateRatings < ActiveRecord::Migration
   def self.up
     create_table :ratings do |t|
-      t.float :value
+      t.integer :value
       t.references :primary_requirement
       t.references :secondary_requirement
 
