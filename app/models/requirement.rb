@@ -10,4 +10,9 @@ class Requirement < ActiveRecord::Base
     r.has_one :primary_rating, :foreign_key => "primary_requirement_id"
     r.has_one :secondary_rating, :foreign_key => "secondary_requirement_id"
   end
+
+  def recalc_relative_weight(total)
+    self.update_attributes(:relative_weight => weight / total * 100)
+  end
+
 end

@@ -41,25 +41,36 @@ module MatrixHelper
         row do
           cell("")
           cell("")
+          cell("")
           cell("Column #")
           cols.size.times {|x| cell("#{x+1}", :class => "num")}
         end
         row do
           cell("")
           cell("")
+          cell("")
           cell("Weight")
           cols.each {|sec_req| cell(sec_req.weight || "0", :class => "weight")}
+        end
+        row do 
+          cell("")
+          cell("")
+          cell("")
+          cell("Relative Weight")
+          cols.each {|sec_req| cell(number_to_percentage(sec_req.relative_weight), :class => "weight")}
         end
       end
       row do
         cell("Row #")
-        cell("Weight")
+        cell("Relative Weight")
+        cell("Weight", :class => "header")
         cell("Primary / Secondary", :class => "header")
         cols.each {|sec_req| name_for(sec_req)}
       end
       rows.each_with_index do |pri_req, idx|    
         row do
           cell(idx + 1, :class => "num")
+          cell(number_to_percentage(pri_req.relative_weight), :class => "weight")
           cell(pri_req.weight || "0", :class => "weight")
           name_for(pri_req)
           cols.each do |sec_req|

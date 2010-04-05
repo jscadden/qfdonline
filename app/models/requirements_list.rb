@@ -14,7 +14,11 @@ class RequirementsList < ActiveRecord::Base
   private
 
   def recalc_relative_weights
-    logger.debug("no op")
+    total = requirements.sum(:weight).to_f
+
+    requirements.each do |req|
+      req.recalc_relative_weight(total)
+    end
   end
 
 end

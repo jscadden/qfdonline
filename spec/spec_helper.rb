@@ -52,3 +52,7 @@ Spec::Runner.configure do |config|
   #
   # For more information take a look at Spec::Runner::Configuration and Spec::Runner
 end
+
+def disable_observers_for(instance)
+  instance.stub(:notify)
+end

@@ -92,4 +92,33 @@ describe Requirement do
     end
   end
 
+  describe "#recalc_relative_weight" do
+    before(:each) do
+      disable_observers_for(subject)
+    end
+
+    it "should be 100" do
+      subject.weight = 5
+
+      subject.recalc_relative_weight(5)
+
+      subject.relative_weight.should == 100.0
+    end
+
+    it "should be 0" do
+      subject.weight = 0
+
+      subject.recalc_relative_weight(5)
+
+      subject.relative_weight.should == 0.0
+    end
+
+    it "should be 50" do
+      subject.weight = 4
+      
+      subject.recalc_relative_weight(8)
+
+      subject.relative_weight.should == 50.0
+    end
+  end
 end
