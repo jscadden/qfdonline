@@ -20,5 +20,5 @@ When /^I create a new HOQ$/ do
 end
 
 Then /^the new HOQ should have a primary requirement "([^\"]*)"$/ do |name|
-  response.should have_tag("div.cell", /#{name}/)
+  response.body.should have_tag("div.cell", /#{name}/)
 end

@@ -3,6 +3,6 @@ Given /^an anonymous user$/ do
 end
 
 Then /^I should see the login form$/ do
-  response.should have_tag("input[name='user_session[login]']")
-  response.should have_tag("input[name='user_session[password]']")
+  response.body.should have_tag("input[name='user_session[login]']")
+  response.body.should have_tag("input[name='user_session[password]']")
 end

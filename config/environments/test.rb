@@ -35,3 +35,4 @@ end
 
 config.gem "factory_girl"
 config.gem "cucumber", :lib => false
+config.gem "webrat"

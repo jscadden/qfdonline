@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_session, :current_user, :logged_in?
   helper_method :inner_rating_for, :inner_name_for
 
+
   private
 
   def current_user_session
