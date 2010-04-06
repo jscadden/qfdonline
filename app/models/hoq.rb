@@ -17,4 +17,9 @@ class Hoq < ActiveRecord::Base
     validates_uniqueness_of :secondary_requirements_list_id
   end
 
+  def owns_rating?(rating)
+    primary_requirements_list.owns_rating?(rating) ||
+      secondary_requirements_list.owns_rating?(rating)
+  end
+
 end

@@ -8,6 +8,7 @@ class RequirementsController < ApplicationController
       render :text => inner_name_for(@req)
     else
       logger.error("Error updating requirement #{@req.errors.full_messages}")
+      render :text => "Error"
     end
   end
 

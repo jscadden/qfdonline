@@ -1,25 +1,47 @@
 class RatingsController < ApplicationController
+  before_filter :find_rating, :only => [:update, :destroy,]
 
   def create
-    @rating = check_for_existing_rating || Rating.new
+    @rating = Rating.new(params[:rating])
 
-    if @rating.update_attributes(params[:rating])
-      render :text => inner_rating_for(@rating.primary_requirement,
-                                       @rating.secondary_requirement,
-                                       @rating.value)
+    if @rating.save
+      render_success
     else
-      logger.error("Rating failed")
+      render :text => "Error"
+      logger.error("Rating#create failed")
     end
   end
 
+  def update
+    if @rating.update_attributes(params[:rating])
+      render_success
+    else
+      render :text => "Error"
+      logger.error("Rating#update failed")
+    end
+  end
+
+  def destroy
+    if @rating.destroy
+      @rating = Rating.new(@rating.attributes.merge(:value => nil))
+      render_success
+    else
+      render :text => "Error"
+      logger.error("Rating#destroy failed")
+    end
+  end
 
   private
 
-  def check_for_existing_rating
-    Rating.lookup(params[:rating][:primary_requirement_id],
-                  params[:rating][:secondary_requirement_id])
+  def find_rating
+    @rating = Rating.find(params[:id])
+    unless current_user.owns_rating?(@rating)
+      raise ActiveRecord::RecordNotFound.new
+    end
   end
 
-
+  def render_success
+      render :text => inner_rating_for(@rating)
+  end
 
 end

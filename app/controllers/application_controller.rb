@@ -52,12 +52,10 @@ class ApplicationController < ActionController::Base
     !current_user.nil?
   end
 
-  def inner_rating_for(pri_req, sec_req, value)
+  def inner_rating_for(rating)
     render_to_string(:partial => "/common/inner_rating_for", 
                      :locals => {
-                       :pri_req => pri_req, 
-                       :sec_req => sec_req, 
-                       :value => value,
+                       :rating => rating || Rating.new,
                      })
   end
 

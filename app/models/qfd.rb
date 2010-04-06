@@ -7,4 +7,8 @@ class Qfd < ActiveRecord::Base
   validates_presence_of :name
 
   after_create :create_hoq_list
+
+  def owns_rating?(rating)
+    hoqs.any? {|h| h.owns_rating?(rating)}
+  end
 end

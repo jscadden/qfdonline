@@ -10,6 +10,10 @@ class RequirementsList < ActiveRecord::Base
     recalc_relative_weights
   end
 
+  def owns_rating?(rating)
+    requirements.any? {|r| r.owns_rating?(rating)}
+  end
+
 
   private
 

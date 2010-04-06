@@ -37,8 +37,10 @@ module MatrixHelper
     haml_tag("div", :class => "matrix") do
       haml_tag("div", :class => "sider")
       haml_tag("div", :class => "sider")
+      haml_tag("div", :class => "sider")
       haml_tag("div", :class => "header") do
         row do
+          cell("")
           cell("")
           cell("")
           cell("")
@@ -49,10 +51,20 @@ module MatrixHelper
           cell("")
           cell("")
           cell("")
+          cell("")
+          cell("Max Rating")
+          cols.each {|sec_req| cell(Rating.maximum_as_secondary(sec_req) || "", :class => "maximum")}
+        end
+        row do
+          cell("")
+          cell("")
+          cell("")
+          cell("")
           cell("Weight")
           cols.each {|sec_req| cell(sec_req.weight || "0", :class => "weight")}
         end
         row do 
+          cell("")
           cell("")
           cell("")
           cell("")
@@ -62,6 +74,7 @@ module MatrixHelper
       end
       row do
         cell("Row #")
+        cell("Max Rating")
         cell("Relative Weight")
         cell("Weight", :class => "header")
         cell("Primary / Secondary", :class => "header")
@@ -70,6 +83,7 @@ module MatrixHelper
       rows.each_with_index do |pri_req, idx|    
         row do
           cell(idx + 1, :class => "num")
+          cell(Rating.maximum_as_primary(pri_req) || "", :class => "maximum")
           cell(number_to_percentage(pri_req.relative_weight), :class => "weight")
           cell(pri_req.weight || "0", :class => "weight")
           name_for(pri_req)
@@ -94,15 +108,14 @@ module MatrixHelper
 
   def rating_for(pri_req, sec_req)
     rating = Rating.lookup(pri_req, sec_req)
-    
-    if rating && rating.value
-      value = rating.value
-    else
-      value = "&nbsp;"
+
+    if rating.nil?
+      rating = Rating.new(:primary_requirement => pri_req,
+                          :secondary_requirement => sec_req)
     end
 
-    cell(:class => "rating", :id => rating ? "#{rating.id}" : "") do
-      concat(inner_rating_for(pri_req, sec_req, value))
+    cell(:class => "rating") do
+      concat(inner_rating_for(rating))
     end
   end
 

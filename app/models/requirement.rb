@@ -7,12 +7,16 @@ class Requirement < ActiveRecord::Base
   validates_numericality_of :weight, :relative_weight, :allow_nil => true
 
   with_options(:class_name => "Rating") do |r|
-    r.has_one :primary_rating, :foreign_key => "primary_requirement_id"
-    r.has_one :secondary_rating, :foreign_key => "secondary_requirement_id"
+    r.has_many :primary_ratings, :foreign_key => "primary_requirement_id"
+    r.has_many :secondary_ratings, :foreign_key => "secondary_requirement_id"
   end
 
   def recalc_relative_weight(total)
     self.update_attributes(:relative_weight => weight / total * 100)
+  end
+
+  def owns_rating?(rating)
+    primary_ratings.include?(rating) || secondary_ratings.include?(rating)
   end
 
 end

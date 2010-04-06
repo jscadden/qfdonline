@@ -12,6 +12,7 @@
  * Based on editable by Dylan Verheul <dylan_at_dyve.net>:
  *    http://www.dyve.net/jquery/?editable
  *
+ * Tweaked for QFDOnline by Eric Wollesen <ericw_at_e3labs.com>
  */
 
 /**
@@ -334,7 +335,9 @@
                               /* quick and dirty PUT support */
                               if ('PUT' == settings.method) {
                                   submitdata['_method'] = 'put';
-                              }
+                              } else if ('DELETE' == settings.method) {
+				  submitdata['_method'] = 'delete';
+			      }
 
                               /* show the saving indicator */
                               $(self).html(settings.indicator);
