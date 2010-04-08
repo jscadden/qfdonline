@@ -69,7 +69,7 @@ module MatrixHelper
           cell("")
           cell("")
           cell("Relative Weight")
-          cols.each {|sec_req| cell(number_to_percentage(sec_req.relative_weight), :class => "weight")}
+          cols.each {|sec_req| cell(number_to_relative_weight(sec_req.relative_weight), :class => "weight")}
         end
       end
       row do
@@ -84,7 +84,7 @@ module MatrixHelper
         row do
           cell(idx + 1, :class => "num")
           cell(Rating.maximum_as_primary(pri_req) || "", :class => "maximum")
-          cell(number_to_percentage(pri_req.relative_weight), :class => "weight")
+          cell(number_to_relative_weight(pri_req.relative_weight), :class => "weight")
           cell(pri_req.weight || "0", :class => "weight")
           name_for(pri_req)
           cols.each do |sec_req|

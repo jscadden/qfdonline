@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe RatingsHelper do
 
-  #Delete this example and add some real ones or delete this file
-  it "should be included in the object returned by #helper" do
-    included_modules = (class << helper; self; end).send :included_modules
-    included_modules.should include(RatingsHelper)
+  describe "#number_to_relative_weight" do
+    it "should return two decimal places" do
+      helper.number_to_relative_weight(55.55555555).should match /\d+\.\d{2}/
+    end
   end
 
 end
