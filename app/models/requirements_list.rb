@@ -20,8 +20,10 @@ class RequirementsList < ActiveRecord::Base
   def recalc_relative_weights
     total = requirements.sum(:weight).to_f
 
-    requirements.each do |req|
-      req.recalc_relative_weight(total)
+    if total.to_f > 0
+      requirements.each do |req|
+        req.recalc_relative_weight(total)
+      end
     end
   end
 
