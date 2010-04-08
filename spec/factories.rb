@@ -1,8 +1,8 @@
 Factory.define :user do |u|
   u.login "test"
   u.email "test@wagileconsulting.com"
-  u.password "foobar"
-  u.password_confirmation "foobar"
+  u.password "password"
+  u.password_confirmation "password"
 end
 
 Factory.define "qfd" do |d|
@@ -21,9 +21,37 @@ Factory.sequence "requirement_name" do |n|
 end
 
 Factory.define "requirement" do |r|
-  r.name Factory.next("requirement_name")
+  r.name {Factory.next("requirement_name")}
 end
 
 Factory.define "rating" do |r|
   r.value 3
+end
+
+Factory.define "ratings_test_user", :parent => "user" do |u|
+  u.login "ratings_test"
+  u.after_create do |u|
+    qfd = Factory.create("qfd", :user => u)
+    2.times do |x|
+      hoq = Factory.create("hoq")
+      qfd.hoq_list.insert_back(hoq)
+
+      if x.zero?
+        2.times do |y|
+          req = Factory.build("requirement", :weight => rand(100))
+          hoq.primary_requirements_list.requirements << req
+        end
+      end
+
+      2.times do |z|
+        req = Factory.build("requirement", :weight => rand(100))
+        hoq.secondary_requirements_list.requirements << req
+      end
+
+      # just create one rating for testing purposes
+      Rating.create!(:primary_requirement => hoq.primary_requirements.first,
+                     :secondary_requirement => hoq.secondary_requirements.first,
+                     :value => 3)
+    end
+  end
 end
