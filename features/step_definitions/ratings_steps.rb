@@ -7,7 +7,9 @@ Given /^I\'ve created a secondary requirement$/ do
 end
 
 When /^I double click on the first rating\'s cell$/ do
-  selenium.double_click("css=.rating")
+  if Webrat.configuration.mode == :selenium
+    selenium.double_click("css=.rating")
+  end
 end
 
 Then /^I should see "([^\"]*)" in the rating\'s cell$/ do |value|
@@ -15,9 +17,9 @@ Then /^I should see "([^\"]*)" in the rating\'s cell$/ do |value|
 end
 
 Then /^I should see "([^\"]*)" in the rating\'s row\'s maximum cell$/ do |value|
-  # debugger
-
-  selenium.get_text("xpath=//*[contains(@class, 'row') and (position() > 3)]//*[contains(@class, 'maximum')][1]").should match(/\s*#{value}\s*/)
+  if Webrat.configuration.mode == :selenium
+    selenium.get_text("xpath=//*[contains(@class, 'row') and (position() > 3)]//*[contains(@class, 'maximum')][1]").should match(/\s*#{value}\s*/)
+  end
 end
 
 Given /^a ratings_test user exists$/ do
