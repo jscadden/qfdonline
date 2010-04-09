@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   filter_parameter_logging :password, :password_confirmation
   helper_method :current_user_session, :current_user, :logged_in?
-  helper_method :inner_rating_for, :inner_name_for
+  helper_method :inner_rating_for, :inner_name_for, :inner_weight_for
 
 
   private
@@ -64,9 +64,16 @@ class ApplicationController < ActionController::Base
     render_to_string(:partial => "/common/inner_name_for", 
                      :locals => {
                        :id => req.id, 
-                       :name => req.name,
+                       :name => req.errors.on(:name) ? "Error" : req.name,
                      })
   end
 
+  def inner_weight_for(req)
+    render_to_string(:partial => "/common/inner_weight_for",
+                     :locals => {
+                       :id => req.id,
+                       :weight => req.errors.on(:weight) ? "Error" : req.weight,
+                     })
+  end
 end
 

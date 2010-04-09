@@ -33,7 +33,7 @@ module MatrixHelper
     end
   end
 
-  def matrix(cols, rows, &block)
+  def matrix(cols, rows, is_first, &block)
     haml_tag("div", :class => "matrix") do
       haml_tag("div", :class => "sider")
       haml_tag("div", :class => "sider")
@@ -84,8 +84,9 @@ module MatrixHelper
         row do
           cell(idx + 1, :class => "num")
           cell(Rating.maximum_as_primary(pri_req) || "", :class => "maximum")
-          cell(number_to_relative_weight(pri_req.relative_weight), :class => "weight")
-          cell(pri_req.weight || "0", :class => "weight")
+          cell(number_to_relative_weight(pri_req.relative_weight), 
+               :class => "weight")
+          weight_for(pri_req)
           name_for(pri_req)
           cols.each do |sec_req|
             rating_for(pri_req, sec_req)
@@ -122,6 +123,19 @@ module MatrixHelper
   def name_for(req)
     cell(:class => "name") do
       concat(inner_name_for(req))
+    end
+  end
+
+  def weight_for(req)
+    classes = ["weight",]
+    if req.primary_hoq.first?
+      classes << "first_hoq"
+    else
+      classes << "header"
+    end
+
+    cell(:class => classes.join(" ")) do
+      concat(inner_weight_for(req))
     end
   end
 

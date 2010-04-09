@@ -55,3 +55,7 @@ Factory.define "ratings_test_user", :parent => "user" do |u|
     end
   end
 end
+
+Factory.define "editing_weights_user", :parent => "ratings_test_user" do |u|
+  u.login "editing_weights_test"
+end

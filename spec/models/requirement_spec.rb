@@ -71,8 +71,22 @@ describe Requirement do
         subject.should be_valid
       end
 
-      it "should reject 1,000.5" do
+      it "should accept \"1,000.5\"" do
         subject.weight = "1,000.5"
+
+        subject.should be_valid
+        subject.weight.should == 1000.5
+      end
+
+      it "should reject \"-1\"" do
+        subject.weight = "-1"
+
+        subject.should_not be_valid
+        subject.errors.on(:weight).should_not be_empty
+      end
+
+      it "should reject -1" do
+        subject.weight = -1
 
         subject.should_not be_valid
         subject.errors.on(:weight).should_not be_empty

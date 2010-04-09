@@ -14,6 +14,29 @@ function qfdonline_init() {
 function editable_init() {
     editable_rating_init();
     editable_name_init();
+    editable_weight_init();
+}
+
+function editable_weight_init() {
+    $(".cell.first_hoq.weight").editable("/requirements", {
+	data: function (value, settings) {
+	    return $(".value", $(value)).text();
+	},
+	event: "dblclick",
+	id: "", // we'll inject the id into the target URL for RESTful style
+	method: "PUT",
+	name: "requirement[weight]",
+	select: true,
+	submitdata: function (cell_contents, settings) {
+	    var req_id = $(".req_id", $(cell_contents)).html();
+	    inject_weight_target(settings, req_id);
+	    return {};
+	}
+    });
+}
+
+function inject_weight_target(settings, req_id) {
+    settings.target = "/requirements/" + req_id;
 }
 
 function editable_rating_init() {
