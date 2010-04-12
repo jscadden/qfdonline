@@ -83,6 +83,9 @@ function column_context_menu_init() {
 	var requested_position = 1;
 
 	switch (action) {
+	case "delete":
+	    delete_requirement(sibling_id);
+	    break;
 	case "insert_after":
 	    requested_position = parseInt($(element).text()) + 1;
 	    insert_requirement(sibling_id, name, requested_position);
@@ -109,6 +112,9 @@ function row_context_menu_init() {
 	var requested_position = 1;
 
 	switch (action) {
+	case "delete":
+	    delete_requirement(sibling_id);
+	    break;
 	case "insert_above":
 	    requested_position = parseInt($(element).text());
 	    insert_requirement(sibling_id, name, requested_position);
@@ -132,6 +138,14 @@ function insert_requirement(sibling_id, name, requested_position) {
     }, function (data) {
 	inject_script(data);
     });
+}
+
+function delete_requirement(req_id) {
+    $.post("/requirements/" + req_id, {
+	"_method": "DELETE"
+    }, function (data) {
+	inject_script(data);
+    });    
 }
 
 function update_max_ratings(cell) {

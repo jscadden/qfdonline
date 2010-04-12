@@ -30,6 +30,16 @@ describe RequirementObserver do
     end
   end
 
+  describe "#after_destroy" do
+    it "should notify its requirements list" do
+      list = mock_model(RequirementsList)
+      list.should_receive(:requirement_weight_changed)
+      @req.stub(:requirements_list).and_return(list)
+
+      subject.after_destroy(@req)
+    end
+  end
+
   describe "#after_save" do
     context "on weight change" do
       before(:each) do

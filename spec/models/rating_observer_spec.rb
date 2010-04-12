@@ -24,18 +24,12 @@ describe RatingObserver do
   end
 
   describe "#after_destroy" do
-    context "on value change" do
-      before(:each) do
-        @rating.stub(:value_changed?).and_return(true)
-      end
+    it "should notify its secondary requirement" do
+      req = mock_model(Requirement)
+      req.should_receive(:secondary_rating_changed)
+      @rating.stub(:secondary_requirement).and_return(req)
 
-      it "should notify its secondary requirement" do
-        req = mock_model(Requirement)
-        req.should_receive(:secondary_rating_changed)
-        @rating.stub(:secondary_requirement).and_return(req)
-
-        subject.after_destroy(@rating)
-      end
+      subject.after_destroy(@rating)
     end
   end
 

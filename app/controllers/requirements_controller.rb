@@ -5,11 +5,25 @@ class RequirementsController < ApplicationController
 
     if @req.save
       logger.debug("Requirement saved successfully")
-      render :js => "window.location = '#{request.referer}';"
+      render_reload
     else
-      logger.error("Error creating requirement")
-      logger.error(@req.errors.full_messages.join("\n"))
-      render :inline => "alert(\"Error creating requirement: #{@req.errors.full_messages.join("\n")}\");"
+      msg = @req.errors.full_messages.join("\n")
+      logger.error("Error creating requirement\n#{msg}")
+      render_error("Error creating requirement", msg)
+    end
+  end
+
+  def destroy
+    # TODO: check to make sure I own me
+    @req = Requirement.find(params[:id])
+
+    if @req.destroy
+      logger.debug("Requirement destroyed successfully")
+      render_reload
+    else
+      msg = @req.errors.full_messages.join("\n")
+      logger.error("Error destroying requirement\n#{msg}")
+      render_error("Error creating requirement", msg)
     end
   end
 
@@ -33,4 +47,14 @@ class RequirementsController < ApplicationController
     end
   end
 
+
+  private 
+  
+  def render_reload
+    render :js => "window.location = '#{request.referer}';"
+  end
+
+  def render_error(title, msg)
+    render :inline => "alert(\"#{title}:\n#{msg}\");"
+  end
 end
