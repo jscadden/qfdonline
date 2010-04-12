@@ -5,8 +5,10 @@ class Rating < ActiveRecord::Base
     r.belongs_to :secondary_requirement
   end
 
-  validates_uniqueness_of :primary_requirement_id, :scope => :secondary_requirement_id
-  validates_uniqueness_of :secondary_requirement_id, :scope => :primary_requirement_id
+  validates_uniqueness_of :primary_requirement_id, 
+                            :scope => :secondary_requirement_id
+  validates_uniqueness_of :secondary_requirement_id, 
+                            :scope => :primary_requirement_id
 
   def self.lookup(pri_req, sec_req)
     find_by_primary_requirement_id_and_secondary_requirement_id(pri_req.id,

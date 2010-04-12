@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Rating do
   before(:each) do
     @rating = Factory.build("rating")
+    disable_observers_for(@rating)
   end
 
   it "should create a new instance given valid attributes" do

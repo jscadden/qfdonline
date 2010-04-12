@@ -3,6 +3,9 @@ class Requirement < ActiveRecord::Base
   acts_as_list :scope => :requirements_list
 
   has_one :primary_hoq, :through => :requirements_list
+  has_one :secondary_hoq, :through => :requirements_list
+
+  delegate :correlated_requirements_list, :to => :requirements_list
 
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :requirements_list_id
@@ -16,6 +19,18 @@ class Requirement < ActiveRecord::Base
 
   def recalc_relative_weight(total)
     self.update_attributes(:relative_weight => weight / total * 100)
+  end
+
+  def recalc_weight
+    weight = correlated_requirements_list.inject(0) do |total, cor_req|
+      rating = Rating.lookup(cor_req, self)
+      total += rating ? rating.value * cor_req.relative_weight : 0
+    end
+    self.update_attributes(:weight => weight)
+  end
+
+  def secondary_rating_changed
+    recalc_weight
   end
 
   def owns_rating?(rating)

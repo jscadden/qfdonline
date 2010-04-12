@@ -61,7 +61,7 @@ module MatrixHelper
           cell("")
           cell("")
           cell("Weight")
-          cols.each {|sec_req| cell(sec_req.weight || "0", :class => "weight")}
+          cols.each {|sec_req| cell(number_to_weight(sec_req.weight), :class => "weight")}
         end
         row do 
           cell("")

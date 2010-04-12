@@ -106,6 +106,30 @@ describe Requirement do
     end
   end
 
+  describe "#recalc_weight" do
+    before(:each) do
+      disable_observers_for(subject)
+      cor_req = mock_model(Requirement, :relative_weight => 20.0)
+      subject.stub(:correlated_requirements_list).and_return([cor_req])
+      rating = mock_model(Rating, :value => 5)
+      Rating.stub(:lookup).and_return(rating)
+    end
+
+    it "should be 100" do
+      subject.recalc_weight
+
+      subject.weight.should == 100
+    end
+
+    it "should be 0" do
+      Rating.stub(:lookup).and_return(nil)
+      
+      subject.recalc_weight
+
+      subject.weight.should == 0
+    end
+  end
+
   describe "#recalc_relative_weight" do
     before(:each) do
       disable_observers_for(subject)
