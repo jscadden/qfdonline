@@ -9,8 +9,8 @@ When /^I wait for the page to load$/ do
 end
 
 # useful for debugging selenium problems
-When /^I wait for (\d+) seconds?$/ do |seconds|
+When /^I wait for ((?:\d+\.)?\d+) seconds?$/ do |seconds|
   if Webrat.configuration.mode == :selenium
-    sleep seconds.to_i
+    sleep seconds.to_f
   end
 end

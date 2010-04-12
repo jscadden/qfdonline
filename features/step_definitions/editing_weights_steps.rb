@@ -13,7 +13,14 @@ Then /^I should see "([^\"]*)" in the first primary requirement\'s weight cell$/
 end
 
 When /^I type "([^\"]*)"$/ do |value|
+  if /(.*)\\n$/ === value
+    value = $~[1]
+    press_enter = true
+  else
+    press_enter = false
+  end
+
   selenium.type("xpath=//input", value)
-  selenium.fire_event("xpath=//input", "change")
-  #selenium.submit("xpath=//form")
+  selenium.key_press_native(10) if press_enter
 end
+
