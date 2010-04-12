@@ -10,6 +10,7 @@ $(qfdonline_init);
 function qfdonline_init() {
     $(".cell.rating").click(rating_clicked);
     $(".cell.name").click(rating_clicked);
+    $(".num").mouseup(num_clicked); 
     editable_init();
     context_menu_init();
 }
@@ -77,24 +78,35 @@ function context_menu_init() {
     },
     function (action, element, pos) {
 	console.log("w00t right click and " + action + "!");
+	var sibling_id = $(".req_id", $(element).col()[4]).text();
+	var name = "New Requirement";
+	var requested_position = 1;
+
 	switch (action) {
 	case "insert_after":
-	    $.post("/requirements", {
-		"requirement[sibling_id]": $(".req_id", $(element).col()[4]).text(),
-		"requirement[name]": "New Requirement",
-		"requirement[requested_position]": parseInt($(element).text()) + 1
-	    }, function (data) {
-		inject_script(data);
-	    });
-	    console.log("insert_after");
+	    requested_position = parseInt($(element).text()) + 1;
+	    insert_requirement(sibling_id, name, requested_position);
+	    break;
+	case "insert_before":
+	    requested_position = parseInt($(element).text());
+	    insert_requirement(sibling_id, name, requested_position);
 	    break;
 	default:
 	    alert("Unhandled context menu action: " + action);
 	    break;
 	}
     });
-    console.log("context menus initialized");
-    $(".num").mouseup(num_clicked);
+
+}
+
+function insert_requirement(sibling_id, name, requested_position) {
+    $.post("/requirements", {
+	"requirement[sibling_id]": sibling_id,
+	"requirement[name]": name,
+	"requirement[requested_position]": requested_position
+    }, function (data) {
+	inject_script(data);
+    });
 }
 
 function update_max_ratings(cell) {

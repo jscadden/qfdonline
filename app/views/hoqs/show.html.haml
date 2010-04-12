@@ -10,5 +10,7 @@
 - matrix(@hoq.secondary_requirements, @hoq.primary_requirements, @hoq.first?)
 
 %ul#column_menu.contextMenu
-  %li.edit
+  %li.insert_before
+    = link_to("Insert Before", "#insert_before")
+  %li.insert_after
     = link_to("Insert After", "#insert_after")
