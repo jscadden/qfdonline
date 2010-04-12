@@ -6,7 +6,7 @@ ActionController::Routing::Routes.draw do |map|
   map.register "register", :controller => "users", :action => "new"
 
   map.resources :qfds, :has_many => :hoqs
-  map.resources :hoqs, :has_many => [:primary_requirements, :secondary_requirements,]
+  map.resources :hoqs, :has_many => [:primary_requirements,]
   map.resources :ratings
   map.resources :requirements
 

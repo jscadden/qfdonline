@@ -8,9 +8,8 @@ Given /^I\'ve created a HOQ$/ do
 end
 
 Given /^I\'ve added a secondary requirement "([^\"]*)" to the HOQ$/ do |name|
-  visit(new_hoq_secondary_requirement_path(@hoq))
-  fill_in "Name", :with => name
-  click_button "Create Secondary Requirement"
+  req = Factory.build("requirement", :name => name)
+  @hoq.secondary_requirements_list.requirements << req
 end
 
 When /^I create a new HOQ$/ do
