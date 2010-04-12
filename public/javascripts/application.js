@@ -77,7 +77,6 @@ function context_menu_init() {
 	menu: "column_menu"
     },
     function (action, element, pos) {
-	console.log("w00t right click and " + action + "!");
 	var sibling_id = $(".req_id", $(element).col()[4]).text();
 	var name = "New Requirement";
 	var requested_position = 1;
