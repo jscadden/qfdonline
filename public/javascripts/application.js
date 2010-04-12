@@ -12,7 +12,8 @@ function qfdonline_init() {
     $(".cell.name").click(rating_clicked);
     $(".num").mouseup(num_clicked); 
     editable_init();
-    context_menu_init();
+    column_context_menu_init();
+    row_context_menu_init();
 }
 
 function editable_init() {
@@ -72,7 +73,7 @@ function editable_rating_init() {
     });
 }
 
-function context_menu_init() {
+function column_context_menu_init() {
     $(".row:first-child .cell.num").contextMenu({
 	menu: "column_menu"
     },
@@ -96,6 +97,31 @@ function context_menu_init() {
 	}
     });
 
+}
+
+function row_context_menu_init() {
+    $(".row .num:first-child").contextMenu({
+	menu: "row_menu"
+    },
+    function (action, element, pos) {
+	var sibling_id = $(".req_id", $(element).row()[4]).text();
+	var name = "New Requirement";
+	var requested_position = 1;
+
+	switch (action) {
+	case "insert_above":
+	    requested_position = parseInt($(element).text());
+	    insert_requirement(sibling_id, name, requested_position);
+	    break;
+	case "insert_below":
+	    requested_position = parseInt($(element).text()) + 1;
+	    insert_requirement(sibling_id, name, requested_position);
+	    break;
+	default:
+	    alert("Unhandled context menu action: " + action);
+	    break;
+	}
+    });
 }
 
 function insert_requirement(sibling_id, name, requested_position) {
