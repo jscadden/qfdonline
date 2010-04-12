@@ -27,8 +27,7 @@ qfd = user.qfds.create!(:name => "Test QFD")
   end
 
   3.times do |z|
-      req = Requirement.new(:name => "Test Requirement ##{Requirement.count}",
-                            :weight => rand(100))
+      req = Requirement.new(:name => "Test Requirement ##{Requirement.count}")
       hoq.secondary_requirements_list.requirements << req
   end
 

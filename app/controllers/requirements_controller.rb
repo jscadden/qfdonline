@@ -1,5 +1,18 @@
 class RequirementsController < ApplicationController
 
+  def create
+    @req = Requirement.new(params[:requirement])
+
+    if @req.save
+      logger.debug("Requirement saved successfully")
+      render :js => "window.location = '#{request.referer}';"
+    else
+      logger.error("Error creating requirement")
+      logger.error(@req.errors.full_messages.join("\n"))
+      render :inline => "alert(\"Error creating requirement: #{@req.errors.full_messages.join("\n")}\");"
+    end
+  end
+
   def update
     @req = Requirement.find(params[:id])
 

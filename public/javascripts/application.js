@@ -2,6 +2,8 @@ const KEY_LEFT = 37;
 const KEY_UP = 38;
 const KEY_RIGHT = 39;
 const KEY_DOWN = 40;
+const BUTTON_MOUSE_RIGHT = 2;
+
 
 $(qfdonline_init);
 
@@ -9,6 +11,7 @@ function qfdonline_init() {
     $(".cell.rating").click(rating_clicked);
     $(".cell.name").click(rating_clicked);
     editable_init();
+    context_menu_init();
 }
 
 function editable_init() {
@@ -66,6 +69,32 @@ function editable_rating_init() {
 	},
 	type: "select"
     });
+}
+
+function context_menu_init() {
+    $(".row:first-child .cell.num").contextMenu({
+	menu: "column_menu"
+    },
+    function (action, element, pos) {
+	console.log("w00t right click and " + action + "!");
+	switch (action) {
+	case "insert_after":
+	    $.post("/requirements", {
+		"requirement[sibling_id]": $(".req_id", $(element).col()[4]).text(),
+		"requirement[name]": "New Requirement",
+		"requirement[requested_position]": parseInt($(element).text()) + 1
+	    }, function (data) {
+		inject_script(data);
+	    });
+	    console.log("insert_after");
+	    break;
+	default:
+	    alert("Unhandled context menu action: " + action);
+	    break;
+	}
+    });
+    console.log("context menus initialized");
+    $(".num").mouseup(num_clicked);
 }
 
 function update_max_ratings(cell) {
@@ -128,6 +157,18 @@ function rating_clicked() {
     cell.addClass("highlight_border");
 }
 
+function num_clicked(event) {
+    var cell = $(this);
+    var matrix = cell.parents(".matrix");
+
+    if (BUTTON_MOUSE_RIGHT == event.button) {
+	$(".num", matrix).removeClass("highlight");
+	$(".cell", matrix).removeClass("highlight_border");
+
+	cell.addClass("highlight");
+    }
+}
+
 function body_onkeypress(event) {
     switch (event.keyCode) {
     case KEY_LEFT:
@@ -143,4 +184,17 @@ function body_onkeypress(event) {
 	console.log("down");
 	break;
     };
+}
+
+function inject_script(javascript) {
+    var head = document.getElementsByTagName("head")[0];
+    var script = document.createElement("script");
+
+    script.onload = function () {
+	if (head && script.parentNode) {
+	    head.removeChild(script);
+	}
+    };
+    $(script).html(javascript);
+    head.appendChild(script);
 }

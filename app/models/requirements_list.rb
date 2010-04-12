@@ -48,7 +48,4 @@ class RequirementsList < ActiveRecord::Base
     end
   end
 
-  def recalc_secondary_weights
-  end
-
 end
