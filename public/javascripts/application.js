@@ -88,6 +88,7 @@ function column_context_menu_init() {
 	switch (action) {
 	case "cut":
 	    cut_requirement(sibling_id, element);
+	    enable_pasting_for_columns();
 	    break;
 	case "delete":
 	    delete_requirement(sibling_id);
@@ -103,17 +104,19 @@ function column_context_menu_init() {
 	case "paste_after":
 	    requested_position = parseInt($(element).text()) + 1;
 	    paste_requirement(cut_req_id, requested_position);
+	    disable_pasting_for_columns();
 	    break;
 	case "paste_before":
 	    requested_position = parseInt($(element).text());
 	    paste_requirement(cut_req_id, requested_position - 1);
+	    disable_pasting_for_columns();
 	    break;
 	default:
 	    alert("Unhandled context menu action: " + action);
 	    break;
 	}
     });
-
+    disable_pasting_for_columns();
 }
 
 function row_context_menu_init() {
@@ -130,6 +133,7 @@ function row_context_menu_init() {
 	switch (action) {
 	case "cut":
 	    cut_requirement(sibling_id, element);
+	    enable_pasting_for_rows();
 	    break;
 	case "delete":
 	    delete_requirement(sibling_id);
@@ -145,16 +149,19 @@ function row_context_menu_init() {
 	case "paste_above":
 	    requested_position = parseInt($(element).text());
 	    paste_requirement(cut_req_id, requested_position - 1);
+	    disable_pasting_for_rows();
 	    break;
 	case "paste_below":
 	    requested_position = parseInt($(element).text()) + 1;
 	    paste_requirement(cut_req_id, requested_position);
+	    disable_pasting_for_rows();
 	    break;
 	default:
 	    alert("Unhandled context menu action: " + action);
 	    break;
 	}
     });
+    disable_pasting_for_rows();
 }
 
 function insert_requirement(sibling_id, name, requested_position) {
@@ -298,4 +305,22 @@ function paste_requirement(req_id, pos) {
     }, function (data) {
 	inject_script(data);
     });
+}
+
+function disable_pasting_for_columns() {
+    $("#column_menu").disableContextMenuItems("#paste_after,#paste_before");
+}
+
+function enable_pasting_for_columns() {
+    disable_pasting_for_rows();
+    $("#column_menu").enableContextMenuItems("#paste_after,#paste_before");
+}
+
+function disable_pasting_for_rows() {
+    $("#row_menu").disableContextMenuItems("#paste_below,#paste_above");
+}
+
+function enable_pasting_for_rows() {
+    disable_pasting_for_columns();
+    $("#row_menu").enableContextMenuItems("#paste_below,#paste_above");
 }
