@@ -235,7 +235,7 @@ function rating_clicked() {
     var col = cell.col();
 
     $(".num", matrix).removeClass("highlight");
-    $(".cell", matrix).removeClass("highlight_border");
+    $(".cell", matrix).removeClass("highlight_border").removeClass("backlight");
 
     cell.row().filter(".num").addClass("highlight");
     cell.col().filter(".num").addClass("highlight");
