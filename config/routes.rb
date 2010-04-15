@@ -9,6 +9,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :hoqs
   map.resources :ratings
   map.resources :requirements
+  map.resources :requirements_lists, :member => {:sort => :get}
 
   map.resource :user_sessions
   map.resource :account, :controller => "users"

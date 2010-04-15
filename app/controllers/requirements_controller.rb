@@ -51,10 +51,6 @@ class RequirementsController < ApplicationController
 
 
   private 
-  
-  def render_reload
-    render :js => "window.location = '#{request.referer}';"
-  end
 
   def render_error(title, msg)
     render :inline => "alert(\"#{title}:\n#{msg}\");"

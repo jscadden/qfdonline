@@ -8,7 +8,8 @@ describe "hoqs/show.html.haml" do
 
   context "first HOQ" do
     it "weights should indicate that they belong to the first HOQ" do
-      pri_req = stub_model(Requirement)
+      list = stub_model(RequirementsList)
+      pri_req = stub_model(Requirement, :requirements_list => list)
       hoq = stub_model(Hoq, 
                        :first? => true,
                        :primary_requirements => [pri_req,],
@@ -25,7 +26,8 @@ describe "hoqs/show.html.haml" do
 
   context "non-first HOQ" do
     it "weights should not indicate that they belong to the first HOQ" do
-      pri_req = stub_model(Requirement)
+      list = stub_model(RequirementsList)
+      pri_req = stub_model(Requirement, :requirements_list => list)
       hoq = stub_model(Hoq, 
                        :primary_requirements => [pri_req,],
                        :secondary_requirements => [],

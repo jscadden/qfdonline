@@ -68,14 +68,30 @@ module MatrixHelper
           cell("")
           cell("")
           cell("")
-          cell("Relative Weight")
+          cell do
+            haml_concat("Relative Weight")
+            if cols.size > 0
+              haml_concat(sort_req_list_asc_link(cols.first.requirements_list,
+                                                 "weight"))
+              haml_concat(sort_req_list_desc_link(cols.first.requirements_list,
+                                                  "weight"))
+            end
+          end
           cols.each {|sec_req| cell(number_to_relative_weight(sec_req.relative_weight) || "", :class => "weight")}
         end
       end
       row do
         cell("Row #")
         cell("Max Rating")
-        cell("Relative Weight")
+        cell do
+            haml_concat("Relative Weight")
+            if rows.size > 0
+              haml_concat(sort_req_list_asc_link(rows.first.requirements_list,
+                                                 "weight"))
+              haml_concat(sort_req_list_desc_link(rows.first.requirements_list,
+                                                  "weight"))
+            end
+          end
         cell("Weight", :class => "header")
         cell("Primary / Secondary", :class => "header")
         cols.each {|sec_req| name_for(sec_req)}
@@ -139,6 +155,15 @@ module MatrixHelper
     end
   end
 
+  def sort_req_list_asc_link(list, attr)
+    link_to(image_tag("icons/silk/arrow_up-m.png"), 
+            sort_requirements_list_path(list, :by => attr,:order => "asc"))
+  end
+
+  def sort_req_list_desc_link(list, attr)
+    link_to(image_tag("icons/silk/arrow_down-m.png"), 
+            sort_requirements_list_path(list, :by => attr,:order => "desc"))
+  end
 end
 
 

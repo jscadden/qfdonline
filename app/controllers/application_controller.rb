@@ -75,5 +75,9 @@ class ApplicationController < ActionController::Base
                        :weight => req.errors.on(:weight) ? "Error" : req.weight,
                      })
   end
+
+  def render_reload
+    render :js => "window.location = '#{request.referer}';"
+  end
 end
 

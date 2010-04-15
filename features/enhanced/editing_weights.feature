@@ -10,5 +10,5 @@ Feature: Inline Editing of Requirement Weights
     When I visit the HOQ's page
     And I double click on the first primary requirement's weight cell
     And I type "13\n"
-    And I wait for 0.5 seconds
+    And I wait for ajax
     Then I should see "13" in the first primary requirement's weight cell

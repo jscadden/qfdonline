@@ -33,10 +33,26 @@ class RequirementsList < ActiveRecord::Base
     requirements.each {|req| req.recalc_weight}
   end
 
+  def sort(attr, asc=true)
+    check_sort_attr(attr)
+    Requirement.transaction do
+      in_order = requirements.all(:order => "#{attr} #{asc ? "ASC" : "DESC"}")
+      in_order.each_with_index do |req, idx|
+        req.update_attribute(:position, idx + 1)
+      end
+    end
+  end
+
   delegate :each, :to => :requirements
 
 
   private
+
+  def check_sort_attr(attr)
+    unless Requirement.column_names.include?(attr.to_s)
+      raise ArgumentError.new("invalid sort attribute #{attr.inspect}")
+    end
+  end
 
   def recalc_relative_weights
     total = requirements.sum(:weight).to_f
