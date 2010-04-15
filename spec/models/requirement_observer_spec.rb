@@ -7,7 +7,7 @@ describe RequirementObserver do
     @req = stub_model(Requirement)
   end
 
-  describe "#after_create" do 
+  describe "#after_save" do 
     context "when position 3 is requested" do
       before(:each) do
         @req.stub(:requested_position).and_return(3)
@@ -16,7 +16,7 @@ describe RequirementObserver do
       it "should move the requirement into position" do
         @req.should_receive(:insert_at).with(3)
 
-        subject.after_create(@req)
+        subject.after_save(@req)
       end
     end
 
@@ -25,7 +25,7 @@ describe RequirementObserver do
         @req.stub(:requested_position).and_return(nil)
         @req.should_not_receive(:insert_at)
 
-        subject.after_create(@req)
+        subject.after_save(@req)
       end
     end
   end

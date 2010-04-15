@@ -36,10 +36,12 @@ class RequirementsController < ApplicationController
       logger.error("Error updating requirement #{@req.errors.full_messages}")
     end
 
-    if params[:requirement].include?(:weight)
+    if weight_edited?
       render :text => inner_weight_for(@req)
-    elsif params[:requirement].include?(:name)
+    elsif name_edited?
       render :text => inner_name_for(@req)
+    elsif moved?
+      render_reload
     else
       logger.error("Don't know what to render after updating " +
                    "#{params.inspect}")
@@ -57,4 +59,17 @@ class RequirementsController < ApplicationController
   def render_error(title, msg)
     render :inline => "alert(\"#{title}:\n#{msg}\");"
   end
+
+  def weight_edited? 
+    params[:requirement].include?(:weight)
+  end
+
+  def name_edited?
+    params[:requirement].include?(:name)
+  end
+
+  def moved?
+    params[:requirement].include?(:requested_position)
+  end
+
 end

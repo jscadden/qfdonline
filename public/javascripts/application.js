@@ -3,6 +3,7 @@ const KEY_UP = 38;
 const KEY_RIGHT = 39;
 const KEY_DOWN = 40;
 const BUTTON_MOUSE_RIGHT = 2;
+const CUT_REQ_ID = "cut_req_id";
 
 
 $(qfdonline_init);
@@ -81,8 +82,14 @@ function column_context_menu_init() {
 	var sibling_id = $(".req_id", $(element).col()[4]).text();
 	var name = "New Requirement";
 	var requested_position = 1;
+	var matrix = $(element).parents(".matrix").eq(0);
+	var cut_req_id = matrix.data(CUT_REQ_ID);
+	console.log("cut req_id is " + cut_req_id);
 
 	switch (action) {
+	case "cut":
+	    cut_requirement(sibling_id, element);
+	    break;
 	case "delete":
 	    delete_requirement(sibling_id);
 	    break;
@@ -93,6 +100,14 @@ function column_context_menu_init() {
 	case "insert_before":
 	    requested_position = parseInt($(element).text());
 	    insert_requirement(sibling_id, name, requested_position);
+	    break;
+	case "paste_after":
+	    requested_position = parseInt($(element).text()) + 1;
+	    paste_requirement(cut_req_id, requested_position);
+	    break;
+	case "paste_before":
+	    requested_position = parseInt($(element).text());
+	    paste_requirement(cut_req_id, requested_position - 1);
 	    break;
 	default:
 	    alert("Unhandled context menu action: " + action);
@@ -110,8 +125,13 @@ function row_context_menu_init() {
 	var sibling_id = $(".req_id", $(element).row()[4]).text();
 	var name = "New Requirement";
 	var requested_position = 1;
+	var matrix = $(element).parents(".matrix").eq(0);
+	var cut_req_id = matrix.data(CUT_REQ_ID);
 
 	switch (action) {
+	case "cut":
+	    cut_requirement(sibling_id, element);
+	    break;
 	case "delete":
 	    delete_requirement(sibling_id);
 	    break;
@@ -122,6 +142,14 @@ function row_context_menu_init() {
 	case "insert_below":
 	    requested_position = parseInt($(element).text()) + 1;
 	    insert_requirement(sibling_id, name, requested_position);
+	    break;
+	case "paste_above":
+	    requested_position = parseInt($(element).text());
+	    paste_requirement(cut_req_id, requested_position - 1);
+	    break;
+	case "paste_below":
+	    requested_position = parseInt($(element).text()) + 1;
+	    paste_requirement(cut_req_id, requested_position);
 	    break;
 	default:
 	    alert("Unhandled context menu action: " + action);
@@ -248,4 +276,20 @@ function inject_script(javascript) {
     };
     $(script).html(javascript);
     head.appendChild(script);
+}
+
+function cut_requirement(req_id, element) {
+    var matrix = $(element).parents(".matrix").eq(0);
+    matrix.data(CUT_REQ_ID, req_id);
+    console.log("set cut_req_id to " + 
+		$(element).parents(".matrix").data(CUT_REQ_ID));
+}
+
+function paste_requirement(req_id, pos) {
+    $.post("/requirements/" + req_id, {
+	"_method": "PUT",
+	"requirement[requested_position]": pos
+    }, function (data) {
+	inject_script(data);
+    });
 }
