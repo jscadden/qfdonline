@@ -5,6 +5,9 @@
 !lt_grey = #999999
 !text_white = #f0f0f0
 !orange = #ffa500
+!flash_green = #ccffcc
+!flash_yellow = #ffffcc
+!flash_red = #ffcccc
 !header_pad = 8px
 
 // mix-ins
@@ -62,6 +65,22 @@ ul
 .contextMenu
   width: auto
 
+.flash
+  border = 2px solid !med_grey
+  color = !dk_grey
+  display: table-cell
+  margin: 0.2em
+  padding: 0.2em 0.5em
+
+.flash.notice
+  background-color = !flash_green
+
+.flash.warn
+  background-color = !flash_yellow
+
+.flash.error
+  background-color = !flash_red
+    
 .hidden
   display: none
 
@@ -130,6 +149,11 @@ ul
 // ids
 #content
   padding: 25px 100px
+
+#flash_wrapper
+  display: table
+  margin: 1em auto
+  text-align: center
 
 #footer
   color = !lt_grey
