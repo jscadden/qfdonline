@@ -33,6 +33,7 @@ function editable_weight_init() {
 	id: "", // we'll inject the id into the target URL for RESTful style
 	method: "PUT",
 	name: "requirement[weight]",
+	onblur: "submit",
 	select: true,
 	submitdata: function (cell_contents, settings) {
 	    var req_id = $(".req_id", $(cell_contents)).html();
@@ -58,6 +59,7 @@ function editable_rating_init() {
 	},
 	id: "", // we'll inject the id into the target URL for RESTful style
 	name: "rating[value]",
+	onblur: "submit",
 	submitdata: function (cell_contents, settings) {
 	    var rating_value = $(":selected", this).val();
 	    var pri_req_id = $(".pri_req_id", $(cell_contents)).html();
@@ -220,6 +222,7 @@ function editable_name_init() {
 	id: "", // we'll inject the id into the target URL for RESTful style
 	method: "PUT", 
 	name: "requirement[name]",
+	onblur: "submit",
 	select: true,
 	submitdata: function (value, settings) {
 	    var req_id = $(".req_id", value).text(); 
