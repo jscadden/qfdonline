@@ -37,6 +37,8 @@ if(jQuery)( function() {
 						e.stopPropagation();
 						var srcElement = $(this);
 						$(this).unbind('mouseup');
+						// EAW -- allow row / col to be backlit more than once, don't unbind our event
+						$(".num").mouseup(num_clicked); 
 						if( evt.button == 2 ) {
 							// Hide context menus that may be showing
 							$(".contextMenu").hide();

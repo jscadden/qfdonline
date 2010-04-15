@@ -84,7 +84,6 @@ function column_context_menu_init() {
 	var requested_position = 1;
 	var matrix = $(element).parents(".matrix").eq(0);
 	var cut_req_id = matrix.data(CUT_REQ_ID);
-	console.log("cut req_id is " + cut_req_id);
 
 	switch (action) {
 	case "cut":
@@ -242,9 +241,16 @@ function num_clicked(event) {
 
     if (BUTTON_MOUSE_RIGHT == event.button) {
 	$(".num", matrix).removeClass("highlight");
-	$(".cell", matrix).removeClass("highlight_border");
+	$(".cell", matrix).removeClass("highlight_border").
+	    removeClass("backlight");
 
 	cell.addClass("highlight");
+
+	if (cell.closest(".header").length > 0) {
+	    cell.col().addClass("backlight");
+	} else {
+	    cell.row().addClass("backlight");
+	}
     }
 }
 
