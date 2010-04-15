@@ -251,18 +251,16 @@ function num_clicked(event) {
     var cell = $(this);
     var matrix = cell.parents(".matrix");
 
-    if (BUTTON_MOUSE_RIGHT == event.button) {
-	$(".num", matrix).removeClass("highlight");
-	$(".cell", matrix).removeClass("highlight_border").
-	    removeClass("backlight");
+    $(".num", matrix).removeClass("highlight");
+    $(".cell", matrix).removeClass("highlight_border").
+	removeClass("backlight");
 
-	cell.addClass("highlight");
+    cell.addClass("highlight");
 
-	if (cell.closest(".header").length > 0) {
-	    cell.col().addClass("backlight");
-	} else {
-	    cell.row().addClass("backlight");
-	}
+    if (cell.closest(".header").length > 0) {
+	cell.col().addClass("backlight");
+    } else {
+	cell.row().addClass("backlight");
     }
 }
 
