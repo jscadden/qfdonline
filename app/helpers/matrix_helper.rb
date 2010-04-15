@@ -93,7 +93,23 @@ module MatrixHelper
             end
           end
         cell("Weight", :class => "header")
-        cell("Primary / Secondary", :class => "header")
+        cell(:class => "header") do
+          haml_concat("Primary")
+          if rows.size > 0
+            haml_concat(sort_req_list_asc_link(rows.first.requirements_list,
+                                               "name"))
+            haml_concat(sort_req_list_desc_link(rows.first.requirements_list,
+                                                "name"))
+          end
+          haml_concat("/")
+          haml_concat("Secondary")
+          if cols.size > 0
+            haml_concat(sort_req_list_asc_link(cols.first.requirements_list,
+                                               "name"))
+            haml_concat(sort_req_list_desc_link(cols.first.requirements_list,
+                                                "name"))
+          end
+        end
         cols.each {|sec_req| name_for(sec_req)}
       end
       rows.each_with_index do |pri_req, idx|    
