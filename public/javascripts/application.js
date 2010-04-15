@@ -11,6 +11,7 @@ $(qfdonline_init);
 function qfdonline_init() {
     $(".cell.rating").click(rating_clicked);
     $(".cell.name").click(rating_clicked);
+    $(".cell.weight.first_hoq").click(rating_clicked);
     $(".num").mouseup(num_clicked); 
     editable_init();
     column_context_menu_init();
@@ -234,8 +235,9 @@ function rating_clicked() {
     var row = cell.parents(".row");
     var col = cell.col();
 
-    $(".num", matrix).removeClass("highlight");
-    $(".cell", matrix).removeClass("highlight_border").removeClass("backlight");
+    $(".cell", matrix).removeClass("highlight").
+	removeClass("highlight_border").
+	removeClass("backlight");
 
     cell.row().filter(".num").addClass("highlight");
     cell.col().filter(".num").addClass("highlight");

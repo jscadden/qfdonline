@@ -98,7 +98,7 @@ ul
     collapse: collapse
   display: table
   font:
-    size: medium
+    size: 8pt
 
   input
     border: 0
@@ -111,7 +111,7 @@ ul
       width: 1px
       style: solid
     display: table-cell
-    padding: 2px
+    padding: 5px
 
   .cell.header
     display: table-cell
@@ -121,18 +121,18 @@ ul
   .cell.num, .cell.weight, .cell.maximum
     text-align: center
 
-  .cell.rating, .cell.name
+  .cell.rating, .cell.name, .cell.weight.first_hoq
     padding: 0
 
-  .cell.rating > div, .cell.name > div
-    padding: 3px
+  .cell.rating > div, .cell.name > div, .cell.weight.first_hoq > div
+    padding: 5px
 
-  .cell.rating.highlight_border > div, .cell.name.highlight_border > div
+  .cell.rating.highlight_border > div, .cell.name.highlight_border > div, .cell.weight.first_hoq.highlight_border > div
     border:
       color = !orange
       style: solid
-      width: 1px
-    padding: 2px
+      width: 2px
+    padding: 3px
 
   .cell.rating
     text-align: center
