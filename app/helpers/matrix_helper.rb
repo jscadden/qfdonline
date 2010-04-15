@@ -40,34 +40,34 @@ module MatrixHelper
       haml_tag("div", :class => "sider")
       haml_tag("div", :class => "header") do
         row do
-          cell("")
-          cell("")
-          cell("")
-          cell("")
+          cell("", :class => "invisible")
+          cell("", :class => "invisible")
+          cell("", :class => "invisible")
+          cell("", :class => "invisible")
           cell("Column #")
           cols.size.times {|x| cell("#{x+1}", :class => "num")}
         end
         row do
-          cell("")
-          cell("")
-          cell("")
-          cell("")
+          cell("", :class => "invisible")
+          cell("", :class => "invisible")
+          cell("", :class => "invisible")
+          cell("", :class => "invisible")
           cell("Max Rating")
           cols.each {|sec_req| cell(Rating.maximum_as_secondary(sec_req) || "", :class => "maximum")}
         end
         row do
-          cell("")
-          cell("")
-          cell("")
-          cell("")
+          cell("", :class => "invisible")
+          cell("", :class => "invisible")
+          cell("", :class => "invisible")
+          cell("", :class => "invisible")
           cell("Weight")
           cols.each {|sec_req| cell(number_to_weight(sec_req.weight) || "", :class => "weight")}
         end
         row do 
-          cell("")
-          cell("")
-          cell("")
-          cell("")
+          cell("", :class => "invisible")
+          cell("", :class => "invisible")
+          cell("", :class => "invisible")
+          cell("", :class => "invisible")
           cell do
             haml_concat("Relative Weight")
             if cols.size > 0
