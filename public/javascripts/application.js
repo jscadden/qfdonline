@@ -16,6 +16,7 @@ function qfdonline_init() {
     editable_init();
     column_context_menu_init();
     row_context_menu_init();
+    hide_hidden_primary_requirements();
 }
 
 function editable_init() {
@@ -141,6 +142,9 @@ function row_context_menu_init() {
 	case "delete":
 	    delete_requirement(sibling_id);
 	    break;
+	case "hide":
+	    hide_primary_requirement(element);
+	    break;
 	case "insert_above":
 	    requested_position = parseInt($(element).text());
 	    insert_requirement(sibling_id, name, requested_position);
@@ -185,6 +189,78 @@ function delete_requirement(req_id) {
     });    
 }
 
+function hide_primary_requirement(cell) {
+    cell = $(cell);
+    var row = cell.parents(".row");
+    var hidden_pri_req_id = parseInt($(".req_id", row).eq(0).text());
+
+    set_hidden_primary_requirement(hidden_pri_req_id);
+    row.hide();
+    cell.parents(".row").after(make_hidden_row_placeholder(cell.row().length));
+    $(".row.click_to_show").click(function () {
+	$(this).prev().show();
+	unset_hidden_primary_requirement(hidden_pri_req_id);
+	$(this).remove();
+    });
+}
+
+function set_hidden_primary_requirement(hidden_pri_req_id) {
+    var hidden_reqs = $.cookie("hidden_primary_requirements");
+
+    if (hidden_reqs) {
+	hidden_reqs = $.makeArray(JSON.parse(hidden_reqs));
+    } else {
+	hidden_reqs = new Array();
+    }
+
+    if (-1 == $.inArray(hidden_pri_req_id, hidden_reqs)) {
+	hidden_reqs.push(hidden_pri_req_id);
+	$.cookie("hidden_primary_requirements", JSON.stringify(hidden_reqs));
+    }
+}
+
+function unset_hidden_primary_requirement(hidden_pri_req_id) {
+    var hidden_reqs = $.cookie("hidden_primary_requirements");
+
+    if (hidden_reqs) {
+	hidden_reqs = $.makeArray(JSON.parse(hidden_reqs));
+
+	var idx = $.inArray(hidden_pri_req_id, hidden_reqs);
+	if (0 <= idx) {
+	    hidden_reqs = $.grep(hidden_reqs, function (e, i) {
+		return i != idx;
+	    });
+	}
+
+	$.cookie("hidden_primary_requirements", JSON.stringify(hidden_reqs));
+    }
+}
+
+function hide_hidden_primary_requirements() {
+    var hidden_reqs = $.cookie("hidden_primary_requirements");
+
+    if (hidden_reqs) {
+	hidden_reqs = $.makeArray(JSON.parse(hidden_reqs));
+	$(".matrix .row").each(function (i, e) {
+	    var req_span = $(".req_id", e).eq(0);
+	    var id = parseInt(req_span.text());
+
+	    if (-1 != $.inArray(id, hidden_reqs)) {
+		hide_primary_requirement(req_span);
+	    }
+	});
+    }
+}
+
+function make_hidden_row_placeholder(cols) {
+    var cells = "";
+
+    for (var x = 0; x < cols; x++) {
+	cells += "<div class=\"cell\"></div>";
+    }
+
+    return $("<div class=\"row click_to_show\">" + cells + "</div>");
+}
 function update_max_ratings(cell) {
     var row = cell.row();
     var col = cell.col();
@@ -297,8 +373,6 @@ function inject_script(javascript) {
 function cut_requirement(req_id, element) {
     var matrix = $(element).parents(".matrix").eq(0);
     matrix.data(CUT_REQ_ID, req_id);
-    console.log("set cut_req_id to " + 
-		$(element).parents(".matrix").data(CUT_REQ_ID));
 }
 
 function paste_requirement(req_id, pos) {
