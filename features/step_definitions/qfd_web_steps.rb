@@ -23,3 +23,9 @@ When /^I wait for ajax$/ do
   end
 end
   
+When /^I reload the page$/ do
+  if Webrat.configuration.mode == :selenium
+    selenium.refresh
+  end
+end
+

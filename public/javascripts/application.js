@@ -331,14 +331,14 @@ function make_hidden_row_placeholder(cols) {
 	cells += "<div class=\"cell\"></div>";
     }
 
-    return $("<div class=\"row click_to_show_row\">" + cells + "</div>");
+    return $("<div class=\"row click_to_show_row\" title=\"Click to show\">" + cells + "</div>");
 }
 
 function make_hidden_col_placeholder(cols) {
     var cells = "";
 
     $.each(cols, function () {
-	$(this).after("<div class=\"cell click_to_show_col\"></div>");
+	$(this).after("<div class=\"cell click_to_show_col\" title=\"Click to show\"></div>");
     });
 }
 

@@ -28,9 +28,9 @@ Factory.define "rating" do |r|
   r.value 3
 end
 
-Factory.define "ratings_test_user", :parent => "user" do |u|
-  u.login "ratings_test"
-  u.after_create do |u|
+Factory.define "hiding_rows_test_user", :parent => "user" do |u|
+  u.login "hiding_rows_test"
+  u.after_build do |u|
     qfd = Factory.create("qfd", :user => u)
     2.times do |x|
       hoq = Factory.create("hoq")
@@ -47,12 +47,24 @@ Factory.define "ratings_test_user", :parent => "user" do |u|
         req = Factory.build("requirement", :weight => rand(100))
         hoq.secondary_requirements_list.requirements << req
       end
-
-      # just create one rating for testing purposes
-      Rating.create!(:primary_requirement => hoq.primary_requirements.first,
-                     :secondary_requirement => hoq.secondary_requirements.first,
-                     :value => 3)
     end
+  end
+end
+
+Factory.define "hiding_columns_test_user", :parent => "hiding_rows_test_user" do |u|
+  u.login "hiding_columns_test"
+end
+
+Factory.define "ratings_test_user", :parent => "hiding_rows_test_user" do |u|
+  u.login "ratings_test"
+  u.after_create do |u|
+    qfd = u.qfds.first
+    hoq = qfd.hoq_list.first
+
+    # just create one rating for testing purposes
+    Rating.create!(:primary_requirement => hoq.primary_requirements.first,
+                   :secondary_requirement => hoq.secondary_requirements.first,
+                   :value => 3)
   end
 end
 
