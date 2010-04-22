@@ -15,8 +15,8 @@ function qfdonline_init() {
     $(".cell.weight.first_hoq").click(rating_clicked);
     $(".num").mouseup(num_clicked); 
     editable_init();
-    //column_context_menu_init();
-    //row_context_menu_init();
+    column_context_menu_init();
+    row_context_menu_init();
     hide_hidden_primary_requirements();
     hide_hidden_secondary_requirements();
 }
@@ -411,31 +411,33 @@ function editable_name_init() {
     });
 }
 
-function rating_clicked() {
+function rating_clicked(event) {
     var cell = $(this);
     var matrix = cell.parents(".matrix");
 
-    clear_selections();
+    clear_selections(event);
 
     cell.row().filter(".num").addClass("highlight");
     cell.col().filter(".num").addClass("highlight");
     cell.addClass("highlight_border");
 }
 
-function clear_selections() {
+function clear_selections(event) {
     var matrix = $(".matrix");
 
-    $("*", matrix).removeClass("ui-selected");
-    $(".cell", matrix).removeClass("highlight").
-	removeClass("highlight_border").
-	removeClass("backlight");
+    if (0 == event.button) {
+	$("*", matrix).removeClass("ui-selected");
+	$(".cell", matrix).removeClass("highlight").
+	    removeClass("highlight_border").
+	    removeClass("backlight");
+    }
 }
 
 function num_clicked(event) {
     var cell = $(this);
     var matrix = cell.parents(".matrix");
 
-    clear_selections();
+    clear_selections(event);
 
     cell.addClass("highlight");
 
