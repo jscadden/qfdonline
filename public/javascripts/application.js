@@ -9,13 +9,14 @@ const CUT_REQ_ID = "cut_req_id";
 $(qfdonline_init);
 
 function qfdonline_init() {
+    selectable_init();
     $(".cell.rating").click(rating_clicked);
     $(".cell.name").click(rating_clicked);
     $(".cell.weight.first_hoq").click(rating_clicked);
     $(".num").mouseup(num_clicked); 
     editable_init();
-    column_context_menu_init();
-    row_context_menu_init();
+    //column_context_menu_init();
+    //row_context_menu_init();
     hide_hidden_primary_requirements();
     hide_hidden_secondary_requirements();
 }
@@ -173,6 +174,27 @@ function row_context_menu_init() {
 	}
     });
     disable_pasting_for_rows();
+}
+
+function selectable_init() {
+    $(".matrix").selectable({
+	distance: 5,
+	filter: ".num", 
+	start: clear_selections,
+	stop: backlight_row_or_column
+    });
+}
+
+function backlight_row_or_column(event, ui) {
+    $(".num.ui-selected").each(function (e, i) {
+	var cell = $(this);
+
+	if (cell.prev().length) {
+	    cell.col().addClass("backlight");
+	} else {
+	    cell.row().addClass("backlight");
+	}
+    });
 }
 
 function insert_requirement(sibling_id, name, requested_position) {
@@ -392,25 +414,28 @@ function editable_name_init() {
 function rating_clicked() {
     var cell = $(this);
     var matrix = cell.parents(".matrix");
-    var row = cell.parents(".row");
-    var col = cell.col();
 
-    $(".cell", matrix).removeClass("highlight").
-	removeClass("highlight_border").
-	removeClass("backlight");
+    clear_selections();
 
     cell.row().filter(".num").addClass("highlight");
     cell.col().filter(".num").addClass("highlight");
     cell.addClass("highlight_border");
 }
 
+function clear_selections() {
+    var matrix = $(".matrix");
+
+    $("*", matrix).removeClass("ui-selected");
+    $(".cell", matrix).removeClass("highlight").
+	removeClass("highlight_border").
+	removeClass("backlight");
+}
+
 function num_clicked(event) {
     var cell = $(this);
     var matrix = cell.parents(".matrix");
 
-    $(".num", matrix).removeClass("highlight");
-    $(".cell", matrix).removeClass("highlight_border").
-	removeClass("backlight");
+    clear_selections();
 
     cell.addClass("highlight");
 
