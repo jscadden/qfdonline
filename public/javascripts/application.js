@@ -100,7 +100,7 @@ function column_context_menu_init() {
 	    delete_requirement(sibling_id);
 	    break;
 	case "hide":
-	    hide_secondary_requirement(element);
+	    hide_secondary_requirements();
 	    break;
 	case "insert_after":
 	    requested_position = parseInt($(element).text()) + 1;
@@ -120,12 +120,18 @@ function column_context_menu_init() {
 	    paste_requirement(cut_req_id, requested_position - 1);
 	    disable_pasting_for_columns();
 	    break;
+	case "unhide":
+	    show_secondary_requirements();
+	    force_clear_selections();
+	    break;
 	default:
 	    alert("Unhandled context menu action: " + action);
 	    break;
 	}
+	disable_unhiding_for_columns();
     });
     disable_pasting_for_columns();
+    disable_unhiding_for_columns();
 }
 
 function row_context_menu_init() {
@@ -148,7 +154,7 @@ function row_context_menu_init() {
 	    delete_requirement(sibling_id);
 	    break;
 	case "hide":
-	    hide_primary_requirement(element);
+	    hide_primary_requirements();
 	    break;
 	case "insert_above":
 	    requested_position = parseInt($(element).text());
@@ -168,12 +174,18 @@ function row_context_menu_init() {
 	    paste_requirement(cut_req_id, requested_position);
 	    disable_pasting_for_rows();
 	    break;
+	case "unhide":
+	    show_primary_requirements();
+	    force_clear_selections();
+	    break;
 	default:
 	    alert("Unhandled context menu action: " + action);
 	    break;
 	}
+	disable_unhiding_for_rows();
     });
     disable_pasting_for_rows();
+    disable_unhiding_for_rows();
 }
 
 function selectable_init() {
@@ -195,6 +207,14 @@ function backlight_row_or_column(event, ui) {
 	    cell.row().addClass("backlight");
 	}
     });
+
+    disable_unhiding_for_rows();
+    disable_unhiding_for_columns();
+    if (selection_includes_hidden_rows()) {
+	enable_unhiding_for_rows();
+    } else if (selection_includes_hidden_columns()) {
+	enable_unhiding_for_columns();
+    }
 }
 
 function insert_requirement(sibling_id, name, requested_position) {
@@ -215,36 +235,148 @@ function delete_requirement(req_id) {
     });    
 }
 
-function hide_primary_requirement(cell) {
-    cell = $(cell);
-    var row = cell.parents(".row");
-    var hidden_pri_req_id = parseInt($(".req_id", row).eq(0).text());
+function hide_primary_requirements() {
+    $(".matrix .num.backlight").each(function () {
+	var self = $(this);
+	var row_div = self.parents(".row");
+	var req_id = parseInt($(".req_id", row_div).eq(0).text());
 
-    set_hidden_primary_requirement(hidden_pri_req_id);
-    row.hide();
-    cell.parents(".row").after(make_hidden_row_placeholder(cell.row().length));
-    $(".row.click_to_show_row").click(function () {
-	$(this).prev().show();
-	unset_hidden_primary_requirement(hidden_pri_req_id);
-	$(this).remove();
+	row_div.hide();
+	row_div.after(make_hidden_row_placeholder(self.row().length));
+	set_hidden_primary_requirement(req_id);
+    });
+
+    $(".row.click_to_show_row").each(function () {
+	$(this).click(function () {
+	    var self = $(this);
+	    var pri_req_id = parseInt($(".req_id", self.prev()).eq(0).text());
+
+	    self.prev().show();
+	    unset_hidden_primary_requirement(pri_req_id);
+	    self.remove();
+	});
+    });
+
+    force_clear_selections();
+}
+
+function hide_secondary_requirements() {
+    $(".matrix .num.backlight").each(function () {
+	var self = $(this);
+	var req_id = parseInt(self.col().filter(".cell").find(".req_id").text());
+
+	self.col().hide();
+	make_hidden_col_placeholder(self.col());
+	set_hidden_secondary_requirement(req_id);
+    });
+
+    $(".cell.click_to_show_col").each(function () {
+	$(this).click(function () {
+	    var self = $(this);
+	    var req_id = parseInt(self.prev().col().filter(".name").find(".req_id").text());
+
+	    self.prev().col().show();
+	    unset_hidden_secondary_requirement(req_id);
+	    self.col().remove();
+	});
+    });
+
+    force_clear_selections();
+}
+
+function show_primary_requirements() {
+    var matrix = $(".matrix");
+    var within_selection = false;
+
+    $(".row", matrix).each(function() {
+	var self = $(this);
+	if (!within_selection && $(".num.ui-selected", self).length) {
+	    within_selection = true;
+	}
+
+	if (within_selection && 0 == $(".num.ui-selected", self).length) {
+	    within_selection = false;
+	}
+
+	if (within_selection && self.hasClass("click_to_show_row")) {
+	    self.click();
+	}
     });
 }
 
-function hide_secondary_requirement(cell) {
-    cell = $(cell);
-    var col = cell.col();
-    var hidden_sec_req_id = parseInt(col.filter(".cell.name").find(".req_id").text());
+function selection_includes_hidden_rows() {
+    var matrix = $(".matrix");
+    var within_selection = false;
+    var ret = false;
 
-    set_hidden_secondary_requirement(hidden_sec_req_id);
-    col.hide();
-    make_hidden_col_placeholder(cell.col());
-    $(".cell.click_to_show_col").click(function () {
-	$.each($(this).prev().col(), function () {
-	    $(this).show();
-	});
-	unset_hidden_secondary_requirement(hidden_sec_req_id);
-	$(this).col().remove();
+    $(".row", matrix).each(function() {
+	var self = $(this);
+	if (!within_selection && $(".num.ui-selected", self).length) {
+	    within_selection = true;
+	}
+
+	if (within_selection && 0 == $(".num.ui-selected", self).length) {
+	    within_selection = false;
+	}
+
+	if (within_selection && self.hasClass("click_to_show_row")) {
+	    ret = true;
+	}
     });
+
+    return ret;
+}
+
+function show_secondary_requirements() {
+    var matrix = $(".matrix");
+    var within_selection = false;
+
+    $(".row:first-child .num", matrix).each(function() {
+	var self = $(this);
+	if (!within_selection && self.hasClass("highlight")) {
+	    within_selection = true;
+	}
+
+	if (within_selection && !self.hasClass("highlight")) {
+	    within_selection = false;
+	}
+
+	if (within_selection) {
+	    self.col().each(function () {
+		if ($(this).hasClass("click_to_show_col")) {
+		    $(this).click();
+		}
+	    });
+	}
+    });
+}
+
+function selection_includes_hidden_columns() {
+    var matrix = $(".matrix");
+    var within_selection = false;
+    var ret = false;
+
+    $(".row:first-child .num", matrix).each(function() {
+	var self = $(this);
+	if (!within_selection && self.hasClass("highlight")) {
+	    within_selection = true;
+	}
+
+	if (within_selection && !self.hasClass("highlight")) {
+	    within_selection = false;
+	}
+
+	if (within_selection) {
+	    self.col().each(function () {
+		if ($(this).hasClass("click_to_show_col")) {
+		    ret = true;
+		}
+		
+	    });
+	}
+    });
+
+    return ret;
 }
 
 function set_hidden_primary_requirement(hidden_pri_req_id) {
@@ -265,6 +397,9 @@ function set_hidden_primary_requirement(hidden_pri_req_id) {
 function set_hidden_secondary_requirement(hidden_sec_req_id) {
     var hidden_reqs = $.cookie("hidden_secondary_requirements");
 
+
+    console.log("pre set hidden reqs "); console.log(hidden_reqs);
+
     if (hidden_reqs) {
 	hidden_reqs = $.makeArray(JSON.parse(hidden_reqs));
     } else {
@@ -275,6 +410,9 @@ function set_hidden_secondary_requirement(hidden_sec_req_id) {
 	hidden_reqs.push(hidden_sec_req_id);
 	$.cookie("hidden_secondary_requirements", JSON.stringify(hidden_reqs));
     }
+
+    console.log("post set hidden reqs "); console.log(hidden_reqs);
+    console.log($.cookie("hidden_secondary_requirements"));
 }
 
 function unset_hidden_primary_requirement(hidden_pri_req_id) {
@@ -282,7 +420,6 @@ function unset_hidden_primary_requirement(hidden_pri_req_id) {
 
     if (hidden_reqs) {
 	hidden_reqs = $.makeArray(JSON.parse(hidden_reqs));
-
 	var idx = $.inArray(hidden_pri_req_id, hidden_reqs);
 	if (0 <= idx) {
 	    hidden_reqs = $.grep(hidden_reqs, function (e, i) {
@@ -296,6 +433,7 @@ function unset_hidden_primary_requirement(hidden_pri_req_id) {
 
 function unset_hidden_secondary_requirement(hidden_sec_req_id) {
     var hidden_reqs = $.cookie("hidden_secondary_requirements");
+    console.log("pre unset hidden reqs "); console.log(hidden_reqs);
 
     if (hidden_reqs) {
 	hidden_reqs = $.makeArray(JSON.parse(hidden_reqs));
@@ -307,6 +445,7 @@ function unset_hidden_secondary_requirement(hidden_sec_req_id) {
 	    });
 	}
 
+	console.log("post unset hidden reqs "); console.log(hidden_reqs);
 	$.cookie("hidden_secondary_requirements", JSON.stringify(hidden_reqs));
     }
 }
@@ -318,12 +457,13 @@ function hide_hidden_primary_requirements() {
 	hidden_reqs = $.makeArray(JSON.parse(hidden_reqs));
 	$(".matrix .row").each(function (i, e) {
 	    var req_span = $(".req_id", e).eq(0);
-	    var id = parseInt(req_span.text());
+	    var req_id = parseInt(req_span.text());
 
-	    if (-1 != $.inArray(id, hidden_reqs)) {
-		hide_primary_requirement(req_span);
+	    if (-1 != $.inArray(req_id, hidden_reqs)) {
+		$(".num", req_span.parents(".row")).addClass("backlight");
 	    }
 	});
+	hide_primary_requirements();
     }
 }
 
@@ -338,7 +478,9 @@ function hide_hidden_secondary_requirements() {
 	    req_spans.each(function () {
 		var id = parseInt($(this).text());
 		if (-1 != $.inArray(id, hidden_reqs)) {
-		    hide_secondary_requirement($(this).parents(".cell").eq(0));
+		    console.log("I should hide " + id);
+		    $(this).parents(".cell").col().filter(".num").addClass("backlight");
+		    hide_secondary_requirements();
 		}
 	    });
 
@@ -423,14 +565,18 @@ function rating_clicked(event) {
 }
 
 function clear_selections(event) {
+    if (0 == event.button) {
+	force_clear_selections();
+    }
+}
+
+function force_clear_selections() {
     var matrix = $(".matrix");
 
-    if (0 == event.button) {
-	$("*", matrix).removeClass("ui-selected");
-	$(".cell", matrix).removeClass("highlight").
-	    removeClass("highlight_border").
-	    removeClass("backlight");
-    }
+    $("*", matrix).removeClass("ui-selected");
+    $(".cell", matrix).removeClass("highlight").
+	removeClass("highlight_border").
+	removeClass("backlight");
 }
 
 function num_clicked(event) {
@@ -508,4 +654,20 @@ function disable_pasting_for_rows() {
 function enable_pasting_for_rows() {
     disable_pasting_for_columns();
     $("#row_menu").enableContextMenuItems("#paste_below,#paste_above");
+}
+
+function disable_unhiding_for_rows() {
+    $("#row_menu").disableContextMenuItems("#unhide");
+}
+
+function enable_unhiding_for_rows() {
+    $("#row_menu").enableContextMenuItems("#unhide");
+}
+
+function disable_unhiding_for_columns() {
+    $("#column_menu").disableContextMenuItems("#unhide");
+}
+
+function enable_unhiding_for_columns() {
+    $("#column_menu").enableContextMenuItems("#unhide");
 }
