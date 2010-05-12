@@ -398,8 +398,6 @@ function set_hidden_secondary_requirement(hidden_sec_req_id) {
     var hidden_reqs = $.cookie("hidden_secondary_requirements");
 
 
-    console.log("pre set hidden reqs "); console.log(hidden_reqs);
-
     if (hidden_reqs) {
 	hidden_reqs = $.makeArray(JSON.parse(hidden_reqs));
     } else {
@@ -410,9 +408,6 @@ function set_hidden_secondary_requirement(hidden_sec_req_id) {
 	hidden_reqs.push(hidden_sec_req_id);
 	$.cookie("hidden_secondary_requirements", JSON.stringify(hidden_reqs));
     }
-
-    console.log("post set hidden reqs "); console.log(hidden_reqs);
-    console.log($.cookie("hidden_secondary_requirements"));
 }
 
 function unset_hidden_primary_requirement(hidden_pri_req_id) {
@@ -433,7 +428,6 @@ function unset_hidden_primary_requirement(hidden_pri_req_id) {
 
 function unset_hidden_secondary_requirement(hidden_sec_req_id) {
     var hidden_reqs = $.cookie("hidden_secondary_requirements");
-    console.log("pre unset hidden reqs "); console.log(hidden_reqs);
 
     if (hidden_reqs) {
 	hidden_reqs = $.makeArray(JSON.parse(hidden_reqs));
@@ -445,7 +439,6 @@ function unset_hidden_secondary_requirement(hidden_sec_req_id) {
 	    });
 	}
 
-	console.log("post unset hidden reqs "); console.log(hidden_reqs);
 	$.cookie("hidden_secondary_requirements", JSON.stringify(hidden_reqs));
     }
 }
@@ -478,7 +471,6 @@ function hide_hidden_secondary_requirements() {
 	    req_spans.each(function () {
 		var id = parseInt($(this).text());
 		if (-1 != $.inArray(id, hidden_reqs)) {
-		    console.log("I should hide " + id);
 		    $(this).parents(".cell").col().filter(".num").addClass("backlight");
 		    hide_secondary_requirements();
 		}
