@@ -6,7 +6,6 @@ end
 
 When /^I right click on the column \#1\'s number cell$/ do
   if Webrat.configuration.mode == :selenium
-    #pending("context menus disabled")
     css = "css=.row > .num:contains('1')"
     selenium.mouse_down_right(css)
     selenium.mouse_up_right(css)
