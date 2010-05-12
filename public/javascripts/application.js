@@ -294,7 +294,7 @@ function show_primary_requirements() {
 	    within_selection = true;
 	}
 
-	if (within_selection && 0 == $(".num.ui-selected", self).length) {
+	if (within_selection && neither_selected_nor_hidden(self)) {
 	    within_selection = false;
 	}
 
@@ -309,14 +309,14 @@ function selection_includes_hidden_rows() {
     var within_selection = false;
     var ret = false;
 
-    $(".row", matrix).each(function() {
+    $(":visible.row", matrix).each(function() {
 	var self = $(this);
-	if (!within_selection && $(".num.ui-selected", self).length) {
-	    within_selection = true;
+	if (within_selection && neither_selected_nor_hidden(self)) {
+	    within_selection = false;
 	}
 
-	if (within_selection && 0 == $(".num.ui-selected", self).length) {
-	    within_selection = false;
+	if (!within_selection && (0 < $(".num.ui-selected", self).length)) {
+	    within_selection = true;
 	}
 
 	if (within_selection && self.hasClass("click_to_show_row")) {
@@ -325,6 +325,12 @@ function selection_includes_hidden_rows() {
     });
 
     return ret;
+}
+
+function neither_selected_nor_hidden(row) {
+    return !row.hasClass("click_to_show_row") && 
+	    !("none" == row.css("display")) &&
+	    (0 == $(".num.ui-selected", row).length);
 }
 
 function show_secondary_requirements() {
