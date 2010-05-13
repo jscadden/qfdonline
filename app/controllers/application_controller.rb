@@ -60,6 +60,14 @@ class ApplicationController < ActionController::Base
                      })
   end
 
+  def inner_rating_w_redirect_for(rating)
+    render_to_string(:partial => "/common/redirect_to_referer") +
+    render_to_string(:partial => "/common/inner_rating_for", 
+                     :locals => {
+                       :rating => rating || Rating.new,
+                     })
+  end
+
   def inner_name_for(req)
     render_to_string(:partial => "/common/inner_name_for", 
                      :locals => {
@@ -77,7 +85,7 @@ class ApplicationController < ActionController::Base
   end
 
   def inner_weight_w_redirect_for(req)
-    render_to_string(:partial => "/common/inner_weight_w_redirect_for") +
+    render_to_string(:partial => "/common/redirect_to_referer") +
     render_to_string(:partial => "/common/inner_weight_for",
                      :locals => {
                        :id => req.id,

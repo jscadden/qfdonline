@@ -41,7 +41,7 @@ class RatingsController < ApplicationController
   end
 
   def render_success
-      render :text => inner_rating_for(@rating)
+    render :text => inner_rating_w_redirect_for(@rating)
   end
 
 end
