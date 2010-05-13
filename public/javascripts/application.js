@@ -672,5 +672,5 @@ function enable_unhiding_for_columns() {
 }
 
 function ajax_loading_init() {
-    $.loading({onAjax: true, text: "Loading…"});
+    $.loading({onAjax: true, text: "Working…"});
 }
