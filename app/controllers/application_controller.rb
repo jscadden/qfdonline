@@ -76,6 +76,15 @@ class ApplicationController < ActionController::Base
                      })
   end
 
+  def inner_weight_w_redirect_for(req)
+    render_to_string(:partial => "/common/inner_weight_w_redirect_for") +
+    render_to_string(:partial => "/common/inner_weight_for",
+                     :locals => {
+                       :id => req.id,
+                       :weight => req.errors.on(:weight) ? "Error" : req.weight,
+                     }) 
+  end
+
   def render_reload
     render :js => "window.location = '#{request.referer}';"
   end

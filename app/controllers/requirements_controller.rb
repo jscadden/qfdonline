@@ -37,7 +37,7 @@ class RequirementsController < ApplicationController
     end
 
     if weight_edited?
-      render :text => inner_weight_for(@req)
+      render :text => inner_weight_w_redirect_for(@req)
     elsif name_edited?
       render :text => inner_name_for(@req)
     elsif moved?
