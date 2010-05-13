@@ -19,6 +19,7 @@ function qfdonline_init() {
     row_context_menu_init();
     hide_hidden_primary_requirements();
     hide_hidden_secondary_requirements();
+    ajax_loading_init();
 }
 
 function editable_init() {
@@ -668,4 +669,8 @@ function disable_unhiding_for_columns() {
 
 function enable_unhiding_for_columns() {
     $("#column_menu").enableContextMenuItems("#unhide");
+}
+
+function ajax_loading_init() {
+    $.loading({onAjax: true, text: "Loading…"});
 }
