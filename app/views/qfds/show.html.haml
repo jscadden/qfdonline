@@ -8,4 +8,6 @@
   = list_of(@qfd.hoqs) do |hoq|
     = link_to(h(hoq.name), [@qfd, hoq])
 
+= link_to("Download this QFD", download_qfd_path(@qfd))
+%br
 = link_to("My QFDs", qfds_path)

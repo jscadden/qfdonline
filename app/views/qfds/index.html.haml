@@ -4,5 +4,5 @@
 %ul
   = list_of(@qfds) do |qfd|
     = link_to(h(qfd.name), qfd)
-
+    = link_to("Download", download_qfd_path(qfd))
 

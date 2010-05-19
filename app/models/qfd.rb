@@ -1,4 +1,6 @@
 class Qfd < ActiveRecord::Base
+  include SpreadsheetExport::Qfd
+
   belongs_to :user
 
   has_one :hoq_list

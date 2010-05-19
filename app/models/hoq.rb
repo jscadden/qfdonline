@@ -1,5 +1,6 @@
 class Hoq < ActiveRecord::Base
   include HoqExtensions::RequirementsLists
+  include SpreadsheetExport::Hoq
 
   belongs_to :hoq_list
   acts_as_list :scope => :hoq_list
@@ -11,9 +12,9 @@ class Hoq < ActiveRecord::Base
                :class_name => "RequirementsList", :touch => true
 
   has_many :primary_requirements, :through => :primary_requirements_list, 
-             :source => :requirements
+             :source => :requirements, :order => "position"
   has_many :secondary_requirements, :through => :secondary_requirements_list, 
-             :source => :requirements
+             :source => :requirements, :order => "position"
 
   validates_presence_of :name
 

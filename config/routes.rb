@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   map.logout "logout", :controller => "user_sessions", :action => "destroy"
   map.register "register", :controller => "users", :action => "new"
 
-  map.resources :qfds, :has_many => :hoqs
+  map.resources :qfds, :has_many => :hoqs, :member => {:download => :get}
   map.resources :hoqs
   map.resources :ratings
   map.resources :requirements

@@ -1,6 +1,12 @@
 class QfdsController < ApplicationController
   before_filter :require_user
 
+  def download
+    @qfd = current_user.qfds.find(params[:id])
+    file = @qfd.to_xls
+    send_file file.path
+  end
+
   def index
     @qfds = current_user.qfds.all
   end
