@@ -3,7 +3,7 @@ require "spec_helper"
 describe "hoqs/show.html.haml" do
 
   before(:each) do
-    assigns["qfd"] = stub_model(Qfd)
+    assigns["qfd"] = stub_model(Qfd, :hoq_list => [])
   end
 
   context "first HOQ" do

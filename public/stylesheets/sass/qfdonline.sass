@@ -166,6 +166,23 @@ ul
     
 
 // ids
+#breadcrumbs
+  list-style-type: none
+  margin: 0
+    bottom: 1.5em
+    top: -1.25em
+  padding: 0
+
+  li
+    display: inline
+    font-size: small
+
+  li:before
+    content: " | "
+
+  li:first-child:before
+    content: ""
+    
 #content
   padding: 25px 100px
 
