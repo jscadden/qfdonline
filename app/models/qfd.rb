@@ -1,10 +1,13 @@
 class Qfd < ActiveRecord::Base
   include SpreadsheetExport::Qfd
+  using_access_control
 
   belongs_to :user
 
   has_one :hoq_list
   has_many :hoqs, :through => :hoq_list
+  has_many :invitations
+  has_many :collaborators, :through => :invitations, :source => :recipient
 
   validates_presence_of :name
 

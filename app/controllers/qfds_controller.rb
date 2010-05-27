@@ -12,6 +12,7 @@ class QfdsController < ApplicationController
   end
 
   def show
+    update_invitation if has_token?
     @qfd = current_user.qfds.find(params[:id])
   end
 
@@ -50,5 +51,17 @@ class QfdsController < ApplicationController
     @qfd.destroy
 
     redirect_to(qfds_url)
+  end
+
+
+  private
+
+  def has_token?
+    params.include?(:token)
+  end
+
+  def update_invitation
+    invitation = Invitation.unaccepted.find_by_token(params[:token])
+    invitation.update_attributes(:recipient => current_user) if invitation
   end
 end

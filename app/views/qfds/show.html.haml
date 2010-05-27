@@ -11,3 +11,6 @@
 = link_to("Download this QFD", download_qfd_path(@qfd))
 %br
 = link_to("My QFDs", qfds_path)
+%br
+- if @qfd.user == current_user
+  = link_to("Invite a collaborator", new_invitation_path(:invitation => {:qfd_id => @qfd.id}))

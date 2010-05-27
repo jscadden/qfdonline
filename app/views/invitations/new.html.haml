@@ -1,0 +1,11 @@
+%h1 Invite A Collaborator
+
+- form_for(@invitation) do |f|
+  = f.error_messages
+  = f.hidden_field(:qfd_id)
+
+  .field
+    = f.label(:recipient_email)
+    = f.text_field(:recipient_email)
+
+  = f.submit("Invite")

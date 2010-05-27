@@ -13,19 +13,16 @@ class HoqsController < ApplicationController
     end
   end
 
-  def index
-    @hoqs = @qfd.hoqs.all
-  end
-
   def new
     @hoq = @qfd.hoqs.build(params[:hoq])
   end
 
   def show
-    @hoq = @qfd.hoqs.find(params[:id], :include => [:primary_requirements, :secondary_requirements,])
+    @hoq = @qfd.hoqs.find(params[:id], :include => [:primary_requirements, 
+                                                    :secondary_requirements,])
   end
 
-
+  
   private
 
   def find_qfd
