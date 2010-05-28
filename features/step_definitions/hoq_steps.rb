@@ -1,7 +1,3 @@
-Given /^I\'m on the new HOQ form$/ do
-  visit(new_qfd_hoq_path(@qfd))
-end
-
 Given /^I\'ve created a HOQ$/ do
   @hoq = Factory.build("hoq")
   @qfd.hoq_list.insert_back(@hoq)
@@ -13,6 +9,7 @@ Given /^I\'ve added a secondary requirement "([^\"]*)" to the HOQ$/ do |name|
 end
 
 When /^I create a new HOQ$/ do
+  pending "I need to be rewritten"
   visit(new_qfd_hoq_path(@qfd))
   fill_in "Name", :with => "2nd HOQ"
   click_button "Create HOQ"

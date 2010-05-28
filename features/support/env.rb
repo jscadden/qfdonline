@@ -21,6 +21,7 @@ Webrat.configure do |config|
   config.open_error_files = false # Set to true if you want error pages to pop up in the browser
 end
 
+
 # If you set this to false, any error raised from within your app will bubble 
 # up to your step definition and out to cucumber unless you catch it somewhere
 # on the way. You can make Rails rescue errors and render error pages on a
@@ -44,10 +45,14 @@ ActionController::Base.allow_rescue = false
 # after each scenario, which can lead to hard-to-debug failures in 
 # subsequent scenarios. If you do this, we recommend you create a Before
 # block that will explicitly put your database in a known state.
-# Cucumber::Rails::World.use_transactional_fixtures = true
 #Cucumber::Rails::World.use_transactional_fixtures = true
 
 # How to clean your database when transactions are turned off. See
 # http://github.com/bmabey/database_cleaner for more info.
-require 'database_cleaner'
-DatabaseCleaner.strategy = :truncation
+if defined?(ActiveRecord::Base)
+  begin
+    require 'database_cleaner'
+    DatabaseCleaner.strategy = :truncation
+  rescue LoadError => ignore_if_database_cleaner_not_present
+  end
+end

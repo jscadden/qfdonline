@@ -1,7 +1,9 @@
 Given /^a editing_weights_test user exists$/ do
-  user = Factory.create("editing_weights_user")
-  @qfd = user.qfds.first
-  @hoq = @qfd.hoqs.first
+  without_access_control do 
+    user = Factory.create("editing_weights_user")
+    @qfd = user.qfds.first
+    @hoq = @qfd.hoqs.first
+  end
 end
 
 When /^I double click on the first primary requirement\'s weight cell$/ do

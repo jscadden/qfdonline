@@ -4,8 +4,7 @@ end
 
 Given /^I\'ve created a QFD$/ do
   without_access_control do
-    @qfd = Factory.create("qfd")
-    assigns["current_user"].qfds << @qfd
+    @qfd = User.first.qfds.create!(:name => "Test QFD")
   end
 end
 
