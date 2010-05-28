@@ -13,6 +13,8 @@ class Qfd < ActiveRecord::Base
 
   after_create :create_hoq_list
 
+  accepts_nested_attributes_for :invitations, :allow_destroy => true
+
   def owns_rating?(rating)
     hoqs.any? {|h| h.owns_rating?(rating)}
   end

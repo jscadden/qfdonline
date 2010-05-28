@@ -11,11 +11,40 @@
 !flash_yellow = #ffffcc
 !flash_red = #ffcccc
 !header_pad = 8px
+!error_red = #CC000
+!error_red_bg = #FFCCCC
+!warning_yellow = #CCCC00
+!std_vert = 0.5em
+!std_horiz = 1.2ex
+
 
 // mix-ins
+=error_border
+  border = 2px "solid" !error_red
+
+=explanation
+  background:
+    color: #F0F0F0
+  display: table
+  margin:
+    bottom = !std_vert
+    top = !std_vert
+  padding = !std_vert !std_horiz
+
+  h2
+    color: #FFFFFF
+    font:
+      size: 100%
+      weight: bold
+    margin:
+      bottom = !std_vert
+      left = 0 - !std_horiz
+      right = 0 - !std_horiz
+      top = 0 - !std_vert
+    padding = !std_vert !std_horiz
+
 
 // tags
-
 body
   background:
     color: #ffffff
@@ -71,8 +100,25 @@ ul
 .contextMenu
   width: auto
 
-h1 .download_link
-  font-size: small
+h1 
+  .download_link, .create_link
+    font-size: small
+
+form .field
+  margin: 1em 0
+
+.errorExplanation
+  +explanation
+
+  h2
+    background:
+      color: #CC0000
+
+  +error_border
+
+.fieldWithErrors
+  input, select, textarea
+    +error_border
 
 .flash
   border = 2px solid !med_grey
@@ -166,7 +212,29 @@ h1 .download_link
     background:
       color = !heading_grey
     display: table-column-group
-    
+
+table.qfds
+  margin-bottom: 2em
+
+  thead th
+    font-weight: bold
+
+  td, th
+    padding: 0 0.2em 
+
+    &:first-child
+      padding-left: 0
+
+    &:last-child
+      padding-right: 0
+
+.warningExplanation
+  +explanation
+  border = 2px "solid" !warning_yellow
+  h2
+    background:
+      color: #CCCC00
+
 
 // ids
 #breadcrumbs

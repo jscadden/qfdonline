@@ -4,6 +4,8 @@ class Invitation < ActiveRecord::Base
   belongs_to :recipient, :class_name => "User"
 
   validates_uniqueness_of :token
+  validates_uniqueness_of :recipient_email, :scope => :qfd_id, 
+                          :message => "has already been invited"
   validates_presence_of :sender_id, :qfd_id
   validate :sender_must_own_qfd, :sender_must_not_be_recipient
 

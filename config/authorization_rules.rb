@@ -6,7 +6,7 @@ authorization do
     end
 
     has_permission_on :qfds, :to => :create
-    has_permission_on :qfds, :to => :destroy do
+    has_permission_on :qfds, :to => [:delete, :destroy] do
       if_attribute :user => is {user}
     end
   end
