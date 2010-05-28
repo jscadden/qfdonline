@@ -1,20 +1,17 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :qfds
 
   map.login "login", :controller => "user_sessions", :action => "new"
   map.logout "logout", :controller => "user_sessions", :action => "destroy"
   map.register "register", :controller => "users", :action => "new"
+  map.resource :account, :controller => "users"
+  map.resource :user_sessions
+  map.resources :users
 
   map.resources :qfds, :has_many => :hoqs, :member => {:download => :get}
   map.resources :hoqs
-  map.resources :ratings
-  map.resources :requirements
   map.resources :requirements_lists, :member => {:sort => :get}
-
-  map.resource :user_sessions
-  map.resource :account, :controller => "users"
-  map.resources :users
-
+  map.resources :requirements
+  map.resources :ratings
   map.resources :invitations, :only => [:new, :create, :show, :update]
 
   # The priority is based upon order of creation: first created -> highest priority.
