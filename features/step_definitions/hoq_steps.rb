@@ -9,7 +9,6 @@ Given /^I\'ve added a secondary requirement "([^\"]*)" to the HOQ$/ do |name|
 end
 
 When /^I create a new HOQ$/ do
-  pending "I need to be rewritten"
   visit(new_qfd_hoq_path(@qfd))
   fill_in "Name", :with => "2nd HOQ"
   click_button "Create HOQ"
