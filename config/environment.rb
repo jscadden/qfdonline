@@ -44,7 +44,8 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
 
-  s = YAML::load(File.open("#{Rails.root}/config/action_mailer.yml"))
+  require "erb"
+  s = YAML.load(ERB.new(File.open("#{Rails.root}/config/action_mailer.yml").read).result)
   config.action_mailer.smtp_settings = s[RAILS_ENV] unless s[RAILS_ENV].nil?
 end
 
