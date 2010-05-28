@@ -3,7 +3,7 @@ class HoqsController < ApplicationController
   before_filter :find_qfd
 
   def create
-    @hoq = Hoq.new(params[:hoq])
+    @hoq = @qfd.hoqs.new(params[:hoq])
 
     if @qfd.hoq_list.insert_back(@hoq)
       flash[:notice] = "HOQ created successfully"

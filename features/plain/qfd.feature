@@ -9,7 +9,7 @@ Feature: QFD
     When I fill in the following:
       | Name | Test QFD |
     And I press "Create QFD"
-    Then I should be on the new QFD's page
+    Then I should be redirected to the page of the QFD's first HOQ
     And I should see a flash notice indicating success
 
   Scenario: User views a QFD

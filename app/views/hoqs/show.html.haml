@@ -1,7 +1,10 @@
-%h1 #{h(@hoq.name)}
+%h1 
+  =h @hoq.name
+  %span.download_link
+    = link_to("Download", download_qfd_path(@qfd))
+
 %ul#breadcrumbs
-  %li= link_to("Home", qfds_path)
-  %li= link_to(h(@qfd.name), @qfd)
+  %li= link_to("My QFDs (Home)", qfds_path)
   - @qfd.hoq_list.each do |hoq|
     %li= link_to_unless_current(h(hoq.name), [@qfd, hoq])
 

@@ -4,6 +4,7 @@ describe Qfd do
   before(:each) do
     Authorization.ignore_access_control(true) 
     @qfd = Factory.build("qfd")
+    disable_observers_for @qfd
   end
 
   after(:each) do
@@ -25,7 +26,7 @@ describe Qfd do
     before(:each) do
       @invites = [mock_model(Invitation).as_null_object,]
       @owner = Factory.build("user")
-      @qfd = Factory.create("qfd", :user => @owner, :invitations => @invites)
+      @qfd = mock_model(Qfd, :user => @owner, :invitations => @invites)
       @user = Factory.build("user", :login => "funk", :email => "as@df.com")
       Authorization.ignore_access_control(false) 
     end

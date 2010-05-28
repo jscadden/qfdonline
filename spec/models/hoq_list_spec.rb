@@ -9,6 +9,10 @@ describe HoqList do
     @hoq_list.should_not be_new_record
   end
 
+  it "should create a new HOQ after creating itself" do
+    @hoq_list.hoqs.should_not be_empty
+  end
+
   def it_should_change_the_size_of_the_hoq_list_by_1(&block)
     lambda {block.call}.should change(@hoq_list.hoqs, :size).by(1)
   end
@@ -81,6 +85,7 @@ describe HoqList do
 
   context "size 0" do
     before(:each) do 
+      @hoq_list.hoqs.clear
       fail "HoqList setup failed" if @hoq_list.new_record?
       fail "HoqList is not empty" unless @hoq_list.hoqs.empty?
       @hoq = Factory.build("hoq")
@@ -90,12 +95,12 @@ describe HoqList do
       it_should_behave_like "a successful insert at pos 1"
 
       it "pos 1 should have a new primary requirements list" do
-        @hoq.should_receive(:build_primary_requirements_list)
+        RequirementsList.should_receive(:create!).twice
         @hoq_list.insert_at(@hoq, 1)
       end
 
       it "pos 1 should have a new secondary requirements list" do
-        @hoq.should_receive(:build_secondary_requirements_list)
+        RequirementsList.should_receive(:create!).twice
         @hoq_list.insert_at(@hoq, 1)
       end
 
@@ -110,10 +115,9 @@ describe HoqList do
   context "size 2" do
     before(:each) do
       fail "HoqList setup failed" if @hoq_list.new_record?
-      @hoq_list.insert_back(Factory.build("hoq", :name => "HOQ #0"))
       @hoq_list.insert_back(Factory.build("hoq", :name => "HOQ #1"))
       fail "HoqList is not size 2" unless 2 == @hoq_list.hoqs.size 
-      @hoq = Factory.build("hoq")
+      @hoq = Factory.create("hoq", :hoq_list => @hoq_list)
     end
 
     describe("#insert_at") do
@@ -123,7 +127,7 @@ describe HoqList do
       end
 
       it "pos 1 should have a new primary requirements list" do
-        @hoq.should_receive(:build_primary_requirements_list)
+        RequirementsList.should_receive(:create!)
         @hoq_list.insert_at(@hoq, 1)
       end
 
@@ -158,7 +162,7 @@ describe HoqList do
       end
 
       it "pos 3 should have a new secondary requirements list" do
-        @hoq.should_receive(:build_secondary_requirements_list)
+        RequirementsList.should_receive(:create!)
         @hoq_list.insert_at(@hoq, 3)
       end
 

@@ -13,6 +13,7 @@ class QfdsController < ApplicationController
 
   def show
     @qfd = Qfd.with_permissions_to(:alter).find(params[:id])
+    redirect_to [@qfd, @qfd.hoqs.first]
   end
 
   def new

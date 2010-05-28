@@ -53,42 +53,26 @@ class HoqList < ActiveRecord::Base
     end
 
     hoqs << hoq
+    hoq.insert_at(pos)
   end
 
   def handle_front_insert(hoq)
     hoq.acquire_secondary_requirements_list_from(hoqs.at(1))
     hoq.build_new_primary_requirements_list
-
-    hoqs.all.each do |h|
-      h.increment!(:position)
-    end
-    hoq.position = 1
   end
 
   def handle_back_insert(hoq)
     hoq.inherit_primary_requirements_list_from(hoqs.at(hoqs.size))
     hoq.build_new_secondary_requirements_list
-
-    hoq.position = hoqs.size + 1
   end
 
   def handle_empty_insert(hoq)
     hoq.build_new_primary_requirements_list
     hoq.build_new_secondary_requirements_list
-
-    hoq.position = 1
   end
 
   def handle_insert_mid(hoq, pos)
     hoq.bequeath_secondary_requirements_list_to(hoqs.at(pos))
     hoq.inherit_primary_requirements_list_from(hoqs.at(pos - 1))
-
-    hoqs.at_or_after(pos).each do |h|
-      h.increment!(:position)
-    end
-    hoq.position = pos
   end
-
-
-  
 end

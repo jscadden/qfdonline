@@ -1,7 +1,7 @@
 describe "HoqListExtensions" do
 
   before(:each) do
-    @list = Factory.create("hoq_list")
+    @list = HoqList.create
     fail "Failed to save HoqList" if @list.new_record?
   end
 
@@ -11,16 +11,15 @@ describe "HoqListExtensions" do
     end
 
     it "should find the hoq in position 1" do
-      first_hoq = Factory.create("hoq")
-      @list.insert_back(first_hoq)
+      first_hoq = Factory.build("hoq", :hoq_list_id => @list.id)
+      @list.insert_front(first_hoq)
 
       @list.hoqs.at(1).should == first_hoq
     end
 
     it "should find the hoq in position 2" do
-      first_hoq = Factory.build("hoq")
+      fail "list doesn't have example hoq" if @list.hoqs.empty?
       second_hoq = Factory.build("hoq")
-      @list.insert_back(first_hoq)
       @list.insert_back(second_hoq)
 
       @list.hoqs.at(2).should == second_hoq
