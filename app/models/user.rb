@@ -8,8 +8,13 @@ class User < ActiveRecord::Base
     i.has_many :invitations_received, :foreign_key => "recipient_id"
   end
 
+  # FIXME we should probably get an actual name at some point
+  def name
+    "%s (%s)" % [login, email]
+  end
+
   def role_symbols
-    [:guest,]
+    [:user,]
   end
 
   # FIXME use declarative_authorization instead of voodoo

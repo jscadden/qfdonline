@@ -1,5 +1,5 @@
 authorization do
-  role :guest do
+  role :user do
     has_permission_on :qfds, :to => :alter do
       if_attribute :user => is {user}
       if_attribute :invitations => intersects_with {user.invitations_received}

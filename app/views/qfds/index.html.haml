@@ -2,7 +2,13 @@
 = link_to("Create new QFD", new_qfd_path)
 
 %ul
-  = list_of(@qfds) do |qfd|
+  = list_of(@my_qfds) do |qfd|
     = link_to(h(qfd.name), qfd)
     = link_to("Download", download_qfd_path(qfd))
 
+%h2 QFDs On Which I Collaborate
+
+%ul
+  = list_of(@invited_qfds) do |qfd|
+    = link_to(h(qfd.name), qfd)
+    = link_to("Download", download_qfd_path(qfd))

@@ -1,5 +1,9 @@
 %h1 Welcome
 
+#call_to_register_box
+  New to QFDBuilder?  #{link_to("Click here to register", register_path)}.  
+  It's free.
+
 - form_for(@user_session) do |f|
   = f.error_messages
 

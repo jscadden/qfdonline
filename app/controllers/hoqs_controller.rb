@@ -26,7 +26,7 @@ class HoqsController < ApplicationController
   private
 
   def find_qfd
-    @qfd = current_user.qfds.find(params[:qfd_id])
+    @qfd = Qfd.with_permissions_to(:alter).find(params[:qfd_id])
   end
 
 end

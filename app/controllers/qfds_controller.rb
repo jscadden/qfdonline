@@ -8,12 +8,11 @@ class QfdsController < ApplicationController
   end
 
   def index
-    @qfds = current_user.qfds.all
+    @my_qfds, @invited_qfds = Qfd.with_permissions_to(:alter).find(:all).partition {|q| q.user == current_user}
   end
 
   def show
-    update_invitation if has_token?
-    @qfd = current_user.qfds.find(params[:id])
+    @qfd = Qfd.with_permissions_to(:alter).find(params[:id])
   end
 
   def new
@@ -51,17 +50,5 @@ class QfdsController < ApplicationController
     @qfd.destroy
 
     redirect_to(qfds_url)
-  end
-
-
-  private
-
-  def has_token?
-    params.include?(:token)
-  end
-
-  def update_invitation
-    invitation = Invitation.unaccepted.find_by_token(params[:token])
-    invitation.update_attributes(:recipient => current_user) if invitation
   end
 end

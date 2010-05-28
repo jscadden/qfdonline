@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_session, :current_user, :logged_in?
   helper_method :inner_rating_for, :inner_name_for, :inner_weight_for
 
+  before_filter :set_current_user_for_model_authorization
 
   private
 
@@ -95,6 +96,10 @@ class ApplicationController < ActionController::Base
 
   def render_reload
     render :js => "window.location = '#{request.referer}';"
+  end
+
+  def set_current_user_for_model_authorization
+    Authorization.current_user = current_user if logged_in?
   end
 end
 

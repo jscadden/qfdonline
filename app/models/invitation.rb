@@ -5,15 +5,26 @@ class Invitation < ActiveRecord::Base
 
   validates_uniqueness_of :token
   validates_presence_of :sender_id, :qfd_id
-  validate :sender_must_own_qfd
+  validate :sender_must_own_qfd, :sender_must_not_be_recipient
 
-  before_create :generate_token
   after_create :send_email
 
   named_scope :unaccepted, :conditions => {:recipient_id => nil}
 
   attr_accessor :url
   attr_accessible :recipient_email, :qfd_id
+
+  delegate :name, :to => :sender, :prefix => true
+  delegate :name, :to => :qfd, :prefix => true
+
+  def initialize(*args)
+    super(*args)
+    generate_token
+  end
+
+  def to_param
+    self.token
+  end
 
 
   private
@@ -32,7 +43,13 @@ class Invitation < ActiveRecord::Base
 
   def sender_must_own_qfd
     unless qfd.user == sender
-      Error.add(:qfd, "does not belong to you")
+      errors.add(:qfd, "does not belong to you")
+    end
+  end
+
+  def sender_must_not_be_recipient
+    if self.sender == self.recipient
+      errors.add(:recipient, "may not be the same as the sender")
     end
   end
 end
