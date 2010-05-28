@@ -1,6 +1,8 @@
 *~
 .autotest
 config/database.yml
+config/action_mailer.yml
+config/initializers/action_mailer.rb
 db/schema.rb
 db/*.sqlite3
 log/*
