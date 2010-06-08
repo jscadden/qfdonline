@@ -6,4 +6,4 @@ std_opts = "--format #{ENV['CUCUMBER_FORMAT'] || 'progress'} --strict --tags ~@w
 default: <%= std_opts %> features/plain
 wip: --tags @wip:3 --wip features/plain
 rerun: <%= rerun_opts %> --format rerun --out rerun.txt --strict --tags ~@wip
-selenium: -r features/support/env.rb -r features/support/enhanced.rb -r features/step_definitions features/enhanced
+selenium: -r features/support/env.rb -r features/support/mouse_helpers.rb -r features/support/enhanced.rb -r features/step_definitions features/enhanced 

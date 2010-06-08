@@ -15,5 +15,9 @@ When /^I create a new HOQ$/ do
 end
 
 Then /^the new HOQ should have a primary requirement "([^\"]*)"$/ do |name|
-  response.body.should have_tag("div.cell", /#{name}/)
+  page.should have_css("div.cell", :text => name)
+end
+
+Then /^I should see the new HOQ\'s title$/ do 
+  page.should have_css("h1", :text => "2nd HOQ")
 end

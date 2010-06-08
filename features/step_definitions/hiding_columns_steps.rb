@@ -7,20 +7,16 @@ Given /^a hiding_columns_test user exists$/ do
 end
 
 When /^I right click on the column \#1\'s number cell$/ do
-  if Webrat.configuration.mode == :selenium
-    css = "css=.row > .num:contains('1')"
-    selenium.mouse_down_right(css)
-    selenium.mouse_up_right(css)
-  end
+  right_click(".row > .num:contains('1')")
 end
 
 When /^I click on \"([^\"]+)\" in the column menu/ do |link|
-  click_link_within("#column_menu", link)
+  page.find("#column_menu").should be_visible
+  within("#column_menu") do
+    click(link)
+  end
 end
 
 Then /^I should (?:still )?not see column \#1$/ do
-  css = "css=.row > .num:contains('1')"
-  if Webrat.configuration.mode == :selenium
-    selenium.is_visible(css).should be_false
-  end
+  page.find(".row > .num:contains('1')").should_not be_visible
 end

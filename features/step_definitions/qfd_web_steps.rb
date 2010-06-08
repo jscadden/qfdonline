@@ -3,29 +3,19 @@ When /^I visit (.* page)$/ do |page_name|
 end
 
 When /^I wait for the page to load$/ do
-  if Webrat.configuration.mode == :selenium
-    selenium.wait_for_page_to_load
-  end
+  # if "selenium" == Capybara.mode
+  #   selenium.wait_for_page_to_load
+  # end
 end
 
 # useful for debugging selenium problems
 When /^I wait for ((?:\d+\.)?\d+) seconds?$/ do |seconds|
-  if Webrat.configuration.mode == :selenium
+  if "selenium" == Capybara.mode
     sleep seconds.to_f
-  end
-end
-
-When /^I wait for ajax$/ do 
-  if Webrat.configuration.mode == :selenium
-    # jquery equivalent of selenium.wait_for_ajax from
-    # http://web.elctech.com/2008/11/10/jquery-ajax-loading-and-selenium-respec-testing/
-    selenium.wait_for_condition('selenium.browserbot.getCurrentWindow().jQuery.active == 0', 5.seconds)
   end
 end
   
 When /^I reload the page$/ do
-  if Webrat.configuration.mode == :selenium
-    selenium.refresh
-  end
+  visit(page.driver.current_url)
 end
 

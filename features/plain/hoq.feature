@@ -15,7 +15,7 @@ Feature: HOQ
   Scenario: User creates a new HOQ
     When I am on the new HOQ form
     And I create a new HOQ
-    Then I should be on the new HOQ's page
+    Then I should see the new HOQ's title
 
   Scenario: Primary requirements are inherited from the previous HOQ
     Given I've created a HOQ

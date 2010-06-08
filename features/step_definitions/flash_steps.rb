@@ -1,11 +1,11 @@
 Then /^I should see a flash notice indicating success$/ do
-  response.body.should have_tag(".flash.notice", /success/i)
+  page.should have_css(".flash.notice", :text => /success/i)
 end
 
 Then /^I should see a flash notice indicating that I\'m logged out$/ do
-  response.body.should have_tag(".flash.notice", /log out success/i)
+  page.should have_css(".flash.notice", :text => /log out success/i)
 end
 
 Then /^I should see a flash error indicating that permission is denied$/ do
-  response.body.should have_tag(".flash.error", /permission denied/i)
+  page.should have_css(".flash.error", :text => /permission denied/i)
 end

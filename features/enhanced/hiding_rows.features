@@ -8,7 +8,6 @@ Feature: Hide a row
     And I visit the HOQ's page
     When I right click on the row #1's number cell
     And I click on "Hide" in the row menu
-    And I wait for ajax
     Then I should not see row #1
 
   Scenario: User refreshes the page after hiding a row
@@ -16,7 +15,6 @@ Feature: Hide a row
     And I visit the HOQ's page
     When I right click on the row #1's number cell
     And I click on "Hide" in the row menu
-    And I wait for ajax
     And I reload the page
     Then I should still not see row #1
 

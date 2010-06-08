@@ -9,12 +9,11 @@ Feature: QFD
     When I fill in the following:
       | Name | Test QFD |
     And I press "Create QFD"
-    Then I should be redirected to the page of the QFD's first HOQ
+    Then I should see the QFD's first HOQ's name, "Example HOQ"
     And I should see a flash notice indicating success
 
   Scenario: User views a QFD
     Given that I'm logged in
     And I've created a QFD
-    And I've created a HOQ
     When I go to the QFD's page
-    Then I should be redirected to the page of the QFD's first HOQ
+    Then I should see the QFD's first HOQ's name, "Example HOQ"

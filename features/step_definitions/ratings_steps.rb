@@ -11,18 +11,16 @@ Given /^I\'ve created a secondary requirement$/ do
 end
 
 When /^I double click on the first rating\'s cell$/ do
-  if Webrat.configuration.mode == :selenium
-    selenium.double_click("css=.rating")
-  end
+  double_click(".rating")
 end
 
 Then /^I should see "([^\"]*)" in the rating\'s cell$/ do |value|
-  response.body.should have_tag(".value", /#{value}/)
+  page.should have_css(".value", :text => /#{value}/)
 end
 
 Then /^I should see "([^\"]*)" in the rating\'s row\'s maximum cell$/ do |value|
-  if Webrat.configuration.mode == :selenium
-    selenium.get_text("xpath=//*[contains(@class, 'row') and (position() > 3)]//*[contains(@class, 'maximum')][1]").should match(/\s*#{value}\s*/)
+  within(:xpath, "//*[contains(@class, 'row') and (position() > 3)]//*[contains(@class, 'maximum')][1]") do
+    page.should have_content(value)
   end
 end
 
