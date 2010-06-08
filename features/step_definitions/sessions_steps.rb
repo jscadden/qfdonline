@@ -9,10 +9,8 @@ end
 
 Given /^that I\'m logged in as "([^\"]+)"$/ do |login|
   visit(login_path)
-  When "I wait for the page to load"
   fill_in "Login", :with => login
   fill_in "Password", :with => "password"
   click_button "Log in"
-  When "I wait for the page to load"
 end
 

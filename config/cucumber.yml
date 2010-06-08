@@ -1,9 +1,16 @@
 <%
 rerun = File.file?('rerun.txt') ? IO.read('rerun.txt') : ""
 rerun_opts = rerun.to_s.strip.empty? ? "--format #{ENV['CUCUMBER_FORMAT'] || 'progress'} features/plain" : "--format #{ENV['CUCUMBER_FORMAT'] || 'pretty'} #{rerun}"
-std_opts = "--format #{ENV['CUCUMBER_FORMAT'] || 'progress'} --strict --tags ~@wip -r features/support/env.rb -r features/support/plain.rb -r features/step_definitions"
+std_opts = <<EOF
+  --format #{ENV['CUCUMBER_FORMAT'] || 'progress'} 
+  --strict 
+  --tags ~@wip 
+EOF
+selenium_opts = std_opts + <<EOF
+  --tags @javascript
+EOF
 %>
-default: <%= std_opts %> features/plain
-wip: --tags @wip:3 --wip features/plain
+default: <%= std_opts %> --tags ~@javascript features
+wip: --tags @wip:3 --wip features
 rerun: <%= rerun_opts %> --format rerun --out rerun.txt --strict --tags ~@wip
-selenium: -r features/support/env.rb -r features/support/mouse_helpers.rb -r features/support/enhanced.rb -r features/step_definitions features/enhanced 
+selenium: <%= selenium_opts %> features

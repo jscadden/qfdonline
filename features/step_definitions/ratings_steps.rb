@@ -15,7 +15,9 @@ When /^I double click on the first rating\'s cell$/ do
 end
 
 Then /^I should see "([^\"]*)" in the rating\'s cell$/ do |value|
-  page.should have_css(".value", :text => /#{value}/)
+  within(".value") do
+    page.should have_content(value)
+  end
 end
 
 Then /^I should see "([^\"]*)" in the rating\'s row\'s maximum cell$/ do |value|

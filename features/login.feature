@@ -12,7 +12,6 @@ Feature: Login
       | Login    | test     |
       | Password | password |
     And I press "Log in"
-    And I wait for the page to load
     Then I should be on the root page
     And I should see a flash notice indicating success
       		 
@@ -24,10 +23,8 @@ Feature: Login
       | Login    | test     |
       | Password | password |
     And I press "Log in"
-    And I wait for the page to load
     And I should be on the root page
     When I follow "Log out"
-    And I wait for the page to load
     Then I should be on the login page
     And I should see a flash notice indicating that I'm logged out
 
@@ -39,6 +36,5 @@ Feature: Login
       | Login    | test         |
       | Password | bad_password |
     And I press "Log in"
-    And I wait for the page to load
     Then I should see the login form
     And I should see an explanation of the failure

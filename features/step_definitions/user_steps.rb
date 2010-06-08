@@ -14,6 +14,5 @@ Given /^that I\'m logged in$/ do
   fill_in "Login", :with => user.login
   fill_in "Password", :with => user.password
   click_button "Log in"
-  When "I wait for the page to load"
 end
 
