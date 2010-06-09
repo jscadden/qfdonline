@@ -1,5 +1,9 @@
 %h1 
   =h @hoq.name
+  - if @hoq.qfd.public
+    %span.public_icon
+      = image_tag("icons/silk/world.png", :alt => "World", :title => "Public")
+      [Public]
   %span.download_link
     = link_to("Download", download_qfd_path(@qfd))
 

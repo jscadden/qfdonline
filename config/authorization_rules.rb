@@ -5,6 +5,10 @@ authorization do
       if_attribute :invitations => intersects_with {user.invitations_received}
     end
 
+    has_permission_on :qfds, :to => :read do
+      if_attribute :public => is {true}
+    end
+
     has_permission_on :qfds, :to => :create
     has_permission_on :qfds, :to => [:delete, :destroy] do
       if_attribute :user => is {user}

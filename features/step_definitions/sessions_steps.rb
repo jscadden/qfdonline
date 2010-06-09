@@ -4,6 +4,9 @@ Then /^I should see the login form$/ do
 end
 
 Given /^(?:that\s+)?I\'m logged in as "([^\"]+)"$/ do |login|
+  unless User.exists?(:login => login)
+    Factory("user", :login => login)
+  end
   visit(login_path)
   fill_in "Login", :with => login
   fill_in "Password", :with => "password"

@@ -16,3 +16,4 @@ config.action_controller.perform_caching             = false
 config.action_mailer.raise_delivery_errors = true
 
 config.gem "ruby-debug"
+config.gem "factory_girl"

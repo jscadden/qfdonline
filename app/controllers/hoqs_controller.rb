@@ -26,7 +26,7 @@ class HoqsController < ApplicationController
   private
 
   def find_qfd
-    @qfd = Qfd.with_permissions_to(:alter).find(params[:qfd_id])
+    @qfd = Qfd.with_permissions_to(:read).find(params[:qfd_id])
   end
 
 end

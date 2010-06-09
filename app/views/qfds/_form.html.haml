@@ -2,6 +2,13 @@
   = form.label(:name)
   %br
   = form.text_field(:name)
+.field
+  = form.label(:public)
+  %br
+  = form.check_box(:public)
+  %br
+  If public, your QFD will be viewable—but not editable—by anyone.
+
 - if 0 < form.object.invitations.size
   .field
     Collaborators
