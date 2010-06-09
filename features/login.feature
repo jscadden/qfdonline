@@ -6,7 +6,6 @@ Feature: Login
 
   Scenario: User logs in
     Given a user with login "test" and password "password" exists
-    And an anonymous user
     When I visit the login page
     And I fill in the following:
       | Login    | test     |
@@ -17,7 +16,6 @@ Feature: Login
       		 
   Scenario: User logs out
     Given a user with login "test" and password "password" exists
-    And an anonymous user
     When I visit the login page
     And I fill in the following:
       | Login    | test     |
@@ -29,8 +27,7 @@ Feature: Login
     And I should see a flash notice indicating that I'm logged out
 
   Scenario: User mistypes their password
-    Given an anonymous user
-    And a user with login "test" and password "password" exists
+    Given a user with login "test" and password "password" exists
     When I visit the login page
     And I fill in the following:
       | Login    | test         |

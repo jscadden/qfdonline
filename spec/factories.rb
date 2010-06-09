@@ -1,6 +1,10 @@
+Factory.sequence "email" do |n|
+  "test#{n}@wagileconsulting.com"
+end
+
 Factory.define :user do |u|
   u.login "test"
-  u.email "test@wagileconsulting.com"
+  u.email {Factory.next("email")}
   u.password "password"
   u.password_confirmation "password"
 end
@@ -70,4 +74,25 @@ end
 
 Factory.define "editing_weights_user", :parent => "ratings_test_user" do |u|
   u.login "editing_weights_test"
+end
+
+Factory.define "invitations_test_user", :parent => "user" do |u|
+  u.login "invitations_test"
+  u.after_create do |u|
+    u.qfds.create!(:name => "Test QFD")
+  end
+end
+
+Factory.define "invited_test_user", :parent => "user" do |u|
+  u.login "invited_test"
+end
+
+Factory.define "invitation" do |i|
+  i.association :sender, :factory => :user
+  i.qfd {|i| i.association(:qfd, :user => i.sender)}
+  i.recipient_email {Factory.next("email")}
+  i.url {|i| "http://www.example.com/invitations/#{i.token}"}
+end
+
+Factory.define "unaccepted_invitation", :parent => "invitation" do |i|
 end

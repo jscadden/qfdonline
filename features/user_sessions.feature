@@ -5,8 +5,7 @@ Feature: User Sessions
   So that I can work on my QFDs authentically
 
   Scenario: User logs in
-    Given an anonymous user
-    And a user with login "test" and password "password" exists
+    Given a user with login "test" and password "password" exists
     When I visit the login page
     And I fill in the following:
       | Login    | test     |
@@ -22,8 +21,7 @@ Feature: User Sessions
     And I should see a flash notice indicating that I'm logged out
 
   Scenario: User mistypes their password
-    Given an anonymous user
-    And a user with login "test" and password "password" exists
+    Given a user with login "test" and password "password" exists
     When I visit the login page
     And I fill in the following:
       | Login    | test         |

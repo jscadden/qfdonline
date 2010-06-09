@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_current_user_for_model_authorization
 
+
   private
 
   def current_user_session

@@ -5,7 +5,6 @@ module MouseHelpers
   end
 
   def right_click(css_selector)
-    #debugger
     # NOTE I have reason to believe this will only work in firefox
     js = <<EOS
 var event = document.createEvent("MouseEvents");

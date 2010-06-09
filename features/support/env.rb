@@ -60,3 +60,5 @@ end
 
 require 'declarative_authorization/maintenance'
 World(Authorization::TestHelper)
+
+require 'email_spec/cucumber'
