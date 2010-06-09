@@ -1,9 +1,9 @@
-const KEY_LEFT = 37;
-const KEY_UP = 38;
-const KEY_RIGHT = 39;
-const KEY_DOWN = 40;
-const BUTTON_MOUSE_RIGHT = 2;
-const CUT_REQ_ID = "cut_req_id";
+KEY_LEFT = 37;
+KEY_UP = 38;
+KEY_RIGHT = 39;
+KEY_DOWN = 40;
+BUTTON_MOUSE_RIGHT = 2;
+CUT_REQ_ID = "cut_req_id";
 
 
 $(qfdonline_init);
