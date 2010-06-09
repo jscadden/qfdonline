@@ -1,10 +1,10 @@
 class InvitationMailer < ActionMailer::Base
 
-  def invitation(recipient_email, url)
+  def invitation(recipient_email, url, sender_email, qfd_name)
     recipients recipient_email
     subject "Invitation to collaborate on my QFD"
     from "invitations@qfdonline.com"
-    body :url => url
+    body :url => url, :sender_email => sender_email, :qfd_name => qfd_name
     sent_on Time.now
   end
 

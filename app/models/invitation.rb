@@ -36,11 +36,12 @@ class Invitation < ActiveRecord::Base
   end
 
   def send_email
-    if self.url.blank?
+    if url.blank?
       raise ArgumentError.new("I don't have a URL to send out")
     end
 
-    InvitationMailer.deliver_invitation(self.recipient_email, self.url)
+    InvitationMailer.deliver_invitation(recipient_email, url, 
+                                        sender_name, qfd_name)
   end
 
   def sender_must_own_qfd
