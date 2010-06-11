@@ -3,7 +3,7 @@ require "spec_helper"
 describe "hoqs/show.html.haml" do
 
   before(:each) do
-    assigns["qfd"] = stub_model(Qfd, :hoq_list => [])
+    assigns["qfd"] = mock_model(Qfd, :hoq_list => [], :public => false)
   end
 
   context "first HOQ" do
@@ -14,7 +14,8 @@ describe "hoqs/show.html.haml" do
                        :first? => true,
                        :primary_requirements => [pri_req,],
                        :secondary_requirements => [],
-                       :name => "Test HOQ")
+                       :name => "Test HOQ",
+                       :qfd => assigns[:qfd])
       assigns["hoq"] = hoq
       pri_req.stub(:primary_hoq).and_return(hoq)
 
@@ -31,7 +32,8 @@ describe "hoqs/show.html.haml" do
       hoq = stub_model(Hoq, 
                        :primary_requirements => [pri_req,],
                        :secondary_requirements => [],
-                       :name => "Test HOQ")
+                       :name => "Test HOQ",
+                       :qfd => assigns[:qfd])
       assigns["hoq"] = hoq
       pri_req.stub(:primary_hoq).and_return(hoq)
 
