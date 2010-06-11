@@ -1,4 +1,5 @@
 class RatingsController < ApplicationController
+  before_filter :require_user
   before_filter :find_rating, :only => [:update, :destroy,]
 
   def create
@@ -30,6 +31,7 @@ class RatingsController < ApplicationController
       logger.error("Rating#destroy failed")
     end
   end
+
 
   private
 

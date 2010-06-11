@@ -26,13 +26,25 @@ class ApplicationController < ActionController::Base
 
   def require_user
     unless current_user
-      store_location
-      flash[:notice] = "You must be logged in to access this page"
-      redirect_to new_user_sessions_url
+      if request.xhr?
+        login_required_ajax
+      else
+        login_required
+      end
       return false
     end
   end
-  
+
+  def login_required_ajax
+    render :text => "403 Permission denied", :status => 403
+  end
+
+  def login_required
+    store_location
+    flash[:notice] = "You must be logged in to access this page"
+    redirect_to new_user_sessions_url
+  end
+
   def require_no_user
     if current_user
       store_location
@@ -100,6 +112,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_current_user_for_model_authorization
-    Authorization.current_user = current_user if logged_in?
+    Authorization.current_user = logged_in? ? current_user : nil
   end
 end

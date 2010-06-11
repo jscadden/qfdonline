@@ -41,7 +41,9 @@ Then /^I should not see an indicator that the QFD is public$/ do
 end
 
 Given /^a public QFD named "([^\"]*)"$/ do |name|
-  Factory("qfd", :public => true, :name => name)
+  without_access_control do
+    Factory("qfd", :public => true, :name => name)
+  end
 end
 
 When /^I visit the QFD named "([^\"]*)"$/ do |name|

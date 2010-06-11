@@ -1,3 +1,10 @@
+- if permitted_to?(:update, @qfd)
+  - content_for(:head) do
+    :javascript
+      $(function () {
+        updates_permitted_init();
+      });
+
 %h1 
   =h @hoq.name
   - if @hoq.qfd.public

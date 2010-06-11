@@ -138,6 +138,8 @@ if(jQuery)( function() {
 					    $(this).data("callback", callback);
 					    evt.stopPropagation();
 					    $(this).mouseup(mouseup_handler);
+					} else {
+					    $(".contextMenu").hide();
 					}
 				});
 				

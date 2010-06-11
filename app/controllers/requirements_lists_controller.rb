@@ -1,4 +1,5 @@
 class RequirementsListsController < ApplicationController
+  before_filter :require_user
   
   def sort
     @list = RequirementsList.find(params[:id])

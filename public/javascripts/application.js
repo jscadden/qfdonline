@@ -9,17 +9,20 @@ CUT_REQ_ID = "cut_req_id";
 $(qfdonline_init);
 
 function qfdonline_init() {
-    selectable_init();
     $(".cell.rating").click(rating_clicked);
     $(".cell.name").click(rating_clicked);
     $(".cell.weight.first_hoq").click(rating_clicked);
     $(".num").mouseup(num_clicked); 
+}
+
+function updates_permitted_init() {
+    selectable_init();
+    ajax_loading_init();
     editable_init();
     column_context_menu_init();
     row_context_menu_init();
     hide_hidden_primary_requirements();
     hide_hidden_secondary_requirements();
-    ajax_loading_init();
 }
 
 function editable_init() {
@@ -548,6 +551,10 @@ function editable_name_init() {
 	    var req_id = $(".req_id", value).text(); 
 	    settings.target = "/requirements/" + req_id;
 	},
+	onerror: function (form, args) {
+	    $("#flash_wrapper").append("<div class=\"flash error\">Permission denied</div>");
+	    $("#flash_wrapper").show();
+	},
 	type: "text"
     });
 }
@@ -582,14 +589,19 @@ function num_clicked(event) {
     var cell = $(this);
     var matrix = cell.parents(".matrix");
 
-    clear_selections(event);
+    clear_selections_unless_current(cell);
 
     cell.addClass("highlight");
-
     if (cell.closest(".header").length > 0) {
 	cell.col().addClass("backlight");
     } else {
 	cell.row().addClass("backlight");
+    }
+}
+
+function clear_selections_unless_current(cell) {
+    if (!cell.hasClass("ui-selected")) {
+	force_clear_selections();
     }
 }
 

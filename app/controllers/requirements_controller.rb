@@ -1,4 +1,5 @@
 class RequirementsController < ApplicationController
+  before_filter :require_user
 
   def create
     @req = Requirement.new(params[:requirement])

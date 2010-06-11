@@ -3,6 +3,7 @@ require "spec_helper"
 describe "hoqs/show.html.haml" do
 
   before(:each) do
+    template.stub!(:permitted_to?).and_return(false)
     assigns["qfd"] = mock_model(Qfd, :hoq_list => [], :public => false)
   end
 
