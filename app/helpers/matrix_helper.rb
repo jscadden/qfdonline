@@ -70,14 +70,14 @@ module MatrixHelper
           cell("", :class => "invisible")
           cell do
             haml_concat("Relative Weight")
-            if cols.size > 0
+            if cols.size > 0 && permitted_to?(:update, @qfd)
               haml_concat(sort_req_list_asc_link(cols.first.requirements_list,
                                                  "weight"))
               haml_concat(sort_req_list_desc_link(cols.first.requirements_list,
                                                   "weight"))
             end
           end
-          cols.each {|sec_req| cell(number_to_relative_weight(sec_req.relative_weight) || "", :class => "weight")}
+          cols.each {|sec_req| cell(number_to_relative_weight(sec_req.relative_weight) || "&nbsp;", :class => "weight")}
         end
       end
       row do
@@ -85,7 +85,7 @@ module MatrixHelper
         cell("Max Rating")
         cell do
             haml_concat("Relative Weight")
-            if rows.size > 0
+            if rows.size > 0 && permitted_to?(:update, @qfd)
               haml_concat(sort_req_list_asc_link(rows.first.requirements_list,
                                                  "weight"))
               haml_concat(sort_req_list_desc_link(rows.first.requirements_list,
@@ -95,7 +95,7 @@ module MatrixHelper
         cell("Weight", :class => "header")
         cell(:class => "header") do
           haml_concat("Primary")
-          if rows.size > 0
+          if rows.size > 0 && permitted_to?(:update, @qfd)
             haml_concat(sort_req_list_asc_link(rows.first.requirements_list,
                                                "name"))
             haml_concat(sort_req_list_desc_link(rows.first.requirements_list,
@@ -103,7 +103,7 @@ module MatrixHelper
           end
           haml_concat("/")
           haml_concat("Secondary")
-          if cols.size > 0
+          if cols.size > 0 && permitted_to?(:update, @qfd)
             haml_concat(sort_req_list_asc_link(cols.first.requirements_list,
                                                "name"))
             haml_concat(sort_req_list_desc_link(cols.first.requirements_list,
