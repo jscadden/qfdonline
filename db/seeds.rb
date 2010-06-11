@@ -11,6 +11,7 @@ user = User.create!(:login => "user",
                     :email => "user@qfdonline.com",
                     :password => "password",
                     :password_confirmation => "password")
+Authorization::current_user = user
 
 qfd = user.qfds.create!(:name => "Test QFD")
 

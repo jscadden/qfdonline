@@ -8,7 +8,7 @@ class QfdsController < ApplicationController
   end
 
   def index
-    @my_qfds, @invited_qfds = Qfd.with_permissions_to(:alter).find(:all).partition {|q| q.user == current_user}
+    @my_qfds, @invited_qfds = Qfd.with_permissions_to(:read).find(:all).partition {|q| q.user == current_user}
   end
 
   def show
