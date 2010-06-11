@@ -103,4 +103,3 @@ class ApplicationController < ActionController::Base
     Authorization.current_user = current_user if logged_in?
   end
 end
-
