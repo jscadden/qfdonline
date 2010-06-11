@@ -1,7 +1,7 @@
 module RatingsHelper
 
   def number_to_relative_weight(relative_weight)
-    number_to_percentage(relative_weight, :precision => 2)
+    number_to_percentage(relative_weight, :precision => 2) || "&nbsp;"
   end
 
   def number_to_weight(weight)
