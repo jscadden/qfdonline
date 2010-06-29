@@ -1,9 +1,7 @@
 Given /^a hiding_columns_test user exists$/ do
-  without_access_control do
-    user = Factory.create("hiding_columns_test_user")
-    @qfd = user.qfds.first
-    @hoq = @qfd.hoqs.first
-  end
+  user = Factory.create("hiding_columns_test_user")
+  @qfd = user.qfds.first
+  @hoq = @qfd.hoqs.first
 end
 
 When /^I right click on the column \#1\'s number cell$/ do

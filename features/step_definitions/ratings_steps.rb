@@ -1,13 +1,9 @@
 Given /^I\'ve created a primary requirement$/ do
-  without_access_control do
-    @hoq.primary_requirements_list << Factory.build("requirement")
-  end
+  @hoq.primary_requirements_list << Factory.build("requirement")
 end
 
 Given /^I\'ve created a secondary requirement$/ do
-  without_access_control do
-    @hoq.secondary_requirements_list << Factory.build("requirement")
-  end
+  @hoq.secondary_requirements_list << Factory.build("requirement")
 end
 
 When /^I double click on the first rating\'s cell$/ do
@@ -27,9 +23,12 @@ Then /^I should see "([^\"]*)" in the rating\'s row\'s maximum cell$/ do |value|
 end
 
 Given /^a ratings_test user exists$/ do
-  without_access_control do
-    user = Factory.create("ratings_test_user")
-    @qfd = user.qfds.first
-    @hoq = @qfd.hoqs.first
-  end
+  user = Factory.create("ratings_test_user")
+  @qfd = user.qfds.first
+  @hoq = @qfd.hoqs.first
 end
+
+When /^I should not see a rating select$/ do
+  page.should_not have_css("select[name='rating[value]']")
+end
+

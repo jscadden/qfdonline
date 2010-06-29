@@ -3,9 +3,7 @@ Given /^I\'m on the new QFD form$/ do
 end
 
 Given /^I\'ve created a QFD$/ do
-  without_access_control do
-    @qfd = User.first.qfds.create!(:name => "Test QFD")
-  end
+  @qfd = User.first.qfds.create!(:name => "Test QFD")
 end
 
 Given /^I\'m viewing the QFD$/ do
@@ -41,9 +39,7 @@ Then /^I should not see an indicator that the QFD is public$/ do
 end
 
 Given /^a public QFD named "([^\"]*)"$/ do |name|
-  without_access_control do
-    Factory("qfd", :public => true, :name => name)
-  end
+  Factory("qfd", :public => true, :name => name)
 end
 
 When /^I visit the QFD named "([^\"]*)"$/ do |name|

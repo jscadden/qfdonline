@@ -1,15 +1,11 @@
 Given /^an invitations_test user exists$/ do
-  without_access_control do
-    user = Factory.create("invitations_test_user")
-    @qfd = user.qfds.first
-    @hoq = @qfd.hoqs.first
-  end
+  user = Factory.create("invitations_test_user")
+  @qfd = user.qfds.first
+  @hoq = @qfd.hoqs.first
 end
 
 Given /^an invited_test user exists$/ do
-  without_access_control do
-    user = Factory.create("invited_test_user")
-  end
+  user = Factory.create("invited_test_user")
 end
 
 Given /^I\'m on the qfds index$/ do

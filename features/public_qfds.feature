@@ -20,3 +20,11 @@ Feature: Public QFDs
     And I'm logged in as "public_user"
     When I visit the QFD named "Public QFD"
     Then I should see the QFD's first HOQ's name, "Example HOQ"
+
+  @javascript
+  Scenario: A stranger tries to edit a public QFD
+    Given a public QFD named "Public QFD"
+    And I'm logged in as "public_user"
+    When I visit the QFD named "Public QFD"
+    And I double click on the first rating's cell
+    Then I should not see a rating select

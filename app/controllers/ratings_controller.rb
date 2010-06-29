@@ -1,6 +1,7 @@
 class RatingsController < ApplicationController
   before_filter :require_user
   before_filter :find_rating, :only => [:update, :destroy,]
+  filter_resource_access
 
   def create
     @rating = Rating.new(params[:rating])

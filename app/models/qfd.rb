@@ -1,6 +1,5 @@
 class Qfd < ActiveRecord::Base
   include SpreadsheetExport::Qfd
-  using_access_control
 
   belongs_to :user
 
