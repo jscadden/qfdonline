@@ -13,7 +13,7 @@
     - (@my_qfds + @invited_qfds).each do |qfd|
       %tr
         %td= link_to(h(qfd.name), qfd)
-        %td= qfd.user == current_user ? "Owner" : "Collaborator"
+        %td= permissions_on_qfd_for_current_user(qfd)
         %td
           = link_to("Download", download_qfd_path(qfd))
           - if qfd.user == current_user

@@ -2,11 +2,11 @@ class InvitationsController < ApplicationController
   before_filter :require_user
 
   def show
-    @invitation = Invitation.find_by_token(params[:id])
+    @invitation = Invitation.find_by_token!(params[:id])
   end
 
   def update
-    @invitation = Invitation.find_by_token(params[:id])
+    @invitation = Invitation.find_by_token!(params[:id])
     @invitation.recipient = current_user
 
     if @invitation.save
