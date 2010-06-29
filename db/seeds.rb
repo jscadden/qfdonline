@@ -46,3 +46,5 @@ qfd = user.qfds.create!(:name => "Test QFD")
     end
   end
 end
+
+public_qfd = user.qfds.create!(:name => "Public QFD", :public => true)
