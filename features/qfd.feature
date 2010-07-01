@@ -17,3 +17,9 @@ Feature: QFD
     And I've created a QFD
     When I go to the QFD's page
     Then I should see the QFD's first HOQ's name, "Example HOQ"
+
+  Scenario: User deletes a QFD
+    Given that I'm logged in
+    And I've created a QFD
+    When I delete the QFD
+    Then I should see a flash notice indicating success

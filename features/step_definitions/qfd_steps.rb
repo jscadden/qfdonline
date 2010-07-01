@@ -3,11 +3,15 @@ Given /^I\'m on the new QFD form$/ do
 end
 
 Given /^I\'ve created a QFD$/ do
-  @qfd = User.first.qfds.create!(:name => "Test QFD")
+  visit(new_qfd_path)
+  fill_in("Name", :with => "Test QFD")
+  click_button("Create QFD")
+  page.should have_css(".flash.notice", :text => /success/)
 end
 
 Given /^I\'m viewing the QFD$/ do
-  visit(qfd_path(@qfd))
+  qfd = Qfd.find(:first, :order => "updated_at DESC")
+  visit(qfd_path(qfd))
 end
 
 Then /^I should see the QFD\'s first HOQ\'s name, "([^\"]+)"$/ do |name|
@@ -45,4 +49,9 @@ end
 When /^I visit the QFD named "([^\"]*)"$/ do |name|
   qfd = Qfd.find_by_name(name)
   visit(qfd_path(qfd))
+end
+
+When /^I delete the QFD$/ do
+  visit(qfds_path)
+  click_link("Delete")
 end

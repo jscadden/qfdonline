@@ -14,7 +14,8 @@ describe QfdsController do
         it "should redirect to the first hoq" do
           hoq = mock_model(Hoq)
           qfd = mock_model(Qfd, :public => true, :hoqs => [hoq,])
-          Qfd.stub_chain(:with_permissions_to, :find).and_return(qfd)
+          Qfd.stub(:find).and_return(qfd)
+          Qfd.stub_chain(:hoqs, :first => hoq)
           
           get :show
 
@@ -24,7 +25,7 @@ describe QfdsController do
 
       context("a private qfd") do
         it "should deny access" do
-          Qfd.stub_chain(:with_permissions_to, :find).and_return([])
+          Qfd.stub(:find).and_return([])
           
           get :show
 
@@ -44,7 +45,7 @@ describe QfdsController do
     describe("#show") do
       context("a private qfd") do
         it "should deny access" do
-          Qfd.stub_chain(:with_permissions_to, :find).and_return([])
+          Qfd.stub(:find).and_return([])
           
           get :show
 
@@ -56,7 +57,7 @@ describe QfdsController do
         it "should redirect to the first hoq" do
           hoq = mock_model(Hoq)
           qfd = mock_model(Qfd, :public => true, :hoqs => [hoq,])
-          Qfd.stub_chain(:with_permissions_to, :find).and_return(qfd)
+          Qfd.stub(:find).and_return(qfd)
           
           get :show
 

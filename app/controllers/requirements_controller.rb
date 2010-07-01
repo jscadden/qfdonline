@@ -1,5 +1,6 @@
 class RequirementsController < ApplicationController
   before_filter :require_user
+  filter_resource_access
 
   def create
     @req = Requirement.new(params[:requirement])

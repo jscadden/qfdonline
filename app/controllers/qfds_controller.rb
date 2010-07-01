@@ -1,5 +1,5 @@
 class QfdsController < ApplicationController
-  before_filter :require_user
+  before_filter :require_user, :except => [:show,]
   filter_resource_access :additional_member => [:download,]
 
   def create
@@ -12,8 +12,12 @@ class QfdsController < ApplicationController
   end
 
   def destroy
-    @qfd.destroy
-
+    if @qfd.destroy
+      flash[:notice] = "QFD deleted successfully"
+    else
+      logger.error("Error deleting QFD #{@qfd.inspect}")
+      flash[:error] = "Error deleting QFD"
+    end
     redirect_to(qfds_url)
   end
 
@@ -41,11 +45,11 @@ class QfdsController < ApplicationController
 
   protected
 
-  def load_qfd
-    @qfd = Qfd.with_permissions_to(:read).find(params[:id])
+  def new_qfd_from_params
+    @qfd = current_user.qfds.new(params[:qfd])
   end
 
-  def new_qfd_from_params
+  def new_qfd_for_collection
     @qfd = current_user.qfds.new(params[:qfd])
   end
 end

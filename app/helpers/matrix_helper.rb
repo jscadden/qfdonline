@@ -153,7 +153,7 @@ module MatrixHelper
   end
 
   def name_for(req)
-    cell(:class => "name") do
+    cell(:class => "name requirement_#{req.id}") do
       concat(inner_name_for(req))
     end
   end

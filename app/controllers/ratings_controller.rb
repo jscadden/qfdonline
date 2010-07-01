@@ -1,6 +1,5 @@
 class RatingsController < ApplicationController
   before_filter :require_user
-  before_filter :find_rating, :only => [:update, :destroy,]
   filter_resource_access
 
   def create
@@ -35,13 +34,6 @@ class RatingsController < ApplicationController
 
 
   private
-
-  def find_rating
-    @rating = Rating.find(params[:id])
-    unless current_user.owns_rating?(@rating)
-      raise ActiveRecord::RecordNotFound.new
-    end
-  end
 
   def render_success
     render :text => inner_rating_w_redirect_for(@rating)

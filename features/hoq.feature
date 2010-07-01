@@ -6,7 +6,6 @@ Feature: HOQ
   Background:
     Given that I'm logged in
     And I've created a QFD
-    And I'm viewing the QFD
 
   Scenario: User views the new HOQ form
     When I follow "New HOQ"
@@ -17,8 +16,8 @@ Feature: HOQ
     And I create a new HOQ
     Then I should see the new HOQ's title
 
+  @javascript @slow
   Scenario: Primary requirements are inherited from the previous HOQ
-    Given I've created a HOQ
-    And I've added a secondary requirement "Make it lighter" to the HOQ
+    Given I've added a secondary requirement "Make it lighter" to the HOQ
     When I create a new HOQ
     Then the new HOQ should have a primary requirement "Make it lighter"

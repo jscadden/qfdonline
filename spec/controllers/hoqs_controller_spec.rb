@@ -6,9 +6,54 @@ describe HoqsController do
     activate_authlogic
   end
 
+  context("guest") do
+
+    before(:each) do
+      logout
+      login_as_guest
+    end
+
+    [:new, :create,].each do |action|
+      describe("##{action}") do
+
+        before(:each) do
+          collection_setup
+          @hoq = mock_model(Hoq, :qfd => @qfd)
+          @qfd.stub_chain(:hoq_list, :hoqs, :build => @hoq)
+        end
+
+        context("any qfd") do
+          it "should be denied" do
+            send("do_#{action}")
+
+            response.should be_permission_denied, response.status
+          end
+        end
+      end
+    end
+
+    [:destroy, :update,].each do |action|
+      describe("##{action}") do
+
+        before(:each) do
+          member_setup
+        end
+
+        context("any qfd") do
+          it "should be denied" do
+            send("do_#{action}")
+
+            response.should be_permission_denied, response.status
+          end
+        end
+      end
+    end
+  end
+
   describe "#show" do
     before(:each) do
       member_setup
+      bypass_authorization
     end
 
     it "should assign @hoq" do
@@ -26,9 +71,11 @@ describe HoqsController do
 
   describe "#new" do
     before(:each) do
-      member_setup
+      bypass_authorization
+      collection_setup
       login
-      @qfd.stub_chain(:hoqs, :build => @hoq)
+      @hoq = mock_model(Hoq)
+      @qfd.stub_chain(:hoq_list, :hoqs, :build => @hoq)
     end
 
     it "should assign @hoq" do
@@ -52,15 +99,16 @@ describe HoqsController do
 
   describe "#create" do
     before(:each) do 
+      bypass_authorization
       collection_setup
       login
+      @hoq = mock_model(Hoq)
+      @qfd.stub_chain(:hoq_list, :hoqs, :build => @hoq)
     end
 
     context "when successful" do
 
       before(:each) do
-        @hoq = mock_model(Hoq)
-        @qfd.stub_chain(:hoqs, :build => @hoq)
         @qfd.stub_chain(:hoq_list, :insert_back => true)
       end
 
@@ -80,8 +128,6 @@ describe HoqsController do
 
     context "when unsuccessful" do
       before(:each) do
-        @hoq = mock_model(Hoq)
-        @qfd.stub_chain(:hoqs, :build => @hoq)
         @qfd.stub_chain(:hoq_list, :insert_back => false)
       end
 
@@ -92,6 +138,7 @@ describe HoqsController do
       end
 
     end
+
   end
 
 
@@ -99,13 +146,35 @@ describe HoqsController do
 
   def collection_setup
     @qfd = mock_model(Qfd)
-    Qfd.stub_chain(:with_permissions_to, :find => @qfd)
+    Qfd.stub(:find).and_return(@qfd)
+    subject.stub(:new_controller_object_for_collection).and_return(@qfd)
   end
 
   def member_setup
     collection_setup
 
-    @hoq = mock_model(Hoq, :qfd => @qfd)
-    @qfd.stub_chain(:hoqs, :find => @hoq)
+    @hoq_list = mock_model(HoqList, :qfd => @qfd)
+    @hoq = mock_model(Hoq, :qfd => @qfd, :hoq_list => @hoq_list)
+    Hoq.stub(:find).and_return(@hoq)
+  end
+
+  def do_new(params={})
+    get :new, {}.merge(params)
+  end
+
+  def do_create(params={})
+    post :create, {:hoq => {:name => "Test HOQ"}}.merge(params)
+  end
+
+  def do_destroy(params={})
+    post :destroy, {:id => "1"}.merge(params)
+  end
+
+  def do_update(params={})
+    post :update, {:hoq => {:name => "Updated Test HOQ"}}.merge(params)
+  end
+
+  def bypass_authorization
+    subject.stub(:filter_access_filter).and_return(true)
   end
 end

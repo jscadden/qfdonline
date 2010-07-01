@@ -13,7 +13,7 @@ class HoqList < ActiveRecord::Base
   end
 
   def insert_back(hoq)
-    insert_at(hoq, hoqs.size+1)
+    insert_at(hoq, hoqs.count+1)
   end
 
   delegate :each, :to => :hoqs
@@ -23,11 +23,11 @@ class HoqList < ActiveRecord::Base
 
   def check_pos(pos)
     unless pos.is_a?(Integer)
-      raise TypeError.new("Pos must be an integer")
+      raise TypeError.new("Pos must be an integer #{pos.inspect}")
     end
 
-    if pos < 1 || pos > hoqs.size+1
-      raise IndexError.new("Pos must be [1,hoq_list.size+1]")
+    if pos < 1 || pos > hoqs.count+1
+      raise IndexError.new("Pos must be [1,hoq_list.count+1] #{pos.inspect}")
     end
   end
 
@@ -46,12 +46,13 @@ class HoqList < ActiveRecord::Base
       handle_empty_insert(hoq)
     elsif 1 == pos
       handle_front_insert(hoq)
-    elsif hoqs.size < pos
+    elsif hoqs.count < pos
       handle_back_insert(hoq)
     else
       handle_insert_mid(hoq, pos)
     end
 
+    hoq.position = pos
     hoqs << hoq
     hoq.insert_at(pos)
   end
@@ -62,7 +63,7 @@ class HoqList < ActiveRecord::Base
   end
 
   def handle_back_insert(hoq)
-    hoq.inherit_primary_requirements_list_from(hoqs.at(hoqs.size))
+    hoq.inherit_primary_requirements_list_from(hoqs.at(hoqs.count))
     hoq.build_new_secondary_requirements_list
   end
 

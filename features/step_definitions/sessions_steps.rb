@@ -5,7 +5,7 @@ end
 
 Given /^(?:that\s+)?I\'m logged in as "([^\"]+)"$/ do |login|
   unless User.exists?(:login => login)
-    Factory("user", :login => login)
+    @current_user = Factory("user", :login => login)
   end
   visit(login_path)
   fill_in "Login", :with => login
@@ -14,3 +14,6 @@ Given /^(?:that\s+)?I\'m logged in as "([^\"]+)"$/ do |login|
   page.should have_content("Welcome #{login}")
 end
 
+Given /^that I\'m logged in$/ do
+  Given "that I'm logged in as \"user\""
+end

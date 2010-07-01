@@ -1,10 +1,8 @@
 class HoqsController < ApplicationController
   before_filter :require_user, :except => [:show,]
-  before_filter :find_qfd
+  filter_resource_access :nested_in => :qfds
 
   def create
-    @hoq = @qfd.hoqs.build(params[:hoq])
-
     if @qfd.hoq_list.insert_back(@hoq)
       flash[:notice] = "HOQ created successfully"
       redirect_to [@qfd, @hoq]
@@ -13,20 +11,11 @@ class HoqsController < ApplicationController
     end
   end
 
-  def new
-    @hoq = @qfd.hoqs.build(params[:hoq])
-  end
 
-  def show
-    @hoq = @qfd.hoqs.find(params[:id], :include => [:primary_requirements, 
-                                                    :secondary_requirements,])
-  end
+  protected
 
-  
-  private
-
-  def find_qfd
-    @qfd = Qfd.with_permissions_to(:read).find(params[:qfd_id])
+  def new_hoq_from_params
+    @hoq = @qfd.hoq_list.hoqs.build(params[:hoq])
   end
 
 end

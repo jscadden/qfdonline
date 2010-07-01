@@ -30,13 +30,15 @@ module NavigationHelpers
       qfds_path
 
     when /the QFD\'s page/
-      qfd_path(@qfd)
+      qfd = Qfd.find(:first, :order => "updated_at DESC")
+      qfd_path(qfd)
 
     when /the new QFD\'s page/
       qfd_path(assigns["qfd"])
 
     when /the new HOQ form/
-      new_qfd_hoq_path(@qfd)
+      qfd = Qfd.find(:first, :order => "updated_at DESC")
+      new_qfd_hoq_path(qfd)
 
     when /the new HOQ\'s page/
       qfd_hoq_path(assigns["qfd"], assigns["hoq"])
