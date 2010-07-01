@@ -5,7 +5,10 @@ class Qfd < ActiveRecord::Base
 
   has_one :hoq_list
   has_many :hoqs, :through => :hoq_list
-  has_many :invitations
+  has_many :invitations, :dependent => :destroy
+  has_many :ro_invitations, :class_name => "Invitation", :conditions => {:read_only => true}
+  has_many :rw_invitations, :class_name => "Invitation", :conditions => {:read_only => false}
+
   has_many :collaborators, :through => :invitations, :source => :recipient
 
   validates_presence_of :name

@@ -12,9 +12,10 @@ class Invitation < ActiveRecord::Base
   after_create :send_email
 
   named_scope :unaccepted, :conditions => {:recipient_id => nil}
+  named_scope :accepted, :conditions => "invitations.recipient_id IS NOT NULL"
 
   attr_accessor :url
-  attr_accessible :recipient_email, :qfd_id
+  attr_accessible :recipient_email, :qfd_id, :read_only
 
   delegate :name, :to => :sender, :prefix => true
   delegate :name, :to => :qfd, :prefix => true

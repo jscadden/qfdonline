@@ -16,5 +16,8 @@
       - form.fields_for(:invitations) do |ff|
         %li
           =h ff.object.recipient_email
+          = ff.check_box(:read_only)
+          = ff.label(:read_only)
+          &nbsp;
           = ff.check_box(:_delete)
           = ff.label(:_delete, "Delete")

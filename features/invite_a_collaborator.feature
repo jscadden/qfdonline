@@ -58,3 +58,12 @@ Feature: Invite a collaborator
     And an accepted invitation
     And I'm logged in as "invited_test"
     Then I should see a link to the invited qfd
+
+  Scenario: User invites a collaborator (read-only)
+    Given I'm logged in as "invitations_test"
+    When I fill in the invite a collaborator form
+    And I check "Read only"
+    And I press "Invite"
+    Then I should see a flash notice matching "Invitation sent"
+    And an invitation email should be sent
+    And the invitation email should include an invitation link

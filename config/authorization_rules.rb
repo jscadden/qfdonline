@@ -22,7 +22,7 @@ authorization do
     end
 
     has_permission_on :qfds, :to => :collaborate do
-      if_attribute :invitations => intersects_with {user.invitations_received}
+      if_attribute :rw_invitations => intersects_with {user.invitations_received}
     end
 
     has_permission_on :hoq_lists, :to => :manage do
@@ -46,6 +46,10 @@ authorization do
     has_permission_on :ratings, :to => :manage do
       if_permitted_to :manage, :primary_requirement
       if_permitted_to :manage, :secondary_hoq
+    end
+
+    has_permission_on :qfds, :to => :view do
+      if_attribute :ro_invitations => intersects_with {user.invitations_received}
     end
 
   end

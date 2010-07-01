@@ -17,7 +17,7 @@ describe RatingsController do
           it "should deny access" do
             send("do_#{action}")
 
-            response.should be_permission_denied
+            response.should be_permission_denied, response.status
           end
         end
 
@@ -25,7 +25,7 @@ describe RatingsController do
           it "should deny access" do
             send("do_#{action}")
 
-            response.should be_permission_denied
+            response.should be_permission_denied, response.status
           end
         end
       end

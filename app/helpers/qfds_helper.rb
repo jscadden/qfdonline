@@ -12,6 +12,8 @@ module QfdsHelper
       "Read-Only"
     elsif Qfd.with_permissions_to(:collaborate).include?(qfd)
       "Collaborator"
+    elsif Qfd.with_permissions_to(:view).include?(qfd)
+      "Collaborator (RO)"
     else
       raise "Unknown permissions for #{current_user.inspect} on #{qfd.inspect}"
     end

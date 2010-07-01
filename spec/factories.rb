@@ -96,3 +96,7 @@ end
 
 Factory.define "unaccepted_invitation", :parent => "invitation" do |i|
 end
+
+Factory.define "collab_test_user", :parent => "user" do |u|
+  u.login "collab_test"
+end

@@ -26,7 +26,7 @@ module NavigationHelpers
     when /the root page/
       root_path
 
-    when /the QFDs index/
+    when /(?:the|my) QFDs index/
       qfds_path
 
     when /the QFD\'s page/
@@ -45,6 +45,9 @@ module NavigationHelpers
 
     when /the HOQ\'s page/
       qfd_hoq_path(@qfd, @hoq)
+
+    when /a collaborative QFD\'s page/
+      qfd_path(Invitation.accepted.first.qfd)
 
     else
       begin

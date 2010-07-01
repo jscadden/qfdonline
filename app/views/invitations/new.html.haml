@@ -8,4 +8,8 @@
     = f.label(:recipient_email)
     = f.text_field(:recipient_email)
 
+  .field
+    = f.label(:read_only)
+    = f.check_box(:read_only)
+
   = f.submit("Invite")
