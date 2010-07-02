@@ -3,8 +3,10 @@
 
 .right
   - if logged_in?
-    Welcome #{h(current_user.email)}
+    Welcome #{h current_user.email}
     %br
+    = link_to("My Profile", account_path)
+    |
     = link_to("Log out", logout_path)
   - else
     = link_to("Register", register_path)
