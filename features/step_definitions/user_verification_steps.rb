@@ -21,6 +21,6 @@ When /^I follow the verification link$/ do
 end
 
 Then /^I should be logged in$/ do
-  page.should have_content("Welcome #{latest_user.login}")
+  page.should have_content("Welcome #{latest_user.email}")
   page.should have_css("a[href='#{logout_path}']")
 end

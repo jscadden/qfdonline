@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
-  acts_as_authentic
+  acts_as_authentic do
+    validate_email_field(true)
+    validate_password_field(true)
+  end
 
   has_many :qfds
 
@@ -9,7 +12,7 @@ class User < ActiveRecord::Base
   end
 
   def name
-    "%s (%s)" % [login, email]
+    email
   end
 
   def role_symbols

@@ -10,8 +10,7 @@ if ENV["GMAIL_SMTP_USER"].blank? || ENV["GMAIL_SMTP_PASSWORD"].blank?
   $stderr.puts("DON'T FORGET TO SET THE GMAIL_SMTP_USER/PASSWORD")
 end
 
-user = User.create!(:login => "user",
-                    :email => "ericw+qfdonline-user@xmtp.net",
+user = User.create!(:email => "ericw+qfdonline-user@xmtp.net",
                     :verified_at => Time.now,
                     :password => "password",
                     :password_confirmation => "password")

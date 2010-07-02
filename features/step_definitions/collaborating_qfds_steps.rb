@@ -42,7 +42,7 @@ Then /^I should not be presented with an input$/ do
 end
 
 Given /^I can collaborate (read\-only )?on a QFD named "([^\"]*)"$/ do |ro, name|
-  user = User.find_by_login("test") || Factory("user")
+  user = User.find_by_email("test_user1@qfdonline.com") || Factory("user")
   Factory("invitation", 
           :sender => user,
           :read_only => ro ? true : false,

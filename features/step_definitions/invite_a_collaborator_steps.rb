@@ -52,7 +52,6 @@ When /^I follow an invitation link$/ do
 end
 
 When /^I fill out the signup form$/ do
-  fill_in("Login", :with => "invitee")
   fill_in("Email", :with => "invitee@example.com")
   fill_in("Password", :with => "password")
   fill_in("Password confirmation", :with => "password")
@@ -76,9 +75,9 @@ When /^I follow an invitation link and sign up as a new user$/ do
   When "I press \"Register\""
 end
 
-When /^I follow an invitation link and log in as "invited_test"$/ do
+When /^I follow an invitation link and log in as "invited_test(?:@qfdonline\.com)?"$/ do
   When "I follow an invitation link"
-  fill_in("Login", :with => "invited_test")
+  fill_in("Email", :with => "invited_test@qfdonline.com")
   fill_in("Password", :with => "password")
   click_button("Log in")
 end

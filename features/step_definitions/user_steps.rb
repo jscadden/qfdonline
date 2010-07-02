@@ -1,7 +1,6 @@
-Given /^a user with login "([^\"]*)" and password "([^\"]*)" exists$/ do |login, password|
+Given /^a user with email "([^\"]*)" and password "([^\"]*)" exists$/ do |email, password|
   attr = {
-    :login => login, 
-    :email => "#{login}@qfdonline.com", 
+    :email => email,
     :password => password, 
     :password_confirmation => password,
     :verified_at => Time.now,

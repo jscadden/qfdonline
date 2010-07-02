@@ -1,9 +1,8 @@
 Factory.sequence "email" do |n|
-  "test#{n}@wagileconsulting.com"
+  "test_user#{n}@qfdonline.com"
 end
 
 Factory.define :user do |u|
-  u.login "test"
   u.email {Factory.next("email")}
   u.password "password"
   u.password_confirmation "password"
@@ -34,7 +33,7 @@ Factory.define "rating" do |r|
 end
 
 Factory.define "hiding_rows_test_user", :parent => "user" do |u|
-  u.login "hiding_rows_test"
+  u.email "hiding_rows_test@qfdonline.com"
   u.after_build do |u|
     qfd = Factory.create("qfd", :user => u)
     2.times do |x|
@@ -57,11 +56,11 @@ Factory.define "hiding_rows_test_user", :parent => "user" do |u|
 end
 
 Factory.define "hiding_columns_test_user", :parent => "hiding_rows_test_user" do |u|
-  u.login "hiding_columns_test"
+  u.email "hiding_columns_test@qfdonline.com"
 end
 
 Factory.define "ratings_test_user", :parent => "hiding_rows_test_user" do |u|
-  u.login "ratings_test"
+  u.email "ratings_test@qfdonline.com"
   u.after_create do |u|
     qfd = u.qfds.first
     hoq = qfd.hoq_list.first
@@ -74,18 +73,18 @@ Factory.define "ratings_test_user", :parent => "hiding_rows_test_user" do |u|
 end
 
 Factory.define "editing_weights_user", :parent => "ratings_test_user" do |u|
-  u.login "editing_weights_test"
+  u.email "editing_weights_test@qfdonline.com"
 end
 
 Factory.define "invitations_test_user", :parent => "user" do |u|
-  u.login "invitations_test"
+  u.email "invitations_test@qfdonline.com"
   u.after_create do |u|
     u.qfds.create!(:name => "Test QFD")
   end
 end
 
 Factory.define "invited_test_user", :parent => "user" do |u|
-  u.login "invited_test"
+  u.email "invited_test@qfdonline.com"
 end
 
 Factory.define "invitation" do |i|
@@ -99,7 +98,7 @@ Factory.define "unaccepted_invitation", :parent => "invitation" do |i|
 end
 
 Factory.define "collab_test_user", :parent => "user" do |u|
-  u.login "collab_test"
+  u.email "collab_test@qfdonline.com"
 end
 
 Factory.define "unverified_user", :parent => "user" do |u|

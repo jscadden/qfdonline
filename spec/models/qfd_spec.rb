@@ -27,7 +27,7 @@ describe Qfd do
       @invites = [mock_model(Invitation).as_null_object,]
       @owner = Factory.build("user")
       @qfd = mock_model(Qfd, :user => @owner, :rw_invitations => @invites, :ro_invitations => [])
-      @user = Factory.build("user", :login => "funk", :email => "as@df.com")
+      @user = Factory.build("user", :email => "as@df.com")
       Authorization.ignore_access_control(false) 
     end
 

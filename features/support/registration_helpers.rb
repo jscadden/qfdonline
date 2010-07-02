@@ -2,7 +2,6 @@ module RegistrationHelpers
 
   def do_registration
     visit(register_path)
-    fill_in("Login", :with => "user")
     fill_in("Email", :with => "example@example.com")
     fill_in("Password", :with => "password")
     fill_in("Password confirmation", :with => "password")
