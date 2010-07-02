@@ -55,6 +55,15 @@ body
 
   line-height: 1.5
 
+fieldset
+  border = 2px solid !lt_grey
+  display: inline-block
+  margin = !std_vert 0
+
+  legend
+    font-size: large
+    margin-left: 1em
+
 h1, h2, h3, h4, h5, h6
   margin:
     bottom: 0.5em
@@ -142,6 +151,16 @@ form .field
 .highlight
   background:
     color = !orange
+
+.invitations
+  th
+    font-weight: bold
+
+  td, th
+    padding: 5px
+
+    &.center
+      text-align: center
 
 .matrix
   border:

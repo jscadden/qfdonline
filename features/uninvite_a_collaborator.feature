@@ -17,7 +17,7 @@ Feature: Uninvite a collaborator
   Scenario: User revokes an invitation
     Given I'm logged in as "invitations_test"
     When I follow "Edit"
-    And I check "Delete"
+    And I check "qfd_invitations_attributes_0__delete"
     And I press "Save QFD"
     And I log out
     Given I'm logged in as "invited_test"

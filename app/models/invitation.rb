@@ -29,6 +29,14 @@ class Invitation < ActiveRecord::Base
     self.token
   end
 
+  def status
+    if !recipient_id.blank?
+      "Accepted"
+    else
+      "Pending"
+    end
+  end
+
 
   private
 

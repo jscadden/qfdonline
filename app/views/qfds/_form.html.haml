@@ -10,14 +10,19 @@
   If public, your QFD will be viewable—but not editable—by anyone.
 
 - if 0 < form.object.invitations.size
-  .field
-    Collaborators
-    %ul(style="list-style-type: none")
-      - form.fields_for(:invitations) do |ff|
-        %li
-          =h ff.object.recipient_email
-          = ff.check_box(:read_only)
-          = ff.label(:read_only)
-          &nbsp;
-          = ff.check_box(:_delete)
-          = ff.label(:_delete, "Delete")
+  %fieldset
+    %legend Collaboration Invitations
+    %table.invitations(cellspacing="0" cellpadding="0")
+      %thead
+        %tr
+          %th Email
+          %th Read Only
+          %th Status
+          %th Delete
+      %tbody
+        - form.fields_for(:invitations) do |ff|
+          %tr
+            %td=h ff.object.recipient_email
+            %td.center= ff.check_box(:read_only)
+            %td=h ff.object.status
+            %td.center= ff.check_box(:_delete)
