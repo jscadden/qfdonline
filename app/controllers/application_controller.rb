@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
   def login_required
     store_location
     flash[:notice] = "You must be logged in to access this page"
-    redirect_to new_user_sessions_url
+    redirect_to login_path
   end
 
   def require_no_user

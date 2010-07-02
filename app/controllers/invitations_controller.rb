@@ -1,12 +1,9 @@
 class InvitationsController < ApplicationController
+  before_filter :load_invitation, :only => [:show, :update,]
+  before_filter :capture_recipient_email, :only => [:show,]
   before_filter :require_user
 
-  def show
-    @invitation = Invitation.find_by_token!(params[:id])
-  end
-
   def update
-    @invitation = Invitation.find_by_token!(params[:id])
     @invitation.recipient = current_user
 
     if @invitation.save
@@ -34,4 +31,14 @@ class InvitationsController < ApplicationController
     end
   end
 
+
+  private
+
+  def load_invitation
+    @invitation = Invitation.find_by_token!(params[:id])
+  end
+    
+  def capture_recipient_email
+    session[:recipient_email] = @invitation.recipient_email
+  end
 end

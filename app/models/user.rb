@@ -31,4 +31,5 @@ class User < ActiveRecord::Base
   def active?
     !verified_at.nil?
   end
+  alias_method :verified?, :active?
 end
