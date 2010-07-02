@@ -34,3 +34,5 @@ config.gem "selenium-client", :lib => "selenium/client"
 
 # for selenium
 config.action_controller.session = { :session_http_only => false }
+
+config.gem "email_spec"

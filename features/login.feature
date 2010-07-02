@@ -11,7 +11,7 @@ Feature: Login
       | Login    | test     |
       | Password | password |
     And I press "Log in"
-    Then I should be on the root page
+    Then I should be logged in
     And I should see a flash notice indicating success
       		 
   Scenario: User logs out
@@ -21,7 +21,7 @@ Feature: Login
       | Login    | test     |
       | Password | password |
     And I press "Log in"
-    And I should be on the root page
+    And I should be logged in
     When I follow "Log out"
     Then I should be on the login page
     And I should see a flash notice indicating that I'm logged out

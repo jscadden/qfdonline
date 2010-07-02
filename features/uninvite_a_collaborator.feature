@@ -8,6 +8,7 @@ Feature: Uninvite a collaborator
     And an invited_test user exists
     And an unaccepted invitation
     When I follow an invitation link and sign up as a new user
+    And I follow the verification link in the verification email
     Then I should see a collaboration invitation
     When I press "Accept"
     Then I should see the QFD's first HOQ's name, "Example HOQ"

@@ -26,6 +26,7 @@ Feature: Invite a collaborator
     And I follow "Click here to register"
     And I fill out the signup form
     And I press "Register"
+    And I follow the verification link in the verification email
     Then I should see a collaboration invitation
     When I press "Accept"
     Then I should see the QFD's first HOQ's name, "Example HOQ"

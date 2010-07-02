@@ -7,6 +7,7 @@ Factory.define :user do |u|
   u.email {Factory.next("email")}
   u.password "password"
   u.password_confirmation "password"
+  u.verified_at Time.now
 end
 
 Factory.define "qfd" do |d|
@@ -99,4 +100,8 @@ end
 
 Factory.define "collab_test_user", :parent => "user" do |u|
   u.login "collab_test"
+end
+
+Factory.define "unverified_user", :parent => "user" do |u|
+  u.verified_at nil
 end

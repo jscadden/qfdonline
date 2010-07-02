@@ -11,7 +11,7 @@ Feature: User Sessions
       | Login    | test     |
       | Password | password |
     And I press "Log in"
-    Then I should be on the root page
+    Then I should be logged in
     And I should see a flash notice indicating success
       		 
   Scenario: User logs out

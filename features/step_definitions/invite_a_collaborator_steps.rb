@@ -87,3 +87,8 @@ Then /^I should see a link to the invited qfd$/ do
   qfd = Qfd.find_by_name("Test QFD")
   page.should have_css("a[href^='#{qfd_path(qfd)}']")
 end
+
+When /^I follow the verification link in the verification email$/ do
+  open_email("invitee@example.com")
+  click_email_link_matching(/users\/verify/)
+end

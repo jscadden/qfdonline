@@ -6,45 +6,17 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Major.create(:name => 'Daley', :city => cities.first)
 
+if ENV["GMAIL_SMTP_USER"].blank? || ENV["GMAIL_SMTP_PASSWORD"].blank?
+  $stderr.puts("DON'T FORGET TO SET THE GMAIL_SMTP_USER/PASSWORD")
+end
 
 user = User.create!(:login => "user",
-                    :email => "user@qfdonline.com",
+                    :email => "ericw+qfdonline-user@xmtp.net",
+                    :verified_at => Time.now,
                     :password => "password",
                     :password_confirmation => "password")
 Authorization::current_user = user
 
 qfd = user.qfds.create!(:name => "Test QFD")
-
-3.times do |x|
-  hoq = Hoq.new(:name => "Test HOQ ##{x}")
-  qfd.hoq_list.insert_back(hoq)
-
-  if x.zero?
-    3.times do |y|
-      req = Requirement.new(:name => "Test Requirement ##{Requirement.count}",
-                            :weight => rand(100))
-      hoq.primary_requirements_list.requirements << req
-    end
-  end
-
-  3.times do |z|
-      req = Requirement.new(:name => "Test Requirement ##{Requirement.count}")
-      hoq.secondary_requirements_list.requirements << req
-  end
-
-  hoq.primary_requirements.each do |pri_req|
-    hoq.secondary_requirements.each do |sec_req|
-      rating = Rating.lookup(pri_req, sec_req)
-      if rating.nil?
-        value = [1, 3, 9, nil].rand
-        if value
-          Rating.create!(:primary_requirement => pri_req,
-                         :secondary_requirement => sec_req,
-                         :value => value)
-        end
-      end
-    end
-  end
-end
 
 public_qfd = user.qfds.create!(:name => "Public QFD", :public => true)
