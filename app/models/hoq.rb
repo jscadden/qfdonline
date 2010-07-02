@@ -23,11 +23,6 @@ class Hoq < ActiveRecord::Base
     validates_uniqueness_of :secondary_requirements_list_id
   end
 
-  def owns_rating?(rating)
-    primary_requirements_list.owns_rating?(rating) ||
-      secondary_requirements_list.owns_rating?(rating)
-  end
-
   def recalc_secondary_weights
     secondary_requirements_list.recalc_weights
   end

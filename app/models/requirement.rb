@@ -41,10 +41,6 @@ class Requirement < ActiveRecord::Base
     recalc_weight
   end
 
-  def owns_rating?(rating)
-    primary_ratings.include?(rating) || secondary_ratings.include?(rating)
-  end
-
   def weight=(value)
     value = value.to_s.gsub(/[,]/, "")
     write_attribute(:weight, value)

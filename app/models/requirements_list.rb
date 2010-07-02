@@ -22,10 +22,6 @@ class RequirementsList < ActiveRecord::Base
     end
   end
 
-  def owns_rating?(rating)
-    requirements.any? {|r| r.owns_rating?(rating)}
-  end
-
   def recalc_weights
     # I am my HOQ's secondary requirements list, I was told to update my
     # weights, because my HOQ's primary requirements list has had a weight

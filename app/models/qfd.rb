@@ -18,10 +18,4 @@ class Qfd < ActiveRecord::Base
   accepts_nested_attributes_for :invitations, :allow_destroy => true
 
   named_scope :public, :conditions => ["public IS ?", true]
-
-
-  def owns_rating?(rating)
-    hoqs.any? {|h| h.owns_rating?(rating)}
-  end
-
 end

@@ -16,9 +16,4 @@ class User < ActiveRecord::Base
   def role_symbols
     [:user,]
   end
-
-  # FIXME use declarative_authorization instead of voodoo
-  def owns_rating?(rating)
-    qfds.any? {|q| q.owns_rating?(rating)}
-  end
 end
