@@ -17,5 +17,5 @@ class Qfd < ActiveRecord::Base
 
   accepts_nested_attributes_for :invitations, :allow_destroy => true
 
-  named_scope :public, :conditions => ["public IS ?", true]
+  named_scope :public, :conditions => {:public => true}
 end
