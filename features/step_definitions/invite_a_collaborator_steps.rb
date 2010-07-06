@@ -48,13 +48,15 @@ Given /^an accepted invitation$/ do
 end
 
 When /^I follow an invitation link$/ do
-  visit(invitation_path(Invitation.last))
+  visit(invitation_path(latest_invitation))
 end
 
 When /^I fill out the signup form$/ do
-  fill_in("Email", :with => "invitee@example.com")
-  fill_in("Password", :with => "password")
-  fill_in("Password confirmation", :with => "password")
+  within("form#new_user") do
+    fill_in("Email", :with => "invitee@example.com")
+    fill_in("Password", :with => "password")
+    fill_in("Password confirmation", :with => "password")
+  end
 end
 
 Then /^I should enter the debugger$/ do
@@ -70,16 +72,17 @@ end
 
 When /^I follow an invitation link and sign up as a new user$/ do
   When "I follow an invitation link"
-  When "I follow \"Click here to register\""
   When "I fill out the signup form"
   When "I press \"Register\""
 end
 
 When /^I follow an invitation link and log in as "invited_test(?:@qfdonline\.com)?"$/ do
   When "I follow an invitation link"
-  fill_in("Email", :with => "invited_test@qfdonline.com")
-  fill_in("Password", :with => "password")
-  click_button("Log in")
+  within("form#new_user_session") do
+    fill_in("Email", :with => "invited_test@qfdonline.com")
+    fill_in("Password", :with => "password")
+    click_button("Log in")
+  end
 end
 
 Then /^I should see a link to the invited qfd$/ do

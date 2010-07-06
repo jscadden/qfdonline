@@ -23,7 +23,6 @@ Feature: Invite a collaborator
   Scenario: Anonymous user accepts an invitation
     Given an unaccepted invitation
     When I follow an invitation link
-    And I follow "Click here to register"
     And I fill out the signup form
     And I press "Register"
     And I follow the verification link in the verification email

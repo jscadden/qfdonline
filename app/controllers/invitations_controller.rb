@@ -1,7 +1,7 @@
 class InvitationsController < ApplicationController
   before_filter :load_invitation, :only => [:show, :update,]
   before_filter :capture_recipient_email, :only => [:show,]
-  before_filter :require_user
+  before_filter :require_user, :except => [:show,]
 
   def update
     @invitation.recipient = current_user
@@ -28,6 +28,17 @@ class InvitationsController < ApplicationController
       redirect_to(@invitation.qfd)
     else
       render :action => "new"
+    end
+  end
+
+  def show
+    if logged_in?
+      render :action => "show"
+    else
+      store_location
+      @user_session = UserSession.new(:email => session[:recipient_email])
+      @user = User.new(:email => session[:recipient_email])
+      render :action => "login_or_register"
     end
   end
 
