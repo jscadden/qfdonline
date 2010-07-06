@@ -10,10 +10,18 @@ if ENV["GMAIL_SMTP_USER"].blank? || ENV["GMAIL_SMTP_PASSWORD"].blank?
   $stderr.puts("DON'T FORGET TO SET THE GMAIL_SMTP_USER/PASSWORD")
 end
 
-user = User.create!(:email => "ericw+qfdonline-user@xmtp.net",
-                    :verified_at => Time.now,
-                    :password => "password",
-                    :password_confirmation => "password")
+user = nil
+if Rails.env.production?
+  user = User.create!(:email => "user@qfdonline.com",
+                      :verified_at => Time.now,
+                      :password => "password",
+                      :password_confirmation => "password")
+else
+  user = User.create!(:email => "ericw+qfdonline-user@xmtp.net",
+                      :verified_at => Time.now,
+                      :password => "password",
+                      :password_confirmation => "password")
+end
 Authorization::current_user = user
 
 qfd = user.qfds.create!(:name => "Test QFD")
