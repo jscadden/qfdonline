@@ -29,16 +29,23 @@ module NavigationHelpers
     when /(?:the|my) QFDs index/
       qfds_path
 
+    when /(?:the|my) public QFDs index/ 
+      qfds_path(:public => true)
+
+    when /the QFD/
+      qfd_path(@qfd || latest_qfd)
+
     when /the QFD\'s page/
-      qfd = Qfd.find(:first, :order => "updated_at DESC")
-      qfd_path(qfd)
+      qfd_path(latest_qfd)
 
     when /the new QFD\'s page/
       qfd_path(assigns["qfd"])
 
     when /the new HOQ form/
-      qfd = Qfd.find(:first, :order => "updated_at DESC")
-      new_qfd_hoq_path(qfd)
+      new_qfd_hoq_path(latest_qfd)
+
+    when /the new QFD form/
+      new_qfd_path
 
     when /the new HOQ\'s page/
       qfd_hoq_path(assigns["qfd"], assigns["hoq"])

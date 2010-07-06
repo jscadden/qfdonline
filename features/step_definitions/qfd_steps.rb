@@ -1,7 +1,3 @@
-Given /^I\'m on the new QFD form$/ do
-  visit(new_qfd_path)
-end
-
 Given /^I\'ve created a QFD$/ do
   visit(new_qfd_path)
   fill_in("Name", :with => "Test QFD")
@@ -61,4 +57,30 @@ end
 When /^I delete the QFD$/ do
   visit(qfds_path)
   click_link("Delete")
+end
+
+When /^I visit the QFD$/ do
+  visit(qfd_path(@qfd || latest_qfd))
+end
+
+Given /^another user has created a QFD$/ do
+  other_user = Factory("user")
+  Factory("qfd", :user => other_user)
+end
+
+Then /^I should see the permission denied page$/ do
+  page.should have_css("h1", :content => "403 Permission Denied")
+end
+
+Then /^I should see the public QFD index$/ do
+  page.should have_css("h1", :content => "Public QFDs")
+end
+
+Then /^I should see a link to my personalized QFDs index$/ do
+  page.should have_css("a[href='#{qfds_path}']")
+end
+
+
+Then /^I should see a recommendation to log in$/ do
+  page.should have_css("#content p a", :content => "logging in")
 end

@@ -8,7 +8,7 @@ Feature: Invite a collaborator
 
   Scenario: User goes to the invite a collaborator form
     Given I'm logged in as "invitations_test"
-    And I'm on the qfds index
+    And I'm on the QFDs index
     When I follow "Invite A Collaborator"
     Then I should see the invite a collaborator form
 

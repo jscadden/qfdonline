@@ -12,6 +12,13 @@ class ApplicationController < ActionController::Base
   before_filter :set_current_user_for_model_authorization
 
 
+  protected
+
+  def permission_denied
+    render :template => "/common/permission_denied", :status => 403
+  end
+
+
   private
 
   def current_user_session
@@ -114,4 +121,5 @@ class ApplicationController < ActionController::Base
   def set_current_user_for_model_authorization
     Authorization.current_user = logged_in? ? current_user : nil
   end
+
 end

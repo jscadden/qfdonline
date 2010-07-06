@@ -10,7 +10,6 @@ describe HoqsController do
 
     before(:each) do
       logout
-      login_as_guest
     end
 
     [:new, :create,].each do |action|
@@ -23,10 +22,10 @@ describe HoqsController do
         end
 
         context("any qfd") do
-          it "should be denied" do
+          it "should require login" do
             send("do_#{action}")
 
-            response.should be_permission_denied, response.status
+            response.should redirect_to(login_path)
           end
         end
       end
@@ -40,10 +39,10 @@ describe HoqsController do
         end
 
         context("any qfd") do
-          it "should be denied" do
+          it "should require login" do
             send("do_#{action}")
 
-            response.should be_permission_denied, response.status
+            response.should redirect_to(login_path)
           end
         end
       end

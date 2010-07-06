@@ -1,15 +1,15 @@
 authorization do
 
   role :guest do
-    has_permission_on :qfds, :to => :view do
+    has_permission_on :qfds, :to => [:view, :index,] do
       if_attribute :public => is {true}
     end
 
-    has_permission_on :hoq_lists, :to => :view do
+    has_permission_on :hoq_lists, :to => [:view, :index] do
       if_permitted_to :view, :qfd
     end
 
-    has_permission_on :hoqs, :to => :view do
+    has_permission_on :hoqs, :to => [:view, :index] do
       if_permitted_to :view, :hoq_list
     end
   end

@@ -6,25 +6,24 @@ describe RequirementsController do
 
     before(:each) do
       logout
-      login_as_guest
       Requirement.stub(:find).and_return(mock_model(Requirement))
     end
 
     [:create, :destroy, :update,].each do |action|
       describe("##{action}") do
         context("a public qfd") do
-          it "should deny access" do
+          it "should require login" do
             do_update
 
-            response.should be_permission_denied
+            response.should redirect_to(login_path)
           end
         end
 
         context("a private qfd") do
-          it "should deny access" do
+          it "should require login" do
             do_update
 
-            response.should be_permission_denied
+            response.should redirect_to(login_path)
           end
         end
       end

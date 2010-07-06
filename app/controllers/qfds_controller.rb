@@ -1,5 +1,5 @@
 class QfdsController < ApplicationController
-  before_filter :require_user, :except => [:show,]
+  before_filter :require_user, :except => [:show, :index,]
   filter_resource_access :additional_member => [:download,]
 
   def create
@@ -26,7 +26,11 @@ class QfdsController < ApplicationController
   end
 
   def index
-    @my_qfds, @invited_qfds = Qfd.with_permissions_to(:show).find(:all).partition {|q| q.user == current_user}
+    if public_qfds_requested? || !logged_in?
+      index_public
+    else
+      index_private
+    end
   end
 
   def show
@@ -52,4 +56,22 @@ class QfdsController < ApplicationController
   def new_qfd_for_collection
     @qfd = current_user.qfds.new(params[:qfd])
   end
+
+
+  private
+
+  def index_public
+    @qfds = Qfd.public
+    render :action => "index_public"
+  end
+
+  def index_private
+    @my_qfds, @invited_qfds = Qfd.with_permissions_to(:show).find(:all).partition {|q| q.user == current_user}
+    render :action => "index_private"
+  end
+
+  def public_qfds_requested?
+    params.include?(:public) && "true" == params[:public] 
+  end
+
 end

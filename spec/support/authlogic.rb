@@ -17,8 +17,3 @@ def logout
   @current_user_session = nil
   @current_user = nil
 end
-
-def login_as_guest
-  login({}, :role_symbols => [])
-end
-  

@@ -17,6 +17,6 @@ Given /^(?:that\s+)?I\'m logged in as "([^\"]+)"$/ do |email|
   page.should have_content("Welcome #{email}")
 end
 
-Given /^that I\'m logged in$/ do
+Given /^(?:that )?I\'m logged in$/ do
   Given "that I'm logged in as \"test_user\""
 end

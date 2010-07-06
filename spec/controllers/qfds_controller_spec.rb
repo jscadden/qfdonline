@@ -6,7 +6,6 @@ describe QfdsController do
 
     before(:each) do
       logout
-      login_as_guest
     end
 
     describe("#show") do
@@ -29,9 +28,19 @@ describe QfdsController do
           
           get :show
 
-          response.should be_permission_denied
+          response.should be_permission_denied, response.status
         end
       end
+    end
+
+    describe("#index") do
+
+      it "should render the public index" do
+        get :index
+
+        response.should render_template("qfds/index_public.html.haml")
+      end
+
     end
   end
 
@@ -63,6 +72,27 @@ describe QfdsController do
 
           response.should redirect_to(qfd_hoq_path(qfd, hoq))
         end
+      end
+    end
+
+    describe("#index") do
+
+      before(:each) do
+        Qfd.stub(:public).and_return([])
+        Qfd.stub(:find).and_return([])
+        @current_user.stub(:invitations_received).and_return([])
+      end
+
+      it "should render the private index template" do
+        get :index
+
+        response.should render_template("qfds/index_private.html.haml")
+      end
+
+      it "should render the public index template" do
+        get :index, :public => "true"
+
+        response.should render_template("qfds/index_public.html.haml")
       end
     end
   end

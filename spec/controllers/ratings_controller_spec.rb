@@ -6,7 +6,6 @@ describe RatingsController do
 
     before(:each) do
       logout
-      login_as_guest
       Rating.stub(:find).and_return(mock_model(Rating))
     end
 
@@ -14,18 +13,18 @@ describe RatingsController do
       describe("##{action}") do
 
         context("a public qfd") do
-          it "should deny access" do
+          it "should require login" do
             send("do_#{action}")
 
-            response.should be_permission_denied, response.status
+            response.should redirect_to(login_path)
           end
         end
 
         context("a private qfd") do
-          it "should deny access" do
+          it "should require login" do
             send("do_#{action}")
 
-            response.should be_permission_denied, response.status
+            response.should redirect_to(login_path)
           end
         end
       end
