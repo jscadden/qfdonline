@@ -7,7 +7,8 @@
   %br
   = form.check_box(:public)
   %br
-  If public, your QFD will be viewable—but not editable—by anyone.
+  If public, anyone can view your QFD, but only you and those collaborators
+  you choose will be able to edit it.
 
 - if 0 < form.object.invitations.size
   %fieldset
