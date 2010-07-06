@@ -9,6 +9,13 @@ Given /^I\'ve created a QFD$/ do
   page.should have_css(".flash.notice", :text => /success/)
 end
 
+Given /^I\'ve a QFD(?: named "([^\"]+)")?$/ do |name|
+  args = {:user => latest_user}
+  args.merge!(:name => name) if name.present?
+  qfd = Factory("qfd", args)
+  fail "Failed to create QFD" unless qfd.valid?
+end
+
 Given /^I\'m viewing the QFD$/ do
   qfd = Qfd.find(:first, :order => "updated_at DESC")
   visit(qfd_path(qfd))

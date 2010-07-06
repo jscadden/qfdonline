@@ -45,7 +45,13 @@ module MatrixHelper
           cell("", :class => "invisible")
           cell("", :class => "invisible")
           cell("Column #")
-          cols.size.times {|x| cell("#{x+1}", :class => "num")}
+          cols.size.times do |x|
+            if cols.size == x+1
+              cell("#{x+1}#{add_column_arrow}", :class => "num")
+            else
+              cell("#{x+1}", :class => "num")
+            end
+          end
         end
         row do
           cell("", :class => "invisible")
@@ -114,7 +120,11 @@ module MatrixHelper
       end
       rows.each_with_index do |pri_req, idx|    
         row do
-          cell(idx + 1, :class => "num")
+          if rows.size == idx+1
+            cell("#{idx+1}#{add_row_arrow}", :class => "num")
+          else
+            cell("#{idx+1}", :class => "num")
+          end
           cell(Rating.maximum_as_primary(pri_req) || "", :class => "maximum")
           cell(number_to_relative_weight(pri_req.relative_weight), 
                :class => "weight")
@@ -130,6 +140,18 @@ module MatrixHelper
 
 
   private
+
+  def add_column_arrow
+    img = image_tag("icons/silk/arrow_right.png")
+    content_tag("div", img, :id => "add_column_arrow",
+                :title => "Add secondary requirement")
+  end
+
+  def add_row_arrow 
+    img = image_tag("icons/silk/arrow_down.png") 
+    content_tag("div", img, :id => "add_row_arrow",
+                :title => "Add primary requirement")
+  end
 
   def merge_class_into_options(options, class_name)
     if options.include?(:class)
@@ -181,5 +203,3 @@ module MatrixHelper
             sort_requirements_list_path(list, :by => attr,:order => "desc"))
   end
 end
-
-

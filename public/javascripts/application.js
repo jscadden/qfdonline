@@ -12,7 +12,13 @@ function qfdonline_init() {
     $(".cell.rating").click(rating_clicked);
     $(".cell.name").click(rating_clicked);
     $(".cell.weight.first_hoq").click(rating_clicked);
-    $(".num").mouseup(num_clicked); 
+    $(".num").mouseup(num_clicked);
+    $(".num:last-child").hover(show_add_row_or_column_arrow,
+			       hide_add_row_or_column_arrow)
+	.click(add_column_clicked);
+    $(".num:first-child").hover(show_add_row_or_column_arrow,
+				hide_add_row_or_column_arrow)
+	.click(add_row_clicked);
 }
 
 function updates_permitted_init() {
@@ -603,6 +609,66 @@ function clear_selections_unless_current(cell) {
     if (!cell.hasClass("ui-selected")) {
 	force_clear_selections();
     }
+}
+
+function show_add_row_or_column_arrow() {
+    var arrow = null;
+
+    if ($(this).closest(".header").length > 0) {
+	arrow = $("#add_column_arrow");
+	position_add_column_arrow();
+    } else {
+	arrow = $("#add_row_arrow");
+	position_add_row_arrow();
+    }
+    arrow.show();
+}
+
+function position_add_column_arrow() {
+    var left = $(".num:last-child").parents(".row").offset().left;
+    left += $(".num:last-child").parents(".row").width();
+    left += parseInt($("$.num:last-child").parents(".row").css("border-right-width"));
+
+
+    var top = $(".num:last-child").offset().top;
+    top += ($(".num:last-child").height() / 2.0); 
+    top += parseInt($("$.num:last-child").css("border-bottom-width"));
+    top += parseInt($("$.num:last-child").css("padding-top"));
+    top -= ($("#add_column_arrow").height() / 2.0);
+
+    $("#add_column_arrow").css("left", left);
+    $("#add_column_arrow").css("top", top);
+}
+
+function position_add_row_arrow() {
+    var left = $(".row:last-child .num:first-child").offset().left;
+    left += $(".row:last-child .num:first-child").width() / 2.0;
+    left += parseInt($(".row:last-child .num:first-child").css("padding-left"));
+    left += parseInt($(".row:last-child .num:first-child").css("border-right-width"));
+    left -= ($("#add_row_arrow").width() / 2.0);
+
+    var top = $(".row:last-child .num:first-child").offset().top;
+    top += ($(".row:last-child .num:first-child").parents(".row").height());
+
+    $("#add_row_arrow").css("left", left);
+    $("#add_row_arrow").css("top", top);
+}
+
+function hide_add_row_or_column_arrow() {
+    $("#add_column_arrow").hide();
+    $("#add_row_arrow").hide();	
+}
+
+function add_column_clicked() {
+    var sibling_id = $(".req_id", $(this).col()[4]).text();
+    var requested_position = parseInt($(this).text()) + 1;
+    insert_requirement(sibling_id, "New Requirement", requested_position);
+}
+
+function add_row_clicked() {
+    var sibling_id = $(".req_id", $(this).row()[4]).text();
+    var requested_position = parseInt($(this).text()) + 1;
+    insert_requirement(sibling_id, "New Requirement", requested_position);
 }
 
 function body_onkeypress(event) {

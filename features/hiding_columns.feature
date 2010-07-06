@@ -4,7 +4,7 @@ Feature: Hide a column
     Given a hiding_columns_test user exists
 
   @javascript
-  Scenario: User hides a row
+  Scenario: User hides a column
     Given that I'm logged in as "hiding_columns_test"
     And I visit the HOQ's page
     When I right click on the column #1's number cell

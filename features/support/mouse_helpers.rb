@@ -19,5 +19,15 @@ element.dispatchEvent(event);
 EOS
     page.driver.browser.execute_script(js)
   end
+
+  def mouse_over(css_selector)
+    js = "$('#{css_selector}').mouseenter()"
+    page.driver.browser.execute_script(js)
+  end
+
+  def mouse_click(css_selector)
+    js = "$('#{css_selector}').click()"
+    page.driver.browser.execute_script(js)
+  end
 end
 World(MouseHelpers)

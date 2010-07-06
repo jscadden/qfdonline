@@ -62,3 +62,5 @@ require 'declarative_authorization/maintenance'
 World(Authorization::TestHelper)
 
 require 'email_spec/cucumber'
+
+Capybara.default_wait_time = 5
