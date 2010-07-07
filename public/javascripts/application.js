@@ -9,16 +9,26 @@ CUT_REQ_ID = "cut_req_id";
 $(qfdonline_init);
 
 function qfdonline_init() {
-    $(".cell.rating").click(rating_clicked);
-    $(".cell.name").click(rating_clicked);
-    $(".cell.weight.first_hoq").click(rating_clicked);
-    $(".num").mouseup(num_clicked);
-    $(".num:last-child").hover(show_add_row_or_column_arrow,
-			       hide_add_row_or_column_arrow)
-	.click(add_column_clicked);
-    $(".num:first-child").hover(show_add_row_or_column_arrow,
-				hide_add_row_or_column_arrow)
-	.click(add_row_clicked);
+    try {
+	$(".cell.rating").click(rating_clicked);
+	$(".cell.name").click(rating_clicked);
+	$(".cell.weight.first_hoq").click(rating_clicked);
+	$(".num").mouseup(num_clicked);
+	add_requirements_arrows_init();
+    } catch (x) {
+	alert("Error initializing matrix " + x);
+    }
+}
+
+function add_requirements_arrows_init() {
+    $(".row:first-child .num:last-child")
+	.hover(show_add_row_or_column_arrow,
+	       hide_add_row_or_column_arrow);
+    $("#add_column_arrow").click(add_column_clicked);
+    $(".row:last-child .num:first-child")
+	.hover(show_add_row_or_column_arrow,
+	       hide_add_row_or_column_arrow);
+    $("#add_row_arrow").click(add_row_clicked);
 }
 
 function updates_permitted_init() {
@@ -660,14 +670,14 @@ function hide_add_row_or_column_arrow() {
 }
 
 function add_column_clicked() {
-    var sibling_id = $(".req_id", $(this).col()[4]).text();
-    var requested_position = parseInt($(this).text()) + 1;
+    var sibling_id = $(".req_id", $(this).parents(".cell").col()[4]).text();
+    var requested_position = parseInt($(this).parents(".num").text()) + 1;
     insert_requirement(sibling_id, "New Requirement", requested_position);
 }
 
 function add_row_clicked() {
-    var sibling_id = $(".req_id", $(this).row()[4]).text();
-    var requested_position = parseInt($(this).text()) + 1;
+    var sibling_id = $(".req_id", $(this).parents(".cell").row()[4]).text();
+    var requested_position = parseInt($(this).parents(".num").text()) + 1;
     insert_requirement(sibling_id, "New Requirement", requested_position);
 }
 
