@@ -11,6 +11,9 @@
     %span.public_icon
       = image_tag("icons/silk/world.png", :alt => "World", :title => "Public")
       [Public]
+  - if permitted_to?(:update, @hoq)
+    %span.rename_link
+      = link_to("Rename", :anchor => "")
   %span.download_link
     = link_to("Download", download_qfd_path(@qfd))
 

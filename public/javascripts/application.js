@@ -39,6 +39,7 @@ function updates_permitted_init() {
     row_context_menu_init();
     hide_hidden_primary_requirements();
     hide_hidden_secondary_requirements();
+    rename_hoq_init();
 }
 
 function editable_init() {
@@ -502,6 +503,26 @@ function hide_hidden_secondary_requirements() {
 		}
 	    });
 
+	});
+    }
+}
+
+function rename_hoq_init() {
+    $(".rename_link").click(rename_hoq);
+}
+
+function rename_hoq() {
+    var data = $($("#content > h1").clone());
+    $("span", data).remove();
+    var cur_name = $.trim($(data).text());
+    var new_name = prompt("New name", cur_name);
+
+    if (null != new_name) {
+	$.post(location.href, {
+            "_method": "PUT",
+	    "hoq[name]": new_name
+	}, function (data) {
+	    inject_script(data);
 	});
     }
 }

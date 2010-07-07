@@ -54,10 +54,6 @@ class RequirementsController < ApplicationController
 
   private 
 
-  def render_error(title, msg)
-    render :inline => "alert(\"#{title}:\n#{msg}\");"
-  end
-
   def weight_edited? 
     params[:requirement].include?(:weight)
   end

@@ -120,6 +120,11 @@ class ApplicationController < ActionController::Base
     render :js => "window.location = '#{request.referer}';"
   end
 
+  def render_error(title, msg)
+    logger.error("Error: #{title}\n#{msg}")
+    render :inline => "alert(\"#{title}:\n#{msg}\");"
+  end
+
   def set_current_user_for_model_authorization
     Authorization.current_user = logged_in? ? current_user : nil
   end
