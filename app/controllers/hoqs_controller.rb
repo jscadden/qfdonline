@@ -1,5 +1,5 @@
 class HoqsController < ApplicationController
-  before_filter :require_user, :except => [:show,]
+  before_filter :require_user, :except => [:show, :download,]
   filter_resource_access :nested_in => :qfds
 
   def create
