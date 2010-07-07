@@ -1,6 +1,7 @@
 class HoqsController < ApplicationController
   before_filter :require_user, :except => [:show, :download,]
-  filter_resource_access :nested_in => :qfds
+  filter_resource_access :nested_in => :qfds, :additional_member => [:download,]
+
 
   def create
     if @qfd.hoq_list.insert_back(@hoq)
