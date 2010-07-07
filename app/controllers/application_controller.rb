@@ -2,10 +2,12 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+  include ExceptionNotification::Notifiable
+
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
-  filter_parameter_logging :password, :password_confirmation
+  filter_parameter_logging :password, :password_confirmation, :uservoice_api_key
   helper_method :current_user_session, :current_user, :logged_in?
   helper_method :inner_rating_for, :inner_name_for, :inner_weight_for
 
