@@ -21,7 +21,8 @@ module SpreadsheetExport
     private
 
     def filename
-      ("%s_%s.xls" % [name, user.login]).gsub(/[^\w\.\-]/, "")
+      email_username = user.email.gsub(/([^@]+)@.*/, "\\1")
+      ("%s_%s.xls" % [name, email_username]).gsub(/[^\w\.\-]/, "")
     end
   end
 
