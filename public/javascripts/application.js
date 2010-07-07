@@ -118,7 +118,7 @@ function column_context_menu_init() {
 	    enable_pasting_for_columns();
 	    break;
 	case "delete":
-	    delete_requirement(sibling_id);
+	    delete_selected_requirements();
 	    break;
 	case "hide":
 	    hide_secondary_requirements();
@@ -172,7 +172,7 @@ function row_context_menu_init() {
 	    enable_pasting_for_rows();
 	    break;
 	case "delete":
-	    delete_requirement(sibling_id);
+	    delete_selected_requirements();
 	    break;
 	case "hide":
 	    hide_primary_requirements();
@@ -248,10 +248,45 @@ function insert_requirement(sibling_id, name, requested_position) {
     });
 }
 
-function delete_requirement(req_id) {
-    $.post("/requirements/" + req_id, {
-	"_method": "DELETE"
-    }, function (data) {
+function delete_selected_requirements() {
+    var ids = [];
+    var list_id = -1;
+
+    $(".matrix .num.backlight").each(function () {
+	var self = $(this);
+	var row_div = null;
+
+	if (self.prev().length) {
+	    var req_id = parseInt(self.col().filter(".cell").find(".req_id").text());
+	    list_id = parseInt(self.col().filter(".cell").find(".req_list_id").text());
+	} else {
+	    row_div = self.parents(".row");
+	    var req_id = parseInt($(".req_id", row_div).eq(0).text());
+	    list_id = parseInt($(".req_list_id", row_div).eq(0).text());
+	}
+
+	ids.push(req_id);
+    });
+
+    delete_requirements(list_id, ids);
+}
+
+function delete_requirements(list_id, ids) {
+    var args = {
+	"_method": "PUT",
+	"requirements_list": {
+	    "requirements_attributes": []
+	}
+    };
+
+    $.each(ids, function (idx, value) {
+	args["requirements_list"]["requirements_attributes"].push({
+	    "id": value,
+	    "_delete": "1"
+	});
+    });
+
+    $.post("/requirements_lists/" + list_id, args, function (data) {
 	inject_script(data);
     });    
 }

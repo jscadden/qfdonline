@@ -96,6 +96,7 @@ class ApplicationController < ActionController::Base
                      :locals => {
                        :id => req.id, 
                        :name => req.errors.on(:name) ? "Error" : req.name,
+                       :list_id => req.requirements_list.id,
                      })
   end
 

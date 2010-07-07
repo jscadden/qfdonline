@@ -15,20 +15,6 @@ class RequirementsController < ApplicationController
     end
   end
 
-  def destroy
-    # TODO: check to make sure I own me
-    @req = Requirement.find(params[:id])
-
-    if @req.destroy
-      logger.debug("Requirement destroyed successfully")
-      render_reload
-    else
-      msg = @req.errors.full_messages.join("\n")
-      logger.error("Error destroying requirement\n#{msg}")
-      render_error("Error creating requirement", msg)
-    end
-  end
-
   def update
     @req = Requirement.find(params[:id])
 

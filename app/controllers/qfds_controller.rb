@@ -1,6 +1,6 @@
 class QfdsController < ApplicationController
   before_filter :require_user, :except => [:show, :index, :download,]
-  filter_resource_access :additional_member => [:download,]
+  filter_resource_access :additional_member => {:download => :show,}
 
   def create
     if @qfd.save

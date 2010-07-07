@@ -59,7 +59,7 @@ end
 privileges do
 
   privilege :view do
-    includes :read, :show, :download
+    includes :read, :show
   end
 
   privilege :collaborate do

@@ -195,11 +195,11 @@ module MatrixHelper
 
   def sort_req_list_asc_link(list, attr)
     link_to(image_tag("icons/silk/arrow_up-m.png"), 
-            sort_requirements_list_path(list, :by => attr,:order => "asc"))
+            sort_requirements_list_path(list, :by => attr, :order => "asc"))
   end
 
   def sort_req_list_desc_link(list, attr)
     link_to(image_tag("icons/silk/arrow_down-m.png"), 
-            sort_requirements_list_path(list, :by => attr,:order => "desc"))
+            sort_requirements_list_path(list, :by => attr, :order => "desc"))
   end
 end

@@ -12,6 +12,8 @@ class RequirementsList < ActiveRecord::Base
   has_one :correlated_requirements_list, :through => :secondary_hoq, 
             :source => "primary_requirements_list"
 
+  accepts_nested_attributes_for :requirements, :allow_destroy => true
+
 
   def requirement_weight_changed
     recalc_relative_weights
