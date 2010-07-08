@@ -5,7 +5,7 @@ Given /^I\'ve created a HOQ$/ do
 end
 
 Given /^I\'ve added a secondary requirement "([^\"]*)" to the HOQ$/ do |name|
-  When "I right click on the column #1's number cell"
+  When "I right click on column #1's number cell"
   When "I click on \"Insert After\" in the column menu"
   When "I rename the new requirement to \"#{name}\""
 end

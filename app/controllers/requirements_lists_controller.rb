@@ -9,6 +9,7 @@ class RequirementsListsController < ApplicationController
   end
 
   # used to destroy multiple selected requirements
+  # used to paste/reorder multiple selected requirements
   def update
     respond_to do |format|
       format.js {update_js}

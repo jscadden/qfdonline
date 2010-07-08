@@ -111,10 +111,11 @@ function column_context_menu_init() {
 	var requested_position = 1;
 	var matrix = $(element).parents(".matrix").eq(0);
 	var cut_req_id = matrix.data(CUT_REQ_ID);
+	var req_list_id = parseInt($(element).col().filter(".cell").find(".req_list_id").text());
 
 	switch (action) {
 	case "cut":
-	    cut_requirement(sibling_id, element);
+	    cut_selected_requirement();
 	    enable_pasting_for_columns();
 	    break;
 	case "delete":
@@ -133,12 +134,12 @@ function column_context_menu_init() {
 	    break;
 	case "paste_after":
 	    requested_position = parseInt($(element).text()) + 1;
-	    paste_requirement(cut_req_id, requested_position);
+	    paste_requirements(req_list_id, [cut_req_id], requested_position);
 	    disable_pasting_for_columns();
 	    break;
 	case "paste_before":
 	    requested_position = parseInt($(element).text());
-	    paste_requirement(cut_req_id, requested_position - 1);
+	    paste_requirements(req_list_id, [cut_req_id], requested_position);
 	    disable_pasting_for_columns();
 	    break;
 	case "unhide":
@@ -165,10 +166,11 @@ function row_context_menu_init() {
 	var requested_position = 1;
 	var matrix = $(element).parents(".matrix").eq(0);
 	var cut_req_id = matrix.data(CUT_REQ_ID);
+	var req_list_id = parseInt($(element).row().filter(".cell").find(".req_list_id").text());
 
 	switch (action) {
 	case "cut":
-	    cut_requirement(sibling_id, element);
+	    cut_selected_requirement();
 	    enable_pasting_for_rows();
 	    break;
 	case "delete":
@@ -187,12 +189,12 @@ function row_context_menu_init() {
 	    break;
 	case "paste_above":
 	    requested_position = parseInt($(element).text());
-	    paste_requirement(cut_req_id, requested_position - 1);
+	    paste_requirements(req_list_id, [cut_req_id], requested_position);
 	    disable_pasting_for_rows();
 	    break;
 	case "paste_below":
 	    requested_position = parseInt($(element).text()) + 1;
-	    paste_requirement(cut_req_id, requested_position);
+	    paste_requirements(req_list_id, [cut_req_id], requested_position);
 	    disable_pasting_for_rows();
 	    break;
 	case "unhide":
@@ -767,9 +769,45 @@ function inject_script(javascript) {
     head.appendChild(script);
 }
 
-function cut_requirement(req_id, element) {
-    var matrix = $(element).parents(".matrix").eq(0);
-    matrix.data(CUT_REQ_ID, req_id);
+function cut_selected_requirement() {
+    var ids = [];
+    var list_id = null;
+
+    $(".matrix .num.backlight").each(function () {
+	var self = $(this);
+	var row_div = null;
+	var req_id = null;
+
+	if (self.prev().length) {
+	    req_id = parseInt(self.col().filter(".cell").find(".req_id").text());
+	    list_id = parseInt(self.col().filter(".cell").find(".req_list_id").text());
+	} else {
+	    row_div = self.parents(".row");
+	    req_id = parseInt($(".req_id", row_div).eq(0).text());
+	    list_id = parseInt($(".req_list_id", row_div).eq(0).text());
+	}
+
+	ids.push(req_id);
+    });
+    $(".matrix").data(CUT_REQ_ID, ids[0]);
+}
+
+function paste_requirements(req_list_id, req_ids, pos) {
+    var args = {
+	"_method": "PUT",
+	"requirements_list": {"requirements_attributes": []}
+    };
+
+    $.each(req_ids, function (idx, req_id) {
+	args["requirements_list"]["requirements_attributes"].push({
+            id: req_id,
+	    requested_position: pos + idx
+	});
+    });
+
+    $.post("/requirements_lists/" + req_list_id, args, function (data) {
+	inject_script(data);
+    });
 }
 
 function paste_requirement(req_id, pos) {

@@ -45,6 +45,5 @@ class Requirement < ActiveRecord::Base
     value = value.to_s.gsub(/[,]/, "")
     write_attribute(:weight, value)
   end
-
   
 end
