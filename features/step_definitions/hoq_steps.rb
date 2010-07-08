@@ -17,7 +17,7 @@ When /^I create a new HOQ$/ do
 end
 
 Then /^the new HOQ should have a primary requirement "([^\"]*)"$/ do |name|
-  page.should have_css("div.cell.name", :text => name)
+  page.should have_css("div.cell.name", :text => /#{name}/)
 end
 
 Then /^I should see the new HOQ\'s name$/ do 
@@ -26,7 +26,6 @@ end
 
 Then /^I should see the renamed HOQ\'s name$/ do 
   page.should have_content("Foo Bar")
-  # page.should have_css("h1", :text => /Foo\s+Bar/)
 end
 
 When /^I rename the new requirement to "([^\"]+)"$/ do |name|

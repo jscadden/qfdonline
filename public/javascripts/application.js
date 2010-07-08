@@ -3,7 +3,7 @@ KEY_UP = 38;
 KEY_RIGHT = 39;
 KEY_DOWN = 40;
 BUTTON_MOUSE_RIGHT = 2;
-CUT_REQ_ID = "cut_req_id";
+CUT_REQ_IDS = "cut_req_ids";
 
 
 $(qfdonline_init);
@@ -110,12 +110,12 @@ function column_context_menu_init() {
 	var name = "New Requirement";
 	var requested_position = 1;
 	var matrix = $(element).parents(".matrix").eq(0);
-	var cut_req_id = matrix.data(CUT_REQ_ID);
+	var cut_req_ids = matrix.data(CUT_REQ_IDS);
 	var req_list_id = parseInt($(element).col().filter(".cell").find(".req_list_id").text());
 
 	switch (action) {
 	case "cut":
-	    cut_selected_requirement();
+	    cut_selected_requirements();
 	    enable_pasting_for_columns();
 	    break;
 	case "delete":
@@ -134,12 +134,12 @@ function column_context_menu_init() {
 	    break;
 	case "paste_after":
 	    requested_position = parseInt($(element).text()) + 1;
-	    paste_requirements(req_list_id, [cut_req_id], requested_position);
+	    paste_requirements(req_list_id, cut_req_ids, requested_position);
 	    disable_pasting_for_columns();
 	    break;
 	case "paste_before":
 	    requested_position = parseInt($(element).text());
-	    paste_requirements(req_list_id, [cut_req_id], requested_position);
+	    paste_requirements(req_list_id, cut_req_ids, requested_position);
 	    disable_pasting_for_columns();
 	    break;
 	case "unhide":
@@ -165,12 +165,12 @@ function row_context_menu_init() {
 	var name = "New Requirement";
 	var requested_position = 1;
 	var matrix = $(element).parents(".matrix").eq(0);
-	var cut_req_id = matrix.data(CUT_REQ_ID);
+	var cut_req_ids = matrix.data(CUT_REQ_IDS);
 	var req_list_id = parseInt($(element).row().filter(".cell").find(".req_list_id").text());
 
 	switch (action) {
 	case "cut":
-	    cut_selected_requirement();
+	    cut_selected_requirements();
 	    enable_pasting_for_rows();
 	    break;
 	case "delete":
@@ -189,12 +189,12 @@ function row_context_menu_init() {
 	    break;
 	case "paste_above":
 	    requested_position = parseInt($(element).text());
-	    paste_requirements(req_list_id, [cut_req_id], requested_position);
+	    paste_requirements(req_list_id, cut_req_ids, requested_position);
 	    disable_pasting_for_rows();
 	    break;
 	case "paste_below":
 	    requested_position = parseInt($(element).text()) + 1;
-	    paste_requirements(req_list_id, [cut_req_id], requested_position);
+	    paste_requirements(req_list_id, cut_req_ids, requested_position);
 	    disable_pasting_for_rows();
 	    break;
 	case "unhide":
@@ -769,7 +769,7 @@ function inject_script(javascript) {
     head.appendChild(script);
 }
 
-function cut_selected_requirement() {
+function cut_selected_requirements() {
     var ids = [];
     var list_id = null;
 
@@ -789,7 +789,7 @@ function cut_selected_requirement() {
 
 	ids.push(req_id);
     });
-    $(".matrix").data(CUT_REQ_ID, ids[0]);
+    $(".matrix").data(CUT_REQ_IDS, ids);
 }
 
 function paste_requirements(req_list_id, req_ids, pos) {
@@ -806,15 +806,6 @@ function paste_requirements(req_list_id, req_ids, pos) {
     });
 
     $.post("/requirements_lists/" + req_list_id, args, function (data) {
-	inject_script(data);
-    });
-}
-
-function paste_requirement(req_id, pos) {
-    $.post("/requirements/" + req_id, {
-	"_method": "PUT",
-	"requirement[requested_position]": pos
-    }, function (data) {
 	inject_script(data);
     });
 }
