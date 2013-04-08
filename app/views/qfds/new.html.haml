@@ -1,0 +1,8 @@
+%h1 New QFD
+
+- form_for(@qfd) do |f|
+  = f.error_messages
+  = render :partial => f
+  .actions
+    = f.submit("Create QFD")
+    = link_to("Cancel", qfds_path)

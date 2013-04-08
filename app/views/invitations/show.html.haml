@@ -1,0 +1,12 @@
+%h1 You're Invited To Collaborate
+
+%p
+
+  #{h(@invitation.sender_name)} has invited you to collaborate on a QFD named
+  #{h(@invitation.qfd_name)}.  To begin collaborating, click on the button
+  below.
+
+  - form_for(@invitation) do |f|
+    = f.error_messages
+    %p(style="text-align: center")
+      = f.submit("Accept")

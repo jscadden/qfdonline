@@ -1,0 +1,23 @@
+%h1 403 Permission Denied
+
+%p
+  
+  You do not have permission to view this resource.  Please double check your
+  desired URL for typos.  It is also possible that your access has been
+  revoked.
+
+%p
+
+  From here you can:
+
+  %ul
+    - if logged_in?
+      %li
+        = link_to("See a list of QFDs to which you have access", qfds_path)
+    - else
+      %li
+        = link_to("Log in to edit your QFDs", login_path)
+      %li
+        = link_to("Register to begin creating your own QFDs", register_path)
+    %li
+      = link_to("See a list of public QFDs", qfds_path(:public => true))

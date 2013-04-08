@@ -1,0 +1,29 @@
+.field
+  = form.label(:name)
+  %br
+  = form.text_field(:name)
+.field
+  = form.label(:public)
+  %br
+  = form.check_box(:public)
+  %br
+  If public, anyone can view your QFD, but only you and those collaborators
+  you choose will be able to edit it.
+
+- if 0 < form.object.invitations.size
+  %fieldset
+    %legend Collaboration Invitations
+    %table.invitations(cellspacing="0" cellpadding="0")
+      %thead
+        %tr
+          %th Email
+          %th Read Only
+          %th Status
+          %th Delete
+      %tbody
+        - form.fields_for(:invitations) do |ff|
+          %tr
+            %td=h ff.object.recipient_email
+            %td.center= ff.check_box(:read_only)
+            %td=h ff.object.status
+            %td.center= ff.check_box(:_delete)

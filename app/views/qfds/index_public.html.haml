@@ -1,0 +1,30 @@
+- @title = "Public QFDs"
+
+%h1 Public QFDs
+
+%table.qfds(cellpadding="0" cellspacing="0")
+  %thead
+    %tr
+      %th Name
+      %th Permissions
+      %th Actions
+  %tbody
+    - (@qfds).each do |qfd|
+      %tr
+        %td= link_to(h(qfd.name), qfd)
+        %td= permissions_on_qfd_for_current_user(qfd)
+        %td
+          = link_to("Download", download_qfd_path(qfd))
+          - if qfd.user == current_user
+            = link_to("Edit", edit_qfd_path(qfd))
+            = link_to("Delete", qfd_path(qfd), :confirm => "Are you sure?", :method => "delete")
+            = link_to_invite_a_collaborator(qfd)
+
+
+%p
+  Not seeing all the QFDs you expected?  
+  - if logged_in?
+    Try viewing #{link_to("your personalized QFDs index", qfds_path)}.
+  - else
+    Try #{link_to("logging in", login_path)} to view your personalized QFDs
+    index.

@@ -1,0 +1,7 @@
+%h1 New Secondary Requirement
+
+- form_for([@hoq, @req], :url => hoq_secondary_requirements_path(@hoq)) do |f|
+  = f.error_messages
+  = render :partial => f
+  .actions
+    = f.submit("Create Secondary Requirement")

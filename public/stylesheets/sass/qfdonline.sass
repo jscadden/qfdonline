@@ -1,0 +1,374 @@
+
+// variables
+!dk_grey = #404040
+!heading_grey = #dcdcdc
+!med_grey = #808080
+!lt_grey = #999999
+!text_white = #f0f0f0
+!orange = #ffa500
+!lt_orange = #ffd993
+!flash_green = #ccffcc
+!flash_yellow = #ffffcc
+!flash_red = #ffcccc
+!header_pad = 8px
+!error_red = #CC000
+!error_red_bg = #FFCCCC
+!warning_yellow = #CCCC00
+!std_vert = 0.5em
+!std_horiz = 1.2ex
+
+
+// mix-ins
+=error_border
+  border = 2px "solid" !error_red
+
+=explanation
+  background:
+    color: #F0F0F0
+  display: table
+  margin:
+    bottom = !std_vert
+    top = !std_vert
+  padding = !std_vert !std_horiz
+
+  h2
+    color: #FFFFFF
+    font:
+      size: 100%
+      weight: bold
+    margin:
+      bottom = !std_vert
+      left = 0 - !std_horiz
+      right = 0 - !std_horiz
+      top = 0 - !std_vert
+    padding = !std_vert !std_horiz
+
+
+// tags
+body
+  background:
+    color: #ffffff
+
+  font:
+    family: Arial, Verdana, sans-serif, Helvetica
+    size: 12pt
+
+  line-height: 1.5
+
+fieldset
+  border = 2px solid !lt_grey
+  display: inline-block
+  margin = !std_vert 0
+
+  legend
+    font-size: large
+    margin-left: 1em
+
+h1, h2, h3, h4, h5, h6
+  margin:
+    bottom: 0.5em
+    top: 0.5em
+
+h1
+  font: 
+    size: 150%
+
+h2
+  font:
+    size: 140%
+
+h3
+  font:
+    size: 130%
+
+h4
+  font:
+    size: 120%
+
+h5
+  font:
+    size: 110%
+
+ol
+  list-style:
+    type: decimal
+  padding:
+    left: 2em
+
+ul
+  list-style-type: disc
+  padding:
+    left: 2em
+
+
+// classes
+.backlight
+  background:
+    color = !lt_orange
+
+.contextMenu
+  width: auto
+
+h1 
+  .download_link, .create_link, .public_icon, .rename_link
+    font-size: small
+
+form .field
+  margin: 1em 0
+
+.errorExplanation
+  +explanation
+
+  h2
+    background:
+      color: #CC0000
+
+  +error_border
+
+.fieldWithErrors
+  input, select, textarea
+    +error_border
+
+.flash
+  border = 2px solid !med_grey
+  color = !dk_grey
+  display: table-cell
+  margin: 0.2em
+  padding: 0.2em 0.5em
+
+.flash.notice
+  background-color = !flash_green
+
+.flash.warn
+  background-color = !flash_yellow
+
+.flash.error
+  background-color = !flash_red
+    
+.hidden
+  display: none
+
+.highlight
+  background:
+    color = !orange
+
+.invitations
+  th
+    font-weight: bold
+
+  td, th
+    padding: 5px
+
+    &.center
+      text-align: center
+
+.matrix
+  border:
+    collapse: collapse
+  display: table
+  font:
+    size: 8pt
+
+  input
+    border: 0
+    margin: 0
+    padding: 0
+
+  .cell
+    border:
+      color = !med_grey
+      width: 1px
+      style: solid
+    display: table-cell
+    padding: 5px
+
+  .cell.header
+    display: table-cell
+    background:
+      color = !heading_grey
+
+  .cell.invisible
+    background:
+      color: #ffffff
+    border: 0
+
+  .cell.num, .cell.weight, .cell.maximum
+    text-align: center
+
+  .cell.rating, .cell.name, .cell.weight.first_hoq
+    padding: 0
+
+  .cell.rating > div, .cell.name > div, .cell.weight.first_hoq > div
+    padding: 5px
+
+  .cell.rating.highlight_border > div, .cell.name.highlight_border > div, .cell.weight.first_hoq.highlight_border > div
+    border:
+      color = !orange
+      style: solid
+      width: 2px
+    padding: 3px
+
+  .cell.rating
+    text-align: center
+
+  .header
+    display: table-header-group
+    background:
+      color = !heading_grey
+
+  .row
+    display: table-row
+
+  .row.click_to_show_row, .cell.click_to_show_col
+    background:
+      color = !dk_grey
+
+    .cell
+      height: 5px
+      padding: 0
+
+  .sider
+    background:
+      color = !heading_grey
+    display: table-column-group
+
+table.qfds
+  margin-bottom: 2em
+
+  thead th
+    font-weight: bold
+
+  td, th
+    padding: 0 0.2em 
+
+    &:first-child
+      padding-left: 0
+
+    &:last-child
+      padding-right: 0
+
+.warningExplanation
+  +explanation
+  border = 2px "solid" !warning_yellow
+  h2
+    background:
+      color: #CCCC00
+
+
+// ids
+#add_column_arrow, #add_row_arrow
+  display: none
+  position: absolute
+
+#breadcrumbs
+  list-style-type: none
+  margin: 0
+    bottom: 1.5em
+    top: -1.25em
+  padding: 0
+
+  li
+    display: inline
+    font-size: small
+
+  li:before
+    content: " > "
+
+  li:first-child:before
+    content: ""
+
+= register-box
+  background = !heading_grey
+  border = 2px solid !orange
+
+#call_to_authenticate
+  margin: auto
+  width: 800px
+
+  .left, .right
+    margin: 2em
+    padding: 0.5em
+    width: 300px
+
+  .left
+    float: left
+
+  .right  
+    +register-box
+    float: right
+
+#call_to_register_box
+  +register-box
+  margin: 0.5em
+  padding: 0.5em
+  float: right
+  width: 300px
+  
+#content
+  padding: 25px 100px
+
+#flash_wrapper
+  display: table
+  margin: 1em auto
+  text-align: center
+
+#footer
+  clear: both
+  color = !lt_grey
+  font:
+    family: Arial
+    size: 9pt
+  margin:
+    top: 5em
+  padding:
+    bottom: 4px
+  text:
+    align: center
+  vertical-align: bottom
+
+#footer a
+  color: blue
+
+#header
+  background:
+    color = !dk_grey
+  border:
+    bottom = 5px solid !orange
+  color = !text_white
+  display: table
+  font:
+    size: 14px
+  width: 100%
+
+  .left
+    padding:
+      bottom = !header_pad
+      left = !header_pad
+      top = !header_pad
+
+  .right
+    display: table-cell
+    padding:
+      bottom = !header_pad
+      right = !header_pad
+      top = !header_pad
+    text-align: right
+    vertical-align: middle    
+
+  a
+    color = !text_white
+    text-decoration: none
+
+  a:hover
+    text-decoration: underline
+
+// jquery-ui doesn't seem to include selectable theming
+.ui-selecting
+  background:
+    color = !lt_orange
+
+.ui-selected
+  background:
+    color = !orange
+
+@import jquery.loading.sass

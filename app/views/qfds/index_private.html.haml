@@ -1,0 +1,22 @@
+%h1 
+  My QFDs
+  %span.create_link
+    = link_to("Create New", new_qfd_path)
+
+%table.qfds(cellpadding="0" cellspacing="0")
+  %thead
+    %tr
+      %th Name
+      %th Permissions
+      %th Actions
+  %tbody
+    - (@my_qfds + @invited_qfds).each do |qfd|
+      %tr
+        %td= link_to(h(qfd.name), qfd)
+        %td= permissions_on_qfd_for_current_user(qfd)
+        %td
+          = link_to("Download", download_qfd_path(qfd))
+          - if qfd.user == current_user
+            = link_to("Edit", edit_qfd_path(qfd))
+            = link_to("Delete", qfd_path(qfd), :confirm => "Are you sure?", :method => "delete")
+            = link_to_invite_a_collaborator(qfd)

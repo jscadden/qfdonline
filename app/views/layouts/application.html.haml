@@ -1,0 +1,31 @@
+!!! XML utf-8
+!!! Strict
+%html(xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en")
+  %head
+    %meta(http-equiv="Content-Type" content="text/html; charset=utf-8")/
+    %title= @title ? @title + " : QFD Online Builder" : "QFD Online Builder"
+    = stylesheet_link_tag("reset.css")
+    /[if lt IE 8]
+      = stylesheet_link_tag("http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE8.js")
+    = stylesheet_link_tag("ui-lightness/jquery-ui-1.8.custom.css")
+    = stylesheet_link_tag("jquery.contextMenu.css")
+    = stylesheet_link_tag("qfdonline.css")
+    = javascript_include_tag(:defaults)
+    = javascript_include_tag("json2.js")
+    = javascript_include_tag("jquery.cookie.js")
+    = javascript_include_tag("jquery.jeditable.qfdonline.js")
+    = javascript_include_tag("jquery.matrix.js")
+    = javascript_include_tag("jquery.contextMenu.js")
+    = javascript_include_tag("jquery.loading.1.6.3.min.js")
+    - if logged_in?
+      = uservoice_config_javascript
+    = yield(:head)
+  %body(class=page_class onkeypress="body_onkeypress(event)")
+    #header
+      = render :partial => "common/header"
+    #flash_wrapper
+      = show_flash
+    #content
+      = yield
+    #footer
+      = render :partial => "common/footer"

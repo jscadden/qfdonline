@@ -1,0 +1,8 @@
+:plain
+  Hello,
+
+  You recently registered at #{root_url}.  In order to verify your registration, please follow the URL below.  You will not be able to log in until your account is verified.
+
+  #{verify_users_url(:token => @user.perishable_token)}
+
+  Thank you, and welcome to QFDOnline!
